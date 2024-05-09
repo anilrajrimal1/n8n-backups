@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "n8n": {
       "main": [
@@ -205,8 +205,10 @@
         },
         "repository": {
           "__rl": true,
-          "value": "https://github.com/anilrajrimal1/n8n-backups",
-          "mode": "url"
+          "value": "n8n-backups",
+          "mode": "list",
+          "cachedResultName": "n8n-backups",
+          "cachedResultUrl": "https://github.com/anilrajrimal1/n8n-backups"
         },
         "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$json[\"name\"]}}.json",
         "asBinaryProperty": false,
@@ -409,7 +411,7 @@
           "item": [
             {
               "mode": "everyX",
-              "value": 12
+              "value": 5
             }
           ]
         }
@@ -471,7 +473,7 @@
   "settings": {},
   "staticData": null,
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2024-05-09T09:19:47.000Z",
-  "versionId": "a74563c0-25d0-4668-b805-73612e875eb5"
+  "triggerCount": 1,
+  "updatedAt": "2024-05-09T09:21:13.000Z",
+  "versionId": "430801d1-544e-454a-bb12-b1ca99a0ac07"
 }
