@@ -1,0 +1,56 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2024-05-09T07:54:19.310Z",
+  "id": "JrWu2CPL3VtCISRC",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "owner": {
+          "__rl": true,
+          "value": "anilrajrimal1",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "GuffGaff-Hub",
+          "mode": "list",
+          "cachedResultName": "GuffGaff-Hub",
+          "cachedResultUrl": "https://github.com/anilrajrimal1/GuffGaff-Hub"
+        },
+        "events": [
+          "issues"
+        ],
+        "options": {}
+      },
+      "id": "5e1e3d44-365c-4c70-bc0b-d489ad8f40d1",
+      "name": "Github Trigger",
+      "type": "n8n-nodes-base.githubTrigger",
+      "typeVersion": 1,
+      "position": [
+        780,
+        400
+      ],
+      "webhookId": "499b30b8-cf60-477c-afd1-f1bae82ebc29",
+      "credentials": {
+        "githubApi": {
+          "id": "0RfdS1hAK3pdzgOJ",
+          "name": "GitHub account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-05-09T07:54:19.310Z",
+  "versionId": "ff7dd497-7558-4248-a6b3-d077001d1445"
+}
