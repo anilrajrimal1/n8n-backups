@@ -178,7 +178,8 @@
   "createdAt": "2024-05-09T08:46:44.657Z",
   "id": "8yLn6oG16kp2Oxto",
   "meta": {
-    "templateId": "1534"
+    "templateId": "1534",
+    "templateCredsSetupCompleted": true
   },
   "name": "Back Up Your n8n Workflows To Github",
   "nodes": [
@@ -197,8 +198,16 @@
       "parameters": {
         "resource": "file",
         "operation": "get",
-        "owner": "={{$node[\"Globals\"].json[\"repo\"][\"owner\"]}}",
-        "repository": "={{$node[\"Globals\"].json[\"repo\"][\"name\"]}}",
+        "owner": {
+          "__rl": true,
+          "value": "anilrajrimal1",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "https://github.com/anilrajrimal1/n8n-backups",
+          "mode": "url"
+        },
         "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$json[\"name\"]}}.json",
         "asBinaryProperty": false,
         "additionalParameters": {}
@@ -286,8 +295,18 @@
       "parameters": {
         "resource": "file",
         "operation": "edit",
-        "owner": "={{$node[\"Globals\"].json[\"repo\"][\"owner\"]}}",
-        "repository": "={{$node[\"Globals\"].json[\"repo\"][\"name\"]}}",
+        "owner": {
+          "__rl": true,
+          "value": "anilrajrimal1",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "n8n-backups",
+          "mode": "list",
+          "cachedResultName": "n8n-backups",
+          "cachedResultUrl": "https://github.com/anilrajrimal1/n8n-backups"
+        },
         "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$node[\"OneAtATime\"].json[\"name\"]}}.json",
         "fileContent": "={{$node[\"isDiffOrNew\"].json[\"n8n_data_stringy\"]}}",
         "commitMessage": "=[N8N Backup] {{$node[\"OneAtATime\"].json[\"name\"]}}.json ({{$json[\"github_status\"]}})"
@@ -310,8 +329,18 @@
     {
       "parameters": {
         "resource": "file",
-        "owner": "={{$node[\"Globals\"].json[\"repo\"][\"owner\"]}}",
-        "repository": "={{$node[\"Globals\"].json[\"repo\"][\"name\"]}}",
+        "owner": {
+          "__rl": true,
+          "value": "anilrajrimal1",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "n8n-backups",
+          "mode": "list",
+          "cachedResultName": "n8n-backups",
+          "cachedResultUrl": "https://github.com/anilrajrimal1/n8n-backups"
+        },
         "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$node[\"OneAtATime\"].json[\"name\"]}}.json",
         "fileContent": "={{$node[\"isDiffOrNew\"].json[\"n8n_data_stringy\"]}}",
         "commitMessage": "=[N8N Backup] {{$node[\"OneAtATime\"].json[\"name\"]}}.json ({{$json[\"github_status\"]}})"
@@ -396,21 +425,6 @@
     },
     {
       "parameters": {
-        "content": "## Workflow Backups\nThis workflow will automatically backup your workflows to your Github account every 12 hours.\n\n### Setup\nOpen Globals and update the values below\n**repo.owner:** This is your Github username\n**repo.name:** This is the name of your repository\n**repo.path:** This is the folder to use within the repository, If it doesn't exist it will be created.\n\nIf your username was `n8n-io` and your repository was called `n8n-backups` and you wanted the workflows to go into a `workflows` folder you would set:\n\nrepo.owner - n8n-io\nrepo.name - n8n-backups\nrepo.path - workflows",
-        "height": 464.79920462713443,
-        "width": 389.78906250000017
-      },
-      "id": "fbdcfdd9-4f07-48e7-8586-092d67c7fe59",
-      "name": "Note",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        380,
-        240
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
         "filters": {}
       },
       "id": "926f0d45-31e5-4322-a9d8-36b8f8020076",
@@ -420,7 +434,13 @@
         1220,
         460
       ],
-      "typeVersion": 1
+      "typeVersion": 1,
+      "credentials": {
+        "n8nApi": {
+          "id": "6EttHsCnZYyWog65",
+          "name": "n8n account 2"
+        }
+      }
     },
     {
       "parameters": {
@@ -452,6 +472,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-09T08:49:48.000Z",
-  "versionId": "29f6ca78-1f61-40de-93dd-eea8bf4fe3d8"
+  "updatedAt": "2024-05-09T09:19:47.000Z",
+  "versionId": "a74563c0-25d0-4668-b805-73612e875eb5"
 }
