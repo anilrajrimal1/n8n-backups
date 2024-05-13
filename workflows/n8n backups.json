@@ -163,7 +163,7 @@
         ]
       ]
     },
-    "Every 5 hours": {
+    "Every 10 minutes": {
       "main": [
         [
           {
@@ -453,13 +453,14 @@
           "item": [
             {
               "mode": "everyX",
-              "value": 5
+              "value": 10,
+              "unit": "minutes"
             }
           ]
         }
       },
       "id": "ea730f19-e719-4eb7-ace2-c4c9357080b3",
-      "name": "Every 5 hours",
+      "name": "Every 10 minutes",
       "type": "n8n-nodes-base.cron",
       "position": [
         -1005,
@@ -475,6 +476,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-05-09T10:00:58.000Z",
-  "versionId": "12a21f8e-b1fb-4404-a9f8-125e81aefad2"
+  "updatedAt": "2024-05-13T11:32:48.000Z",
+  "versionId": "67c87b2a-2524-472f-a686-811a9093d1cd"
 }
