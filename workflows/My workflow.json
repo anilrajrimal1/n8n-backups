@@ -1,29 +1,46 @@
 {
   "active": false,
-  "connections": {},
-  "createdAt": "2024-05-14T05:50:08.733Z",
-  "id": "d799zuFqCcwndx0u",
+  "connections": {
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Execute Command",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-05-14T08:43:32.865Z",
+  "id": "VglGHY5Vsqa3JAfW",
   "meta": {
     "templateCredsSetupCompleted": true
   },
   "name": "My workflow",
   "nodes": [
     {
-      "parameters": {
-        "rule": {
-          "interval": [
-            {
-              "field": "minutes"
-            }
-          ]
-        }
-      },
-      "id": "7ce1a99c-299a-45fe-9522-8418dba290ef",
-      "name": "Schedule Trigger",
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1.2,
+      "parameters": {},
+      "id": "b9208f61-6810-464c-b30d-e22f4bc9a7af",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
       "position": [
         780,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "command": "docker ps"
+      },
+      "id": "1105998f-8489-4f58-9016-ab307920074d",
+      "name": "Execute Command",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1000,
         360
       ]
     }
@@ -35,6 +52,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-14T05:50:08.733Z",
-  "versionId": "d1712500-bc51-44b0-b754-9962aa3ac81b"
+  "updatedAt": "2024-05-14T08:43:32.865Z",
+  "versionId": "882faec9-5ea7-46db-8d96-c6c834b783d4"
 }
