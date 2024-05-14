@@ -266,7 +266,7 @@
       "type": "n8n-nodes-base.noOp",
       "position": [
         720,
-        360
+        320
       ],
       "typeVersion": 1
     },
@@ -412,7 +412,7 @@
       "name": "n8n",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        -620,
+        -580,
         580
       ],
       "typeVersion": 1,
@@ -476,6 +476,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-05-13T11:32:48.000Z",
-  "versionId": "67c87b2a-2524-472f-a686-811a9093d1cd"
+  "updatedAt": "2024-05-14T07:26:59.000Z",
+  "versionId": "62f935e3-a21d-4775-9442-b755542f6af9"
 }
