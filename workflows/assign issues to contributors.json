@@ -1,0 +1,360 @@
+{
+  "active": true,
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "if there is no assignee ?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "if anyone interested ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Github Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "if anyone interested ?": {
+      "main": [
+        [
+          {
+            "node": "Assigned or Not ?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assigned or Not ?": {
+      "main": [
+        [
+          {
+            "node": "Assign Commenter",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Add Comment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "if there is no assignee ?": {
+      "main": [
+        [
+          {
+            "node": "Assign Issue Creator",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "no operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-05-13T11:13:42.601Z",
+  "id": "ejYYl5rMChM82x6s",
+  "meta": {
+    "templateId": "1274",
+    "templateCredsSetupCompleted": true
+  },
+  "name": "assign issues to contributors",
+  "nodes": [
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{$json[\"body\"][\"action\"]}}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "opened"
+            },
+            {
+              "value2": "created",
+              "output": 1
+            }
+          ]
+        }
+      },
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        580,
+        340
+      ],
+      "typeVersion": 1,
+      "id": "086bbd3a-f1e0-4d8f-bf27-77582b2ce069"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "edit",
+        "owner": "={{$node[\"Switch\"].json[\"body\"][\"repository\"][\"owner\"][\"login\"]}}",
+        "repository": "={{$node[\"Switch\"].json[\"body\"][\"repository\"][\"name\"]}}",
+        "issueNumber": "={{ $json[\"body\"][\"issue\"][\"number\"] }}",
+        "editFields": {
+          "labels": [
+            {
+              "label": "assigned"
+            }
+          ],
+          "assignees": [
+            {
+              "assignee": "={{$json.body.issue[\"user\"][\"login\"]}}"
+            }
+          ]
+        }
+      },
+      "name": "Assign Issue Creator",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        1240,
+        -40
+      ],
+      "typeVersion": 1,
+      "id": "d7fd893e-3527-4fa0-bd3a-af644f49e9c4",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "wBMqs9Q3SKaMY9Xc",
+          "name": "GitHub account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "createComment",
+        "owner": "={{$json[\"body\"][\"repository\"][\"owner\"][\"login\"]}}",
+        "repository": "={{$json[\"body\"][\"repository\"][\"name\"]}}",
+        "issueNumber": "={{$json[\"body\"][\"issue\"][\"number\"]}}",
+        "body": "=Hey @{{$json[\"body\"][\"comment\"][\"user\"][\"login\"]}},\n\nThis issue is already assigned to {{$json[\"body\"][\"issue\"][\"assignee\"][\"login\"]}} 🙂"
+      },
+      "name": "Add Comment",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        1580,
+        520
+      ],
+      "typeVersion": 1,
+      "id": "10a2b2e4-e3ae-41da-83c3-49c16a43539c",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "wBMqs9Q3SKaMY9Xc",
+          "name": "GitHub account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "edit",
+        "owner": "={{$json[\"body\"][\"repository\"][\"owner\"][\"login\"]}}",
+        "repository": "={{$json[\"body\"][\"repository\"][\"name\"]}}",
+        "issueNumber": "={{$json[\"body\"][\"issue\"][\"number\"]}}",
+        "editFields": {
+          "labels": [
+            {
+              "label": "assigned"
+            }
+          ],
+          "assignees": [
+            {
+              "assignee": "={{$json[\"body\"][\"comment\"][\"user\"][\"login\"]}}"
+            }
+          ]
+        }
+      },
+      "name": "Assign Commenter",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        1580,
+        300
+      ],
+      "typeVersion": 1,
+      "id": "bd2aa5a9-dccd-4f10-bb90-4bbbe3606622",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "wBMqs9Q3SKaMY9Xc",
+          "name": "GitHub account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "owner": {
+          "__rl": true,
+          "value": "anilrajrimal1",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "GuffGaff-Hub",
+          "mode": "list",
+          "cachedResultName": "GuffGaff-Hub",
+          "cachedResultUrl": "https://github.com/anilrajrimal1/GuffGaff-Hub"
+        },
+        "events": [
+          "issue_comment",
+          "issues"
+        ],
+        "options": {}
+      },
+      "id": "b1bb63ae-2f8b-4d7a-a72c-7787465a26e4",
+      "name": "Github Trigger",
+      "type": "n8n-nodes-base.githubTrigger",
+      "typeVersion": 1,
+      "position": [
+        300,
+        340
+      ],
+      "webhookId": "42102986-0dbe-4a67-aeb2-1dc7da9e5e6a",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "wBMqs9Q3SKaMY9Xc",
+          "name": "GitHub account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [],
+          "string": [
+            {
+              "value1": "={{$json[\"body\"][\"comment\"][\"body\"]}}",
+              "operation": "regex",
+              "value2": "/[a,A]ssign[\\w*\\s*]*me/gm"
+            }
+          ]
+        }
+      },
+      "name": "if anyone interested ?",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        860,
+        480
+      ],
+      "typeVersion": 1,
+      "id": "ffa1a5e7-d36e-4311-9bae-2102465af7ea"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{$json[\"body\"][\"issue\"][\"assignees\"].length}}",
+              "operation": "equal"
+            }
+          ],
+          "string": []
+        }
+      },
+      "name": "Assigned or Not ?",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1200,
+        380
+      ],
+      "typeVersion": 1,
+      "id": "b644ad00-f094-4bde-9199-f70d509a2b57"
+    },
+    {
+      "parameters": {},
+      "name": "No Operation",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        1200,
+        600
+      ],
+      "typeVersion": 1,
+      "id": "01a8a69f-87fd-4179-a73e-5fbfcd6f70be"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{$json[\"body\"][\"issue\"][\"assignees\"].length}}",
+              "operation": "equal"
+            }
+          ],
+          "string": [
+            {
+              "value1": "={{$json[\"body\"][\"issue\"][\"body\"]}}",
+              "operation": "regex",
+              "value2": "/[a,A]ssign[\\w*\\s*]*me/gm"
+            }
+          ]
+        }
+      },
+      "name": "if there is no assignee ?",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        840,
+        100
+      ],
+      "typeVersion": 1,
+      "id": "1dc03e45-4fb3-40f3-94cc-8e4c991b6a0d"
+    },
+    {
+      "parameters": {},
+      "name": "no operation",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        1240,
+        160
+      ],
+      "typeVersion": 1,
+      "id": "ced7951c-1cd1-4e5d-86bb-7b9e1119a63d"
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": {
+    "node:Github Trigger": {
+      "webhookId": 478109932,
+      "webhookEvents": [
+        "issues",
+        "issue_comment"
+      ]
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-05-14T03:52:58.000Z",
+  "versionId": "7dc5c67a-4fff-4458-b33a-92036f4cfaf4"
+}
