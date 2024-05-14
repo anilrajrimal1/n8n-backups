@@ -1,0 +1,104 @@
+{
+  "active": true,
+  "connections": {
+    "Github Trigger": {
+      "main": [
+        [
+          {
+            "node": "Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-05-14T05:10:10.427Z",
+  "id": "IyBVjcUkKIEDXwQy",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Slack noti when Contactlist-App deployment fails",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "owner": {
+          "__rl": true,
+          "value": "anilrajrimal1",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "ContactList-Web",
+          "mode": "list",
+          "cachedResultName": "ContactList-Web",
+          "cachedResultUrl": "https://github.com/anilrajrimal1/ContactList-Web"
+        },
+        "events": [
+          "deployment_status"
+        ],
+        "options": {}
+      },
+      "id": "0fd2eda0-9f82-4683-a905-79a3d9053894",
+      "name": "Github Trigger",
+      "type": "n8n-nodes-base.githubTrigger",
+      "typeVersion": 1,
+      "position": [
+        880,
+        320
+      ],
+      "webhookId": "2922ca02-356f-47b8-8523-bc9092cbaae7",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "wBMqs9Q3SKaMY9Xc",
+          "name": "GitHub account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C071JAAQT46",
+          "mode": "list",
+          "cachedResultName": "alerts"
+        },
+        "text": "Deployment Failed of Contact list web app",
+        "otherOptions": {}
+      },
+      "id": "04f7943c-8689-4360-baf2-4feb448dd533",
+      "name": "Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [
+        1100,
+        320
+      ],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "oytOvgZOMj4GVobW",
+          "name": "Slack account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Github Trigger": {
+      "webhookId": 478120290,
+      "webhookEvents": [
+        "deployment_status"
+      ]
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-05-14T05:18:41.000Z",
+  "versionId": "0643013a-3a75-4fd8-848b-50521da0263c"
+}
