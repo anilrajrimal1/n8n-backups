@@ -1,0 +1,113 @@
+{
+  "active": false,
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "message": {
+      "main": [
+        [
+          {
+            "node": "Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-05-14T04:12:47.035Z",
+  "id": "0Sge4gnJigwOSgmX",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "workflow error noti to slack channel",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "919f2552-f857-474d-9aac-901c50867bbf",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        980,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C071JAAQT46",
+          "mode": "list",
+          "cachedResultName": "alerts"
+        },
+        "text": "I guess you've got some errors in your n8n workflow. Kindly check it and please try to fix it as soon as possible.",
+        "otherOptions": {}
+      },
+      "id": "921b7829-1396-4a68-b7a4-d1982ac1d25c",
+      "name": "Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [
+        1420,
+        400
+      ],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "oytOvgZOMj4GVobW",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3ebaaf16-2c8d-404e-b149-9dedcb628f3e",
+              "name": "execution.error.message",
+              "value": "={{ $json.execution.error.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "110fe12d-315e-4ad4-a195-afae47f805dd",
+      "name": "message",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        1200,
+        400
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "nFAn58teCzW5XK15"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-05-14T05:34:38.000Z",
+  "versionId": "85179137-f20e-4ccf-8cc5-3d80687d736f"
+}
