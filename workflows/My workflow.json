@@ -1,8 +1,20 @@
 {
-  "active": false,
-  "connections": {},
-  "createdAt": "2024-05-14T05:10:10.427Z",
-  "id": "IyBVjcUkKIEDXwQy",
+  "active": true,
+  "connections": {
+    "Github Trigger": {
+      "main": [
+        [
+          {
+            "node": "Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-05-14T05:41:12.152Z",
+  "id": "slanQXQ5xpoMEkhW",
   "meta": {
     "templateCredsSetupCompleted": true
   },
@@ -18,29 +30,57 @@
         },
         "repository": {
           "__rl": true,
-          "value": "ContactList-Web",
+          "value": "GuffGaff-Hub",
           "mode": "list",
-          "cachedResultName": "ContactList-Web",
-          "cachedResultUrl": "https://github.com/anilrajrimal1/ContactList-Web"
+          "cachedResultName": "GuffGaff-Hub",
+          "cachedResultUrl": "https://github.com/anilrajrimal1/GuffGaff-Hub"
         },
         "events": [
-          "deployment_status"
+          "pull_request"
         ],
         "options": {}
       },
-      "id": "8871fbe4-3d65-4956-ad61-9be85548a859",
+      "id": "0e0a5046-15c0-4235-a957-e99ac7e9123b",
       "name": "Github Trigger",
       "type": "n8n-nodes-base.githubTrigger",
       "typeVersion": 1,
       "position": [
-        860,
-        360
+        780,
+        400
       ],
-      "webhookId": "a4dff14a-607a-42f1-9ddb-5d3f09b08b8d",
+      "webhookId": "ecaa6592-3102-4a20-bb75-b30d49722ce1",
       "credentials": {
         "githubOAuth2Api": {
           "id": "wBMqs9Q3SKaMY9Xc",
           "name": "GitHub account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C071JAAQT46",
+          "mode": "list",
+          "cachedResultName": "alerts"
+        },
+        "text": "Someone just Created a PR on GuffGaff Hub. Go Check it now !!!",
+        "otherOptions": {}
+      },
+      "id": "571cad4b-9d90-46a8-aa6f-3358f1ae9801",
+      "name": "Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [
+        1000,
+        400
+      ],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "oytOvgZOMj4GVobW",
+          "name": "Slack account"
         }
       }
     }
@@ -49,9 +89,16 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "staticData": null,
+  "staticData": {
+    "node:Github Trigger": {
+      "webhookId": 478123241,
+      "webhookEvents": [
+        "pull_request"
+      ]
+    }
+  },
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2024-05-14T05:10:10.427Z",
-  "versionId": "0f02c529-6cab-456a-aa89-ff36518e7447"
+  "triggerCount": 1,
+  "updatedAt": "2024-05-14T05:42:36.000Z",
+  "versionId": "9a657345-effa-4b98-a430-f53658ee4ba3"
 }
