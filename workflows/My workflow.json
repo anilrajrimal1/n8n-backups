@@ -1,48 +1,48 @@
 {
   "active": false,
-  "connections": {
-    "When clicking \"Test workflow\"": {
-      "main": [
-        [
-          {
-            "node": "Execute Command",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    }
-  },
-  "createdAt": "2024-05-14T08:43:32.865Z",
-  "id": "VglGHY5Vsqa3JAfW",
+  "connections": {},
+  "createdAt": "2024-05-14T09:02:59.430Z",
+  "id": "s3ktSZdbqtj6Neuh",
   "meta": {
     "templateCredsSetupCompleted": true
   },
   "name": "My workflow",
   "nodes": [
     {
-      "parameters": {},
-      "id": "b9208f61-6810-464c-b30d-e22f4bc9a7af",
-      "name": "When clicking \"Test workflow\"",
-      "type": "n8n-nodes-base.manualTrigger",
+      "parameters": {
+        "authentication": "oAuth2",
+        "owner": {
+          "__rl": true,
+          "value": "anilrajrimal1",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "GuffGaff-Hub",
+          "mode": "list",
+          "cachedResultName": "GuffGaff-Hub",
+          "cachedResultUrl": "https://github.com/anilrajrimal1/GuffGaff-Hub"
+        },
+        "events": [
+          "push"
+        ],
+        "options": {}
+      },
+      "id": "ba13b5e1-ce59-4d67-95fe-e62bf770e90f",
+      "name": "Github Trigger",
+      "type": "n8n-nodes-base.githubTrigger",
       "typeVersion": 1,
       "position": [
         780,
         360
-      ]
-    },
-    {
-      "parameters": {
-        "command": "docker ps"
-      },
-      "id": "1105998f-8489-4f58-9016-ab307920074d",
-      "name": "Execute Command",
-      "type": "n8n-nodes-base.executeCommand",
-      "typeVersion": 1,
-      "position": [
-        1000,
-        360
-      ]
+      ],
+      "webhookId": "648120d0-a050-473c-b10d-88c85e4f3600",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "wBMqs9Q3SKaMY9Xc",
+          "name": "GitHub account 2"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -52,6 +52,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-14T08:43:32.865Z",
-  "versionId": "882faec9-5ea7-46db-8d96-c6c834b783d4"
+  "updatedAt": "2024-05-14T09:02:59.430Z",
+  "versionId": "0453111e-ede5-41a5-9cb5-3d65f1dff271"
 }
