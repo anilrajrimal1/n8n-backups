@@ -265,8 +265,8 @@
       "name": "if anyone interested ?",
       "type": "n8n-nodes-base.if",
       "position": [
-        820,
-        440
+        840,
+        320
       ],
       "typeVersion": 1,
       "id": "ffa1a5e7-d36e-4311-9bae-2102465af7ea"
@@ -324,8 +324,8 @@
       "name": "if there is no assignee ?",
       "type": "n8n-nodes-base.if",
       "position": [
-        820,
-        40
+        840,
+        100
       ],
       "typeVersion": 1,
       "id": "1dc03e45-4fb3-40f3-94cc-8e4c991b6a0d"
@@ -347,6 +347,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-13T11:30:16.000Z",
-  "versionId": "9734dffb-dbec-4b83-8bb8-aefd1e1970d4"
+  "updatedAt": "2024-05-14T01:25:31.000Z",
+  "versionId": "515f95c4-51cd-4804-9b4c-0bd86dc25f4a"
 }
