@@ -1,0 +1,76 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2024-05-14T10:52:02.938Z",
+  "id": "95OX0xNH2ag4QQjF",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "00 09 * * MON-FRI"
+            }
+          ]
+        }
+      },
+      "id": "5b63da3d-c7c9-42a1-ae9f-52e696d87d7b",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        160,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "owner": {
+          "__rl": true,
+          "value": "anilrajrimal1",
+          "mode": "list",
+          "cachedResultName": "anilrajrimal1",
+          "cachedResultUrl": "https://github.com/anilrajrimal1"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "=*",
+          "mode": "url"
+        },
+        "events": [
+          "push"
+        ],
+        "options": {}
+      },
+      "id": "847a9b61-084b-4448-b152-85dcfde763bc",
+      "name": "Github Trigger",
+      "type": "n8n-nodes-base.githubTrigger",
+      "typeVersion": 1,
+      "position": [
+        460,
+        460
+      ],
+      "webhookId": "c7525553-13e3-4f73-963d-730a1dca5a65",
+      "credentials": {
+        "githubApi": {
+          "id": "CAnTsavuxvV61O1w",
+          "name": "GitHub account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-05-14T11:34:34.000Z",
+  "versionId": "164cfefb-fd26-4ac0-9643-1d32b28ac029"
+}
