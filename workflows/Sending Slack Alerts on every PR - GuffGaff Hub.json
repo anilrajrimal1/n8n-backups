@@ -22,6 +22,28 @@
           }
         ]
       ]
+    },
+    "Slack": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "SSH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2024-05-14T05:41:12.152Z",
@@ -153,6 +175,32 @@
         980,
         400
       ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "language": "python",
+        "pythonCode": "# Add a new field called 'myNewField' to the JSON of the item\n_input.item.json.myNewField = 1\nreturn _input.item"
+      },
+      "id": "3901f161-d109-4f9b-a025-42c82c8c59c7",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1400,
+        400
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "55097ff9-543f-4d47-b1d8-7a740352b7e2",
+      "name": "SSH",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1620,
+        400
+      ]
     }
   ],
   "pinData": {},
@@ -161,7 +209,7 @@
   },
   "staticData": {
     "node:Github Trigger": {
-      "webhookId": 478155466,
+      "webhookId": 478171892,
       "webhookEvents": [
         "pull_request"
       ]
@@ -169,6 +217,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-05-14T09:43:31.000Z",
-  "versionId": "f6039d80-9d11-4e73-84fa-d84fd8da258d"
+  "updatedAt": "2024-05-14T11:38:45.000Z",
+  "versionId": "f17d5e0c-ccba-41f8-a909-5c587d9974b4"
 }
