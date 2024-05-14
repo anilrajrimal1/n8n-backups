@@ -22,6 +22,29 @@
           }
         ]
       ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "no operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        []
+      ]
     }
   },
   "createdAt": "2024-05-14T05:50:08.733Z",
@@ -46,7 +69,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        780,
+        800,
         360
       ]
     },
@@ -57,8 +80,11 @@
         "owner": {
           "__rl": true,
           "value": "anilrajrimal1",
-          "mode": "name"
-        }
+          "mode": "list",
+          "cachedResultName": "anilrajrimal1",
+          "cachedResultUrl": "https://github.com/anilrajrimal1"
+        },
+        "returnAll": true
       },
       "id": "0bb43027-a133-4d62-8af5-bd45e58a1519",
       "name": "GitHub",
@@ -86,11 +112,11 @@
           "conditions": [
             {
               "id": "44206797-6da4-46c7-bf2c-5e3ae5f8ad90",
-              "leftValue": "README.md",
+              "leftValue": "={{ $json.description = null}}",
               "rightValue": "",
               "operator": {
-                "type": "string",
-                "operation": "exists",
+                "type": "boolean",
+                "operation": "false",
                 "singleValue": true
               }
             }
@@ -104,8 +130,42 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        1220,
+        1200,
         360
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "no operation",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        1460,
+        500
+      ],
+      "typeVersion": 1,
+      "id": "094f58b5-b8f5-4996-b0de-72d0c879c964"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a6dc6a7b-e568-46f2-b66d-3373b98856da",
+              "name": "description",
+              "value": "You need to add any description here",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ce376dd6-671d-44e5-8f75-59baeb2ef7bd",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        1460,
+        280
       ]
     }
   ],
@@ -116,6 +176,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-14T06:06:03.000Z",
-  "versionId": "7a4276d8-a61f-49de-8c80-8dba2ffc2a6c"
+  "updatedAt": "2024-05-14T07:24:14.000Z",
+  "versionId": "e4d873f5-1eed-4b6b-99cf-b212993a4492"
 }
