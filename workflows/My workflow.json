@@ -1,20 +1,8 @@
 {
   "active": false,
-  "connections": {
-    "Trigger at 9am": {
-      "main": [
-        [
-          {
-            "node": "Slack",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    }
-  },
-  "createdAt": "2024-05-14T04:12:47.035Z",
-  "id": "0Sge4gnJigwOSgmX",
+  "connections": {},
+  "createdAt": "2024-05-14T05:10:10.427Z",
+  "id": "IyBVjcUkKIEDXwQy",
   "meta": {
     "templateCredsSetupCompleted": true
   },
@@ -22,47 +10,39 @@
   "nodes": [
     {
       "parameters": {
-        "resource": "user",
-        "operation": "getPresence",
-        "user": {
+        "authentication": "oAuth2",
+        "owner": {
           "__rl": true,
-          "value": "D06VC5XDN4A",
-          "mode": "id"
-        }
+          "value": "anilrajrimal1",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "ContactList-Web",
+          "mode": "list",
+          "cachedResultName": "ContactList-Web",
+          "cachedResultUrl": "https://github.com/anilrajrimal1/ContactList-Web"
+        },
+        "events": [
+          "deployment_status"
+        ],
+        "options": {}
       },
-      "id": "22a499bd-d2d7-40d0-bcdc-6afcbf3383d9",
-      "name": "Slack",
-      "type": "n8n-nodes-base.slack",
-      "typeVersion": 2.1,
-      "position": [
-        1080,
-        360
-      ],
-      "credentials": {
-        "slackApi": {
-          "id": "Cqz1QBhxrYOlTFhH",
-          "name": "Slack account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "rule": {
-          "interval": [
-            {
-              "triggerAtHour": 9
-            }
-          ]
-        }
-      },
-      "id": "996b12c6-4e0b-4df4-ab5c-4169a1cd887b",
-      "name": "Trigger at 9am",
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1.2,
+      "id": "8871fbe4-3d65-4956-ad61-9be85548a859",
+      "name": "Github Trigger",
+      "type": "n8n-nodes-base.githubTrigger",
+      "typeVersion": 1,
       "position": [
         860,
         360
-      ]
+      ],
+      "webhookId": "a4dff14a-607a-42f1-9ddb-5d3f09b08b8d",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "wBMqs9Q3SKaMY9Xc",
+          "name": "GitHub account 2"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -72,6 +52,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-14T04:12:47.035Z",
-  "versionId": "e3644bb6-c81f-420b-847d-3322fc978ebc"
+  "updatedAt": "2024-05-14T05:10:10.427Z",
+  "versionId": "0f02c529-6cab-456a-aa89-ff36518e7447"
 }
