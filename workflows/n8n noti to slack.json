@@ -1,0 +1,80 @@
+{
+  "active": false,
+  "connections": {
+    "Trigger at 9am": {
+      "main": [
+        [
+          {
+            "node": "Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-05-14T04:12:47.035Z",
+  "id": "0Sge4gnJigwOSgmX",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "n8n noti to slack",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "user",
+        "operation": "getPresence",
+        "user": {
+          "__rl": true,
+          "value": "D06VC5XDN4A",
+          "mode": "id"
+        }
+      },
+      "id": "22a499bd-d2d7-40d0-bcdc-6afcbf3383d9",
+      "name": "Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [
+        1080,
+        360
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "Cqz1QBhxrYOlTFhH",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "996b12c6-4e0b-4df4-ab5c-4169a1cd887b",
+      "name": "Trigger at 9am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        860,
+        360
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "nFAn58teCzW5XK15"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-05-14T04:55:32.000Z",
+  "versionId": "03b2d189-541a-4cb3-b71c-dffa7ab648be"
+}
