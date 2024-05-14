@@ -1,0 +1,121 @@
+{
+  "active": false,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitHub": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-05-14T05:50:08.733Z",
+  "id": "d799zuFqCcwndx0u",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "if no README.md >> Create",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "id": "7ce1a99c-299a-45fe-9522-8418dba290ef",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        780,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "user",
+        "owner": {
+          "__rl": true,
+          "value": "anilrajrimal1",
+          "mode": "name"
+        }
+      },
+      "id": "0bb43027-a133-4d62-8af5-bd45e58a1519",
+      "name": "GitHub",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        360
+      ],
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "wBMqs9Q3SKaMY9Xc",
+          "name": "GitHub account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "44206797-6da4-46c7-bf2c-5e3ae5f8ad90",
+              "leftValue": "README.md",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "38d74a54-b308-4ada-ac6c-390525d9b161",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1220,
+        360
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-05-14T06:06:03.000Z",
+  "versionId": "7a4276d8-a61f-49de-8c80-8dba2ffc2a6c"
+}
