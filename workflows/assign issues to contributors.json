@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Switch": {
       "main": [
@@ -113,7 +113,7 @@
       "type": "n8n-nodes-base.switch",
       "position": [
         580,
-        240
+        340
       ],
       "typeVersion": 1,
       "id": "086bbd3a-f1e0-4d8f-bf27-77582b2ce069"
@@ -141,7 +141,7 @@
       "name": "Assign Issue Creator",
       "type": "n8n-nodes-base.github",
       "position": [
-        1100,
+        1240,
         -40
       ],
       "typeVersion": 1,
@@ -165,8 +165,8 @@
       "name": "Add Comment",
       "type": "n8n-nodes-base.github",
       "position": [
-        1280,
-        540
+        1580,
+        520
       ],
       "typeVersion": 1,
       "id": "10a2b2e4-e3ae-41da-83c3-49c16a43539c",
@@ -200,8 +200,8 @@
       "name": "Assign Commenter",
       "type": "n8n-nodes-base.github",
       "position": [
-        1280,
-        340
+        1580,
+        300
       ],
       "typeVersion": 1,
       "id": "bd2aa5a9-dccd-4f10-bb90-4bbbe3606622",
@@ -239,7 +239,7 @@
       "typeVersion": 1,
       "position": [
         300,
-        240
+        340
       ],
       "webhookId": "42102986-0dbe-4a67-aeb2-1dc7da9e5e6a",
       "credentials": {
@@ -265,8 +265,8 @@
       "name": "if anyone interested ?",
       "type": "n8n-nodes-base.if",
       "position": [
-        840,
-        320
+        860,
+        480
       ],
       "typeVersion": 1,
       "id": "ffa1a5e7-d36e-4311-9bae-2102465af7ea"
@@ -286,8 +286,8 @@
       "name": "Assigned or Not ?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1040,
-        360
+        1200,
+        380
       ],
       "typeVersion": 1,
       "id": "b644ad00-f094-4bde-9199-f70d509a2b57"
@@ -297,8 +297,8 @@
       "name": "No Operation",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1040,
-        540
+        1200,
+        600
       ],
       "typeVersion": 1,
       "id": "01a8a69f-87fd-4179-a73e-5fbfcd6f70be"
@@ -335,7 +335,7 @@
       "name": "no operation",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1100,
+        1240,
         160
       ],
       "typeVersion": 1,
@@ -344,9 +344,17 @@
   ],
   "pinData": {},
   "settings": {},
-  "staticData": null,
+  "staticData": {
+    "node:Github Trigger": {
+      "webhookId": 478109932,
+      "webhookEvents": [
+        "issues",
+        "issue_comment"
+      ]
+    }
+  },
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2024-05-14T01:25:31.000Z",
-  "versionId": "515f95c4-51cd-4804-9b4c-0bd86dc25f4a"
+  "triggerCount": 1,
+  "updatedAt": "2024-05-14T03:52:58.000Z",
+  "versionId": "7dc5c67a-4fff-4458-b33a-92036f4cfaf4"
 }
