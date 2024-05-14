@@ -145,8 +145,8 @@
       "name": "no operation",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1460,
-        480
+        1380,
+        500
       ],
       "typeVersion": 1,
       "id": "094f58b5-b8f5-4996-b0de-72d0c879c964"
@@ -169,8 +169,8 @@
       "type": "n8n-nodes-base.slack",
       "typeVersion": 2.1,
       "position": [
-        1460,
-        260
+        1380,
+        220
       ],
       "credentials": {
         "slackOAuth2Api": {
@@ -184,8 +184,8 @@
       "name": "no operation1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1640,
-        260
+        1600,
+        360
       ],
       "typeVersion": 1,
       "id": "782e3297-11e9-4adc-93bb-61ebe735aa3a"
@@ -198,6 +198,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-14T07:39:49.000Z",
-  "versionId": "951d923a-68f5-40cd-86b0-2305bfcfb911"
+  "updatedAt": "2024-05-14T10:03:41.000Z",
+  "versionId": "00b6ec6e-9c91-4bee-a095-76b1fdc07fee"
 }
