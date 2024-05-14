@@ -27,7 +27,7 @@
       "main": [
         [
           {
-            "node": "Edit Fields",
+            "node": "Slack",
             "type": "main",
             "index": 0
           }
@@ -35,6 +35,17 @@
         [
           {
             "node": "no operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack": {
+      "main": [
+        [
+          {
+            "node": "no operation1",
             "type": "main",
             "index": 0
           }
@@ -135,33 +146,49 @@
       "type": "n8n-nodes-base.noOp",
       "position": [
         1460,
-        500
+        480
       ],
       "typeVersion": 1,
       "id": "094f58b5-b8f5-4996-b0de-72d0c879c964"
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "a6dc6a7b-e568-46f2-b66d-3373b98856da",
-              "name": "description",
-              "value": "You need to add any description here",
-              "type": "string"
-            }
-          ]
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C073NUN9QMP",
+          "mode": "list",
+          "cachedResultName": "github-alerts"
         },
-        "options": {}
+        "text": "Add a description Bro....",
+        "otherOptions": {}
       },
-      "id": "ce376dd6-671d-44e5-8f75-59baeb2ef7bd",
-      "name": "Edit Fields",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.3,
+      "id": "3e6cb998-a990-468b-bc47-699013d9f366",
+      "name": "Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
       "position": [
         1460,
-        280
-      ]
+        260
+      ],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "oytOvgZOMj4GVobW",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "name": "no operation1",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        1640,
+        260
+      ],
+      "typeVersion": 1,
+      "id": "782e3297-11e9-4adc-93bb-61ebe735aa3a"
     }
   ],
   "pinData": {},
@@ -171,6 +198,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-14T07:27:46.000Z",
-  "versionId": "96a35a0c-fe0b-4ad6-9c9c-67da549aa437"
+  "updatedAt": "2024-05-14T07:39:49.000Z",
+  "versionId": "951d923a-68f5-40cd-86b0-2305bfcfb911"
 }
