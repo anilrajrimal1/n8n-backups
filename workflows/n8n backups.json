@@ -310,7 +310,7 @@
         },
         "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$node[\"OneAtATime\"].json[\"name\"]}}.json",
         "fileContent": "={{$node[\"isDiffOrNew\"].json[\"n8n_data_stringy\"]}}",
-        "commitMessage": "=[N8N Backup] {{$node[\"OneAtATime\"].json[\"name\"]}}.json ({{$json[\"github_status\"]}})"
+        "commitMessage": "=update: n8n backup {{$node[\"OneAtATime\"].json[\"name\"]}}.json ({{$json[\"github_status\"]}})"
       },
       "id": "ea835d11-8456-4ab3-92b6-feb2e72efc75",
       "name": "GitHub Edit",
@@ -344,7 +344,7 @@
         },
         "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$node[\"OneAtATime\"].json[\"name\"]}}.json",
         "fileContent": "={{$node[\"isDiffOrNew\"].json[\"n8n_data_stringy\"]}}",
-        "commitMessage": "=[N8N Backup] {{$node[\"OneAtATime\"].json[\"name\"]}}.json ({{$json[\"github_status\"]}})"
+        "commitMessage": "=Add: n8n backup file named {{$node[\"OneAtATime\"].json[\"name\"]}}.json ({{$json[\"github_status\"]}})"
       },
       "id": "5f0d3dc2-071f-4510-bb85-13651c80c721",
       "name": "GitHub Create",
@@ -474,6 +474,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-05-14T09:46:24.000Z",
-  "versionId": "84622547-2507-4109-b17f-d0acdffa6de6"
+  "updatedAt": "2024-05-14T09:58:11.000Z",
+  "versionId": "4e0d6d99-47ca-4c25-b779-5d4602655879"
 }
