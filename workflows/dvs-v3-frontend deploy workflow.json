@@ -76,18 +76,7 @@
       "main": [
         [
           {
-            "node": "Install Yarn",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Install Yarn": {
-      "main": [
-        [
-          {
-            "node": "Set max-heap Memory",
+            "node": "Install Yarn Package Manager",
             "type": "main",
             "index": 0
           }
@@ -98,18 +87,95 @@
       "main": [
         [
           {
-            "node": "install Yarn",
+            "node": "Yarn install (install yarn packages)",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "install Yarn": {
+    "Run build": {
+      "main": [
+        [
+          {
+            "node": "goto sites-enabled directory (nginx)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create nginx config file": {
+      "main": [
+        [
+          {
+            "node": "Test nginx",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test nginx": {
+      "main": [
+        [
+          {
+            "node": "reload nginx",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "goto sites-enabled directory (nginx)": {
+      "main": [
+        [
+          {
+            "node": "create nginx config file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Install Yarn Package Manager": {
+      "main": [
+        [
+          {
+            "node": "Set max-heap Memory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Yarn install (install yarn packages)": {
       "main": [
         [
           {
             "node": "Run build",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "reload nginx": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Slack",
             "type": "main",
             "index": 0
           }
@@ -131,13 +197,13 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        860,
+        560,
         360
       ]
     },
     {
       "parameters": {
-        "command": "cp .env.example .env"
+        "command": "cd /home/ubuntu/Projects/dvs-v3-frontend/ && cp .env.example .env"
       },
       "id": "4dadd97e-761a-40b3-a4ec-409e0ef13104",
       "name": "copy env file",
@@ -145,8 +211,9 @@
       "typeVersion": 1,
       "position": [
         1340,
-        200
-      ]
+        260
+      ],
+      "executeOnce": false
     },
     {
       "parameters": {
@@ -159,7 +226,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1080,
+        920,
         360
       ],
       "credentials": {
@@ -192,7 +259,7 @@
       "typeVersion": 1,
       "position": [
         1540,
-        340
+        360
       ]
     },
     {
@@ -205,7 +272,7 @@
       "typeVersion": 1,
       "position": [
         1720,
-        340
+        360
       ]
     },
     {
@@ -217,21 +284,8 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        1920,
-        340
-      ]
-    },
-    {
-      "parameters": {
-        "command": "sudo npm install -g yarn"
-      },
-      "id": "35895402-51f6-444d-978a-0b82dae2596b",
-      "name": "Install Yarn",
-      "type": "n8n-nodes-base.executeCommand",
-      "typeVersion": 1,
-      "position": [
         2100,
-        340
+        360
       ]
     },
     {
@@ -243,21 +297,8 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        2280,
-        340
-      ]
-    },
-    {
-      "parameters": {
-        "command": "yarn install"
-      },
-      "id": "5787a3f6-390a-4fbc-a665-35005bea80f4",
-      "name": "install Yarn",
-      "type": "n8n-nodes-base.executeCommand",
-      "typeVersion": 1,
-      "position": [
-        2480,
-        340
+        2460,
+        360
       ]
     },
     {
@@ -269,9 +310,227 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        2660,
-        340
+        2840,
+        360
       ]
+    },
+    {
+      "parameters": {
+        "command": "echo '\nserver {\n    listen 80;\n    server_name dvs-dev.anilrajrimal.com.np;            # domain name to respond to\n    access_log /var/log/nginx/dvs-dev.anilrajrimal.com.np.access;\n    error_log /var/log/nginx/dvs-dev.anilrajrimal.com.np.error;\n\n    client_max_body_size 500M;            # Allow uploads/transper to 100MB.\n    client_body_buffer_size 128k;\n\n    gzip on;            # Allows compression; can be CPU intensive\n    gzip_min_length 150;\n    gzip_types    text/plain text/css application/javascript application/x-javascript text/javascript image/x-icon image/svg+xml image/png application/json ;\n\n    location ~ ^/(fastapi|api/v2/) {\n\n              proxy_pass http://localhost:8001;\n              proxy_set_header Upgrade $http_upgrade;\n              proxy_set_header Host $host;\n              proxy_set_header X-Real-IP $remote_addr;\n              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n              proxy_set_header X-Forwarded-Proto https;      # correctly froward>\n\n#              add_header Access-Control-Allow-Origin *;            # For allowing CORS>\n\n              proxy_connect_timeout 240;            # Timeout settings for http re>\n              proxy_send_timeout 240;            # Increase if server times out\n              proxy_read_timeout 240;\n              proxy_buffering off;\n              proxy_request_buffering off;\n    }\n\n    location ~ ^/(api|admin|user|swagger|federal|static|media) {\n\n              proxy_pass http://localhost:8000;\n              proxy_set_header Upgrade $http_upgrade;\n              proxy_set_header Host $host;\n              proxy_set_header X-Real-IP $remote_addr;\n              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n              proxy_set_header X-Forwarded-Proto https;      # correctly frowards http/https based on scheme\n\n#              add_header Access-Control-Allow-Origin *;            # For allowing CORS request; comment if handled by application.\n\n              proxy_connect_timeout 240;            # Timeout settings for http requests\n              proxy_send_timeout 240;            # Increase if server times out\n              proxy_read_timeout 240;\n              proxy_buffering off;\n              proxy_request_buffering off;\n    }\n\n              root /home/ubuntu/Projects/dvs-v3-frontend/dist;\n\t      index  index.html index.htm;\n     location / {\n\t      add_header Access-Control-Allow-Origin *;\n              try_files $uri /index.html;            # if no endpoint found try index.html\n             }\n\n}\n' > dvs-dev.anilrajrimal.com.np.conf\n"
+      },
+      "id": "8c2e3358-a94c-4388-857b-52066afbd682",
+      "name": "create nginx config file",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3360,
+        360
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "command": "sudo nginx -t"
+      },
+      "id": "3b63ee69-9e52-4476-b869-3c2de75f2ce8",
+      "name": "Test nginx",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3520,
+        360
+      ],
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "command": "sudo nginx -s reload"
+      },
+      "id": "9a9738db-26ab-41c2-9856-51ae65003e7e",
+      "name": "reload nginx",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3680,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "command": "cd /etc/nginx/sites-enabled"
+      },
+      "id": "78f47725-95fd-42b2-9ac6-2ecbf29c4b68",
+      "name": "goto sites-enabled directory (nginx)",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3180,
+        360
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "content": "## Setting up trigger for the workflow",
+        "height": 366.19860141384584,
+        "width": 276,
+        "color": 6
+      },
+      "id": "a95450b4-0d29-4f87-bef8-560a8aa55801",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        480,
+        220
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## SSH into VM\nUse respective credentials for SSH",
+        "height": 351.19860141384584,
+        "width": 269,
+        "color": 6
+      },
+      "id": "9b610886-b92a-4733-b894-537b559a7d0c",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        840,
+        224
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Setting up .env and loading nvm\nJust some of commands to copy .env.example to .env\nand load nvm",
+        "height": 530.1986014138458,
+        "width": 710,
+        "color": 6
+      },
+      "id": "b2a3976c-a6cb-48b2-bdf5-def30d5c4633",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1220,
+        122
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "command": "sudo npm install -g yarn"
+      },
+      "id": "35895402-51f6-444d-978a-0b82dae2596b",
+      "name": "Install Yarn Package Manager",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2280,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "command": "yarn install"
+      },
+      "id": "5787a3f6-390a-4fbc-a665-35005bea80f4",
+      "name": "Yarn install (install yarn packages)",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2660,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Installing and Setting up Yarn Package Manager\nCommand to install and setup yarn package manager\nCommand to set the heap size\nCommand to install project packages using yarn\nCommand to build the yarn project",
+        "height": 530.1986014138458,
+        "width": 986,
+        "color": 6
+      },
+      "id": "ad0c47af-c587-45b3-8484-8e06474a110e",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2040,
+        120
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Setting up nginx config, testing and reloading\nThis portion contains the commands to setup the nginx config file in /etc/nginx/sites-enabled directory.\n\nThen test the nginx connection and then reload it.",
+        "height": 530.1986014138458,
+        "width": 787,
+        "color": 6
+      },
+      "id": "f0aebd5f-696c-4e8d-ae31-794d8bd18aeb",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3100,
+        120
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ddebf767-e60a-40d1-af60-a7036ccdacc3",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        4040,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C073V4SMDJ5",
+          "mode": "list",
+          "cachedResultName": "dvs-frontend-v3"
+        },
+        "text": "test message ..",
+        "otherOptions": {}
+      },
+      "id": "864d4fca-7aa3-458b-a671-1447fe91d041",
+      "name": "Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [
+        4260,
+        360
+      ],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "oytOvgZOMj4GVobW",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Setting up Slack for providing notification of success with the various deployment details.",
+        "height": 530.1986014138458,
+        "width": 570,
+        "color": 6
+      },
+      "id": "6151a710-bcad-4dae-9713-86b6347e336c",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3960,
+        120
+      ],
+      "typeVersion": 1
     }
   ],
   "pinData": {},
@@ -281,6 +540,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-15T02:04:51.000Z",
-  "versionId": "6b9e7a4a-9b84-4394-a7b8-2de4a725e142"
+  "updatedAt": "2024-05-15T02:59:53.000Z",
+  "versionId": "1be4bd58-7a93-428a-b83d-da213c226a7c"
 }
