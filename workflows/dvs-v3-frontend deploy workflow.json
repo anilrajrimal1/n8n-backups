@@ -1,11 +1,279 @@
 {
   "active": false,
-  "connections": {},
+  "connections": {
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "SSH into VM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH into VM": {
+      "main": [
+        [
+          {
+            "node": "export NVM_HOME path",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "copy env file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "export NVM_HOME path": {
+      "main": [
+        [
+          {
+            "node": "loads nvm",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "copy env file": {
+      "main": [
+        [
+          {
+            "node": "loads nvm",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "loads nvm": {
+      "main": [
+        [
+          {
+            "node": "loads nvm bash_completion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "loads nvm bash_completion": {
+      "main": [
+        [
+          {
+            "node": "Use nvm v19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Use nvm v19": {
+      "main": [
+        [
+          {
+            "node": "Install Yarn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Install Yarn": {
+      "main": [
+        [
+          {
+            "node": "Set max-heap Memory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set max-heap Memory": {
+      "main": [
+        [
+          {
+            "node": "install Yarn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "install Yarn": {
+      "main": [
+        [
+          {
+            "node": "Run build",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "createdAt": "2024-05-14T16:32:02.179Z",
   "id": "y8J3SnykjflufIr9",
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "dvs-v3-frontend deploy workflow",
-  "nodes": [],
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "02e5640f-38e8-443d-86a5-95ea170293f5",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        860,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "command": "cp .env.example .env"
+      },
+      "id": "4dadd97e-761a-40b3-a4ec-409e0ef13104",
+      "name": "copy env file",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "git pull origin develop",
+        "cwd": "/home/ubuntu/Projects/dvs-v3-frontend"
+      },
+      "id": "fa654fe7-31af-485a-a185-652ffba122c1",
+      "name": "SSH into VM",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        360
+      ],
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "aDoEMAgfjOxUDXWv",
+          "name": "SSH Password account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "export NVM_DIR=\"$HOME/.nvm\""
+      },
+      "id": "bc9a484a-331b-4369-9ad7-03cece1f7bb9",
+      "name": "export NVM_HOME path",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "command": "[ -s \"$NVM_DIR/nvm.sh\" ] && \\. \"$NVM_DIR/nvm.sh\""
+      },
+      "id": "5c64a7d2-a487-4fa2-ac28-ddb888bc5468",
+      "name": "loads nvm",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "command": "[ -s \"$NVM_DIR/bash_completion\" ] && \\. \"$NVM_DIR/bash_completion\""
+      },
+      "id": "2de89cad-afb1-4412-9e40-46bfd7dcb0dc",
+      "name": "loads nvm bash_completion",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "command": "nvm use 19"
+      },
+      "id": "b14b2782-fbbf-4cc8-9624-d408d681485d",
+      "name": "Use nvm v19",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "command": "sudo npm install -g yarn"
+      },
+      "id": "35895402-51f6-444d-978a-0b82dae2596b",
+      "name": "Install Yarn",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2100,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "command": "export NODE_OPTIONS=\"--max-old-space-size=4096\""
+      },
+      "id": "494ba20b-dc24-4a36-9e64-d37db714d30a",
+      "name": "Set max-heap Memory",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2280,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "command": "yarn install"
+      },
+      "id": "5787a3f6-390a-4fbc-a665-35005bea80f4",
+      "name": "install Yarn",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2480,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "command": "yarn build"
+      },
+      "id": "21458329-8751-4a73-a85a-3738ba9421ba",
+      "name": "Run build",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2660,
+        340
+      ]
+    }
+  ],
   "pinData": {},
   "settings": {
     "executionOrder": "v1"
@@ -13,6 +281,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-14T16:32:02.179Z",
-  "versionId": "26bef5c8-ce79-4871-b676-1056f27bbf8d"
+  "updatedAt": "2024-05-15T02:04:51.000Z",
+  "versionId": "6b9e7a4a-9b84-4394-a7b8-2de4a725e142"
 }
