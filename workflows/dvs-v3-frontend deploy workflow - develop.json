@@ -193,7 +193,7 @@
     {
       "parameters": {
         "content": "## SSH into VM and pull the develop branch\nUse respective credentials for SSH\nDoing git stash and checkout to develop branch\nthen pull from develop branch",
-        "height": 486.2093700861147,
+        "height": 505.2093700861147,
         "width": 744.758350015788,
         "color": 6
       },
@@ -201,8 +201,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        780,
-        200
+        800,
+        220
       ],
       "typeVersion": 1
     },
@@ -495,8 +495,8 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1100,
-        320
+        1120,
+        340
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -519,7 +519,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1320,
+        1340,
         440
       ],
       "executeOnce": false,
@@ -647,6 +647,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-15T12:07:44.000Z",
-  "versionId": "fb7f9143-5935-4df3-9c3d-16ed65c5a1c8"
+  "updatedAt": "2024-05-15T12:17:27.000Z",
+  "versionId": "71356397-2928-41be-ac70-39198a1d904e"
 }
