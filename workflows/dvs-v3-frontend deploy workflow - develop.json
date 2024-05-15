@@ -450,7 +450,7 @@
       "type": "n8n-nodes-base.slack",
       "typeVersion": 2.1,
       "position": [
-        4540,
+        4580,
         400
       ],
       "executeOnce": true,
@@ -647,6 +647,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-15T12:17:27.000Z",
-  "versionId": "71356397-2928-41be-ac70-39198a1d904e"
+  "updatedAt": "2024-05-15T16:11:15.000Z",
+  "versionId": "8c4d77af-59af-480d-abc6-7280718480cb"
 }
