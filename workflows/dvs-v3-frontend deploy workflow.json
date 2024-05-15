@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "SSH into VM",
+            "node": "Clone from repo",
             "type": "main",
             "index": 0
           }
@@ -16,18 +16,7 @@
       "main": [
         [
           {
-            "node": "Use nvm V19",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Use nvm V19": {
-      "main": [
-        [
-          {
-            "node": "Install Yarn Package Manager",
+            "node": "Use nvm V18",
             "type": "main",
             "index": 0
           }
@@ -122,6 +111,28 @@
         ]
       ]
     },
+    "copy .env": {
+      "main": [
+        [
+          {
+            "node": "export NVM_DIR path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "git stash & checkout to develop": {
+      "main": [
+        [
+          {
+            "node": "git pull develop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "git pull develop": {
       "main": [
         [
@@ -133,22 +144,22 @@
         ]
       ]
     },
-    "SSH into VM": {
+    "Clone from repo": {
       "main": [
         [
           {
-            "node": "git pull develop",
+            "node": "git stash & checkout to develop",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "copy .env": {
+    "Use nvm V18": {
       "main": [
         [
           {
-            "node": "export NVM_DIR path",
+            "node": "Install Yarn Package Manager",
             "type": "main",
             "index": 0
           }
@@ -170,7 +181,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        560,
+        480,
         360
       ]
     },
@@ -178,31 +189,31 @@
       "parameters": {
         "content": "## Setting up trigger for the workflow",
         "height": 366.19860141384584,
-        "width": 276,
+        "width": 372.43025210084033,
         "color": 6
       },
       "id": "a95450b4-0d29-4f87-bef8-560a8aa55801",
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        480,
+        360,
         220
       ],
       "typeVersion": 1
     },
     {
       "parameters": {
-        "content": "## SSH into VM\nUse respective credentials for SSH",
-        "height": 351.19860141384584,
-        "width": 542.9603393939393,
+        "content": "## SSH into VM and pull the develop branch\nUse respective credentials for SSH\nDoing git stash and checkout to develop branch\nthen pull from develop branch",
+        "height": 486.2093700861147,
+        "width": 744.758350015788,
         "color": 6
       },
       "id": "9b610886-b92a-4733-b894-537b559a7d0c",
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        840,
-        224
+        780,
+        200
       ],
       "typeVersion": 1
     },
@@ -224,7 +235,7 @@
     },
     {
       "parameters": {
-        "content": "## Installing and Setting up Yarn Package Manager\nCommand to install and setup yarn package manager\nCommand to set the heap size\nCommand to install project packages using yarn\nCommand to build the yarn project",
+        "content": "## Installing and Setting up Yarn Package Manager ---> running build\nCommand to install and setup yarn package manager\nCommand to set the heap size\nCommand to install project packages using yarn\nCommand to build the yarn project",
         "height": 530.1986014138458,
         "width": 986,
         "color": 6
@@ -281,31 +292,8 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2160,
+        2140,
         260
-      ],
-      "executeOnce": false,
-      "alwaysOutputData": false,
-      "credentials": {
-        "sshPrivateKey": {
-          "id": "aDoEMAgfjOxUDXWv",
-          "name": "SSH Password account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "authentication": "privateKey",
-        "command": "nvm use 19",
-        "cwd": "/home/ubuntu/Projects/dvs-v3-frontend"
-      },
-      "id": "b1d1fe8c-23af-4207-9190-23feae7ab8ea",
-      "name": "Use nvm V19",
-      "type": "n8n-nodes-base.ssh",
-      "typeVersion": 1,
-      "position": [
-        2520,
-        380
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -365,7 +353,7 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "yarn install",
+        "command": "yarn cache clean && yarn install",
         "cwd": "/home/ubuntu/Projects/dvs-v3-frontend"
       },
       "id": "049e3e16-d2e0-4d13-a01c-6d3074809fb0",
@@ -411,7 +399,7 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "sudo bash -c \"echo '| server {    listen 80;    server_name dvs-dev.anilrajrimal.com.np;            # domain name to respond to    access_log /var/log/nginx/dvs-dev.anilrajrimal.com.np.access;    error_log /var/log/nginx/dvs-dev.anilrajrimal.com.np.error;    client_max_body_size 500M;            # Allow uploads/transper to 100MB.    client_body_buffer_size 128k;    gzip on;            # Allows compression; can be CPU intensive    gzip_min_length 150;    gzip_types    text/plain text/css application/javascript application/x-javascript text/javascript image/x-icon image/svg+xml image/png application/json ;    location ~ ^/(fastapi|api/v2/) {              proxy_pass http://localhost:8001;              proxy_set_header Upgrade $http_upgrade;              proxy_set_header Host $host;              proxy_set_header X-Real-IP $remote_addr;              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;              proxy_set_header X-Forwarded-Proto https;      # correctly froward>#              add_header Access-Control-Allow-Origin *;            # For allowing CORS>              proxy_connect_timeout 240;            # Timeout settings for http re>              proxy_send_timeout 240;            # Increase if server times out              proxy_read_timeout 240;              proxy_buffering off;              proxy_request_buffering off;    }    location ~ ^/(api|admin|user|swagger|federal|static|media) {              proxy_pass http://localhost:8000;              proxy_set_header Upgrade $http_upgrade;              proxy_set_header Host $host;              proxy_set_header X-Real-IP $remote_addr;              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;              proxy_set_header X-Forwarded-Proto https;      # correctly frowards http/https based on scheme#              add_header Access-Control-Allow-Origin *;            # For allowing CORS request; comment if handled by application.              proxy_connect_timeout 240;            # Timeout settings for http requests              proxy_send_timeout 240;            # Increase if server times out              proxy_read_timeout 240;              proxy_buffering off;              proxy_request_buffering off;    }              root /home/ubuntu/Projects/dvs-v3-frontend/dist;\t      index  index.html index.htm;     location / {\t      add_header Access-Control-Allow-Origin *;              try_files $uri /index.html;            # if no endpoint found try index.html             }}' > dvs-dev.anilrajrimal.com.np.conf\"",
+        "command": "sudo bash -c \"echo ' server {\n    listen 80;\n    server_name dvs-dev.anilrajrimal.com.np;    # domain name to respond to\n    access_log /var/log/nginx/dvs-dev.anilrajrimal.com.np.access;\n    error_log /var/log/nginx/dvs-dev.anilrajrimal.com.np.error;\n\n    client_max_body_size 500M;            # Allow uploads/transper to 100MB.\n    client_body_buffer_size 128k;\n\n    gzip on;            # Allows compression; can be CPU intensive\n    gzip_min_length 150;\n    gzip_types    text/plain text/css application/javascript application/x-javascript text/javascript image/x-icon image/svg+xml image/png application/json ;\n\n              root /home/ubuntu/Projects/dvs-v3-frontend/dist;\n              index  index.html index.htm;\n     location / {\n              add_header Access-Control-Allow-Origin *;\n              try_files \\$uri /index.html;            # if no endpoint found try index.html\n             }\n\n}' > /etc/nginx/sites-enabled/dvs-dev.anilrajrimal.com.np.conf\"\n",
         "cwd": "/etc/nginx/sites-enabled"
       },
       "id": "f17144f3-b38c-4573-a1c0-f35952f148d8",
@@ -465,7 +453,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        4120,
+        4160,
         360
       ],
       "executeOnce": false,
@@ -479,6 +467,16 @@
     },
     {
       "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cdf362d8-1990-4f51-8b79-97296183d503",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
         "options": {}
       },
       "id": "ddebf767-e60a-40d1-af60-a7036ccdacc3",
@@ -486,7 +484,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.3,
       "position": [
-        4480,
+        4500,
         360
       ]
     },
@@ -508,7 +506,7 @@
       "type": "n8n-nodes-base.slack",
       "typeVersion": 2.1,
       "position": [
-        4700,
+        4780,
         360
       ],
       "credentials": {
@@ -521,16 +519,63 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "git pull origin develop",
+        "command": "cp .env.example .env",
+        "cwd": "/home/ubuntu/Projects/dvs-v3-frontend"
+      },
+      "id": "8b98d1b7-1894-4d60-af28-8afd027addb1",
+      "name": "copy .env",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        420
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "aDoEMAgfjOxUDXWv",
+          "name": "SSH Password account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "git stash && git checkout develop",
         "cwd": "/home/ubuntu/Projects/dvs-v3-frontend"
       },
       "id": "dfc8bf90-4d8c-49c2-aec8-16d0ab9939d8",
+      "name": "git stash & checkout to develop",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        320
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "aDoEMAgfjOxUDXWv",
+          "name": "SSH Password account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "git pull origin develop",
+        "cwd": "/home/ubuntu/Projects/dvs-v3-frontend"
+      },
+      "id": "07965c4b-dcc0-4c9e-a5a7-c6b35b6e60e8",
       "name": "git pull develop",
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1200,
-        340
+        1320,
+        440
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -549,12 +594,12 @@
         "cwd": "/home/ubuntu/Projects/"
       },
       "id": "fa654fe7-31af-485a-a185-652ffba122c1",
-      "name": "SSH into VM",
+      "name": "Clone from repo",
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        920,
-        400
+        880,
+        460
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -569,16 +614,16 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "cp .env.example .env",
+        "command": "source ~/.nvm/nvm.sh && nvm install 18 &&  nvm use 18",
         "cwd": "/home/ubuntu/Projects/dvs-v3-frontend"
       },
-      "id": "8b98d1b7-1894-4d60-af28-8afd027addb1",
-      "name": "copy .env",
+      "id": "b1d1fe8c-23af-4207-9190-23feae7ab8ea",
+      "name": "Use nvm V18",
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1800,
-        460
+        2520,
+        380
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -597,6 +642,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-15T05:41:40.000Z",
-  "versionId": "f2e354e4-5160-48ea-8d42-f6331b012bc8"
+  "updatedAt": "2024-05-15T10:13:31.000Z",
+  "versionId": "615d1593-87d4-4a06-b5ef-4f071aff44b9"
 }
