@@ -1,0 +1,91 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-05-16T07:33:39.382Z",
+  "id": "jLVBMx8W8DRiFbjL",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "node-practice",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "88559241-052b-4e1b-bc44-bc92294df21e",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        260,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d4bdd390-8164-4d63-85b6-ac682b830704",
+              "name": "myNewField",
+              "value": "={{ $json.myNewField }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "18bfd809-2231-437b-8bbb-d234b72e5d0f",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        660,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "for (const data of $input.all()) {\n  data.json.github_url = 1;\n  data.json.version = 18;\n  data.json.github_url = 1;\n  data.json.github_url = 1;\n}\n\nreturn $input.all();"
+      },
+      "id": "15cc6897-850b-46ab-b678-157b9ca34f93",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        400
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-05-16T07:53:42.000Z",
+  "versionId": "65d94db8-e2a7-4d8d-b94a-9884d1efb24c"
+}
