@@ -1,22 +1,22 @@
 {
   "active": false,
   "connections": {
-    "When clicking \"Test workflow\"": {
+    "Code": {
       "main": [
         [
           {
-            "node": "Code",
+            "node": "SSH",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code": {
+    "When clicking \"Test workflow\"": {
       "main": [
         [
           {
-            "node": "Edit Fields",
+            "node": "Code",
             "type": "main",
             "index": 0
           }
@@ -32,51 +32,51 @@
   "name": "node-practice",
   "nodes": [
     {
-      "parameters": {},
-      "id": "88559241-052b-4e1b-bc44-bc92294df21e",
-      "name": "When clicking \"Test workflow\"",
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        260,
-        400
-      ]
-    },
-    {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "d4bdd390-8164-4d63-85b6-ac682b830704",
-              "name": "myNewField",
-              "value": "={{ $json.myNewField }}",
-              "type": "number"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "18bfd809-2231-437b-8bbb-d234b72e5d0f",
-      "name": "Edit Fields",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.3,
-      "position": [
-        660,
-        400
-      ]
-    },
-    {
-      "parameters": {
-        "jsCode": "for (const data of $input.all()) {\n  data.json.github_url = 1;\n  data.json.version = 18;\n  data.json.github_url = 1;\n  data.json.github_url = 1;\n}\n\nreturn $input.all();"
+        "language": "python",
+        "pythonCode": "for data in _input.all():\n  data.json.github_repo_url_ssh = 'git@github.com:naxa-developers/dvs-v3-frontend.git';\n  data.json.project_name = 'dvs-v3-frontend'\n  data.json.branch_name = 'develop';\n  data.json.node_version = 18;\n  return _input.all()"
       },
       "id": "15cc6897-850b-46ab-b678-157b9ca34f93",
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        480,
+        620,
         400
       ]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=git clone -b {{ $json.branch_name }} {{ $json.github_repo_url_ssh }} {{ $json.project_name }}-{{ $json.branch_name }}",
+        "cwd": "/home/ubuntu/Projects"
+      },
+      "id": "1b88b460-4ac1-4bcd-99e0-dd1080a8fab4",
+      "name": "SSH",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        880,
+        400
+      ],
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "aDoEMAgfjOxUDXWv",
+          "name": "SSH Password account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "495ff7e5-3206-4645-983d-8891dd022ce7",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        340,
+        400
+      ],
+      "disabled": true
     }
   ],
   "pinData": {},
@@ -86,6 +86,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-16T07:53:42.000Z",
-  "versionId": "65d94db8-e2a7-4d8d-b94a-9884d1efb24c"
+  "updatedAt": "2024-05-16T09:44:19.000Z",
+  "versionId": "1d81116d-527d-4cb6-a91d-bd148abdb856"
 }
