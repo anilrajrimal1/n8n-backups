@@ -559,8 +559,8 @@
       "type": "n8n-nodes-base.githubTrigger",
       "typeVersion": 1,
       "position": [
-        1200,
-        820
+        1020,
+        1740
       ],
       "webhookId": "f9ea4388-e4fb-48e7-9ed2-d105cab7c0c2",
       "credentials": {
@@ -599,8 +599,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        1500,
-        720
+        1400,
+        1800
       ]
     },
     {
@@ -1087,7 +1087,7 @@
         "content": "## Setting up Slack for providing notification of success with the various deployment details.",
         "height": 379.5965980525016,
         "width": 519.4161210084033,
-        "color": 4
+        "color": 2
       },
       "id": "584ee607-deed-4168-a654-055421ec3640",
       "name": "Sticky Note6",
@@ -1103,7 +1103,7 @@
         "content": "## Setting up nginx config, testing and reloading\nThis portion contains the commands to setup the nginx config file in /etc/nginx/sites-enabled directory.\n\nThen test the nginx connection and then reload it.",
         "height": 433.629377884434,
         "width": 787,
-        "color": 4
+        "color": 2
       },
       "id": "9faec09e-b430-4b30-95e3-56f98d24852b",
       "name": "Sticky Note7",
@@ -1119,7 +1119,7 @@
         "content": "## Installing and Setting up Yarn Package Manager ---> running build\nCommand to install and setup yarn package manager\nCommand to set the heap size\nCommand to install project packages using yarn\nCommand to build the yarn project\nCommand to set up the permission to read by nginx config.",
         "height": 731.3844837667864,
         "width": 1321.693015126049,
-        "color": 4
+        "color": 2
       },
       "id": "8e6709b6-f43f-4489-b8ff-e123cbd9a961",
       "name": "Sticky Note8",
@@ -1135,7 +1135,7 @@
         "content": "## Setting up .env\nJust some of commands to copy .env.example to .env",
         "height": 435.92864511132495,
         "width": 475.4747428571427,
-        "color": 4
+        "color": 2
       },
       "id": "7c7ca172-4265-41df-833e-d909ccbc4e5c",
       "name": "Sticky Note2",
@@ -1151,7 +1151,7 @@
         "content": "## SSH into VM and pull the master branch\nUse respective credentials for SSH\nDoing git stash and checkout to master branch\nthen pull from master branch",
         "height": 505.2093700861147,
         "width": 744.758350015788,
-        "color": 4
+        "color": 2
       },
       "id": "94085511-cc52-4236-ac77-0a169254f251",
       "name": "Sticky Note9",
@@ -1249,14 +1249,14 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        1820,
-        1140
+        1860,
+        1400
       ]
     },
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "git stash && git checkout master",
+        "command": "git checkout master",
         "cwd": "/home/ubuntu/Projects/dvs-v3-frontend-master"
       },
       "id": "ec613421-f5c4-41d0-b2f1-74bdd4f11b1d",
@@ -1996,6 +1996,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-16T05:43:16.000Z",
-  "versionId": "cff60964-ffc5-42c1-b594-e32aac1a3a6d"
+  "updatedAt": "2024-05-16T07:33:10.000Z",
+  "versionId": "333099a6-d76a-4df6-921b-1845ae2f9c10"
 }
