@@ -38,7 +38,7 @@
       "main": [
         [
           {
-            "node": "Clone from repository",
+            "node": "get repo_name",
             "type": "main",
             "index": 0
           }
@@ -110,6 +110,17 @@
           }
         ]
       ]
+    },
+    "get repo_name": {
+      "main": [
+        [
+          {
+            "node": "Clone from repository",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2024-05-16T01:15:13.389Z",
@@ -122,8 +133,8 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "cp .env.example .env",
-        "cwd": "={{ $('n8n Form Trigger').item.json.project_directory }}{{ $('n8n Form Trigger').item.json.project_name }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "command": "=sed 's/admin.naxa.com.np/{{ $('n8n Form Trigger').item.json.domain_name }}/g' .env.exmaple > .env\n",
+        "cwd": "=/home/ubuntu/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "df49f6ec-2bff-4951-a293-5fe7afdf6eed",
       "name": "copy .env file",
@@ -146,7 +157,7 @@
       "parameters": {
         "authentication": "privateKey",
         "command": "source ~/.nvm/nvm.sh && yarn cache clean && yarn install",
-        "cwd": "={{ $('n8n Form Trigger').item.json.project_directory }}{{ $('n8n Form Trigger').item.json.project_name }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "cwd": "=/home/ubuntu/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "61ea547d-d3dd-41b5-a3c3-3fc62ae5bd59",
       "name": "Yarn install - packages",
@@ -168,7 +179,7 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "=sudo bash -c \"echo ' server {\n    listen 80;\n    server_name {{ $('n8n Form Trigger').item.json[\"domain_name\"] }};    # domain name to respond to\n    access_log /var/log/nginx/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.access;\n    error_log /var/log/nginx/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.error;\n\n    client_max_body_size 500M;            # Allow uploads/transper to 100MB.\n    client_body_buffer_size 128k;\n\n    gzip on;            # Allows compression; can be CPU intensive\n    gzip_min_length 150;\n    gzip_types    text/plain text/css application/javascript application/x-javascript text/javascript image/x-icon image/svg+xml image/png application/json ;\n\n              root {{ $('n8n Form Trigger').item.json[\"project_directory\"] }}{{ $('n8n Form Trigger').item.json[\"project_name\"] }}-{{ $('n8n Form Trigger').item.json[\"branch\"] }}/dist;\n              index  index.html index.htm;\n     location / {\n              add_header Access-Control-Allow-Origin *;\n              try_files \\$uri /index.html;            # if no endpoint found try index.html\n             }\n\n}' > /etc/nginx/sites-enabled/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.conf\"\n",
+        "command": "=sudo bash -c \"echo ' server {\n    listen 80;\n    server_name {{ $('n8n Form Trigger').item.json[\"domain_name\"] }};    # domain name to respond to\n    access_log /var/log/nginx/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.access;\n    error_log /var/log/nginx/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.error;\n\n    client_max_body_size 500M;            # Allow uploads/transper to 100MB.\n    client_body_buffer_size 128k;\n\n    gzip on;            # Allows compression; can be CPU intensive\n    gzip_min_length 150;\n    gzip_types    text/plain text/css application/javascript application/x-javascript text/javascript image/x-icon image/svg+xml image/png application/json ;\n\n              root /home/ubuntu/Projects/$('get repo_name').item.json[\"stdout\"]-{{ $('n8n Form Trigger').item.json[\"branch\"] }}/dist;\n              index  index.html index.htm;\n     location / {\n              add_header Access-Control-Allow-Origin *;\n              try_files \\$uri /index.html;            # if no endpoint found try index.html\n             }\n\n}' > /etc/nginx/sites-enabled/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.conf\"\n",
         "cwd": "/etc/nginx/sites-enabled"
       },
       "id": "20011a25-24cd-48b8-9a44-88777cbd9e45",
@@ -200,6 +211,10 @@
               "requiredField": true
             },
             {
+              "fieldLabel": "domain_name",
+              "requiredField": true
+            },
+            {
               "fieldLabel": "branch",
               "fieldType": "dropdown",
               "fieldOptions": {
@@ -214,25 +229,11 @@
                     "option": "staging"
                   }
                 ]
-              },
-              "requiredField": true
-            },
-            {
-              "fieldLabel": "project_directory",
-              "requiredField": true
-            },
-            {
-              "fieldLabel": "project_name",
-              "requiredField": true
+              }
             },
             {
               "fieldLabel": "node_version",
-              "fieldType": "number",
-              "requiredField": true
-            },
-            {
-              "fieldLabel": "domain_name",
-              "requiredField": true
+              "fieldType": "number"
             }
           ]
         },
@@ -243,7 +244,7 @@
       "type": "n8n-nodes-base.formTrigger",
       "typeVersion": 2,
       "position": [
-        1540,
+        1560,
         1700
       ],
       "webhookId": "f929d7b4-c0e5-4489-96ee-dbac03aa5383"
@@ -251,8 +252,8 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "=source ~/.nvm/nvm.sh && nvm use  {{ $('n8n Form Trigger').item.json.node_version }} && sudo npm install -g yarn",
-        "cwd": "={{ $('n8n Form Trigger').item.json.project_directory }}{{ $('n8n Form Trigger').item.json.project_name }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "command": "=source ~/.nvm/nvm.sh && nvm use {{ $('n8n Form Trigger').item.json.node_version }} && sudo npm install -g yarn",
+        "cwd": "=/home/ubuntu/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "78dcb8d1-cd3e-4c67-aaa5-d0d4c4b8e8c1",
       "name": "Use nvm 19 & Install yarn",
@@ -275,7 +276,7 @@
       "parameters": {
         "authentication": "privateKey",
         "command": "export NVM_DIR=\"$HOME/.nvm\"\n[ -s \"$NVM_DIR/nvm.sh\" ] && \\. \"$NVM_DIR/nvm.sh\"\n[ -s \"$NVM_DIR/bash_completion\" ] && \\. \"$NVM_DIR/bash_completion\"",
-        "cwd": "={{ $('n8n Form Trigger').item.json.project_directory }}{{ $('n8n Form Trigger').item.json.project_name }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "cwd": "=/home/ubuntu/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "beba39fc-89af-460e-a2b3-2f1de5f81359",
       "name": "Export and load nvm",
@@ -297,16 +298,16 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "=git pull origin  {{ $('n8n Form Trigger').item.json.branch }}",
-        "cwd": "={{ $('n8n Form Trigger').item.json.project_directory }}{{ $('n8n Form Trigger').item.json.project_name }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "command": "=git pull origin {{ $('n8n Form Trigger').item.json.branch }}",
+        "cwd": "=/home/ubuntu/Projects/{{ $('get repo_name').item.json.stdout }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "28ef7e94-3378-46ca-8b04-74cb357575c0",
       "name": "pull from branch",
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2280,
-        1700
+        2360,
+        1780
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -321,16 +322,16 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "=git clone -b {{ $json.branch }} {{ $json.repo_url_ssh }} {{ $json.project_name }}-{{ $json.branch }}",
-        "cwd": "={{ $json.project_directory }}"
+        "command": "=git clone -b {{ $('n8n Form Trigger').item.json.branch }} {{ $('n8n Form Trigger').item.json.repo_url_ssh }} {{ $json.stdout }}-{{ $('n8n Form Trigger').item.json.branch }}",
+        "cwd": "=/home/ubuntu/Projects/"
       },
       "id": "d133701d-0b0b-4386-b9be-14625b812493",
       "name": "Clone from repository",
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2040,
-        1700
+        2180,
+        1640
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -346,7 +347,7 @@
       "parameters": {
         "authentication": "privateKey",
         "command": "source ~/.nvm/nvm.sh && yarn build",
-        "cwd": "={{ $('n8n Form Trigger').item.json.project_directory }}{{ $('n8n Form Trigger').item.json.project_name }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "cwd": "=/home/ubuntu/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "9cdc71b2-a985-4efc-ad76-b6ab4a2dc1fc",
       "name": "yarn build project",
@@ -399,7 +400,7 @@
           "mode": "list",
           "cachedResultName": "dvs-v3-frontend"
         },
-        "text": "=Congratulations !!\n\nFinally your site is live now !\n===========================================================================================\nvisit https://{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}\n===========================================================================================\n\nSome other details:\n\nGitHub Repository: {{ $('n8n Form Trigger').item.json[\"repo_url_ssh\"]}}\nGitHub Branch: {{ $('n8n Form Trigger').item.json[\"branch\"] }}\nProject Directory: {{ $('n8n Form Trigger').item.json[\"project_directory\"] }}\nProject Name: {{ $('n8n Form Trigger').item.json[\"project_name\"] }}\nNode Version: {{ $('n8n Form Trigger').item.json[\"node_version\"] }}\n\nHope this information is useful for you !!",
+        "text": "=Congratulations !!\n\nFinally your site is live now !\n===========================================================================================\nvisit https://{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}\n===========================================================================================\n\nSome other details:\n\nGitHub Repository: {{ $('n8n Form Trigger').item.json[\"repo_url_ssh\"]}}\nGitHub Branch: {{ $('n8n Form Trigger').item.json[\"branch\"] }}\nProject Directory: /home/ubuntu/Projects/\nProject Name: {{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}\nNode Version: {{ $('n8n Form Trigger').item.json[\"node_version\"] }}\n\nHope this information is useful for you !!",
         "otherOptions": {}
       },
       "id": "7e6cf012-65ad-4ad1-bcd3-46c95c037a93",
@@ -420,7 +421,7 @@
     },
     {
       "parameters": {
-        "content": "# Step 1\n\nClone Project from GitHub Repository\n\nPull from branch",
+        "content": "# Step 1\n\nGet Project name from Repository url\n\nClone Project from GitHub Repository\n\nPull from branch",
         "height": 463.19854545454547,
         "width": 552.0640000000002,
         "color": 4
@@ -481,6 +482,30 @@
         3680,
         1480
       ]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=url={{ $('n8n Form Trigger').item.json.repo_url_ssh }}; \nrepo_name=$(basename \"${url%.git}\"); \necho \"$repo_name\"\n\n",
+        "cwd": "=/home/ubuntu/Projects/"
+      },
+      "id": "001f0ce0-b5d0-4b26-a70c-4343ef31fa96",
+      "name": "get repo_name",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1980,
+        1760
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "aDoEMAgfjOxUDXWv",
+          "name": "SSH Password account"
+        }
+      },
+      "onError": "continueRegularOutput"
     }
   ],
   "pinData": {},
@@ -490,6 +515,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-16T09:56:30.000Z",
-  "versionId": "37cd38fa-55ee-4dde-bd0a-b9a73e3a62fe"
+  "updatedAt": "2024-05-16T12:07:36.000Z",
+  "versionId": "87116a61-bc86-4e0f-a80c-5f70a605ebaa"
 }
