@@ -1,8 +1,8 @@
 {
   "active": false,
   "connections": {},
-  "createdAt": "2024-05-14T10:52:02.938Z",
-  "id": "95OX0xNH2ag4QQjF",
+  "createdAt": "2024-05-16T01:15:13.389Z",
+  "id": "ecgUTUfI569OQOTt",
   "meta": {
     "templateCredsSetupCompleted": true
   },
@@ -10,26 +10,7 @@
   "nodes": [
     {
       "parameters": {
-        "rule": {
-          "interval": [
-            {
-              "field": "cronExpression",
-              "expression": "00 09 * * MON-FRI"
-            }
-          ]
-        }
-      },
-      "id": "5b63da3d-c7c9-42a1-ae9f-52e696d87d7b",
-      "name": "Schedule Trigger",
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1.2,
-      "position": [
-        160,
-        360
-      ]
-    },
-    {
-      "parameters": {
+        "authentication": "oAuth2",
         "owner": {
           "__rl": true,
           "value": "anilrajrimal1",
@@ -39,27 +20,29 @@
         },
         "repository": {
           "__rl": true,
-          "value": "=*",
-          "mode": "url"
+          "value": "GuffGaff-Hub",
+          "mode": "list",
+          "cachedResultName": "GuffGaff-Hub",
+          "cachedResultUrl": "https://github.com/anilrajrimal1/GuffGaff-Hub"
         },
         "events": [
           "push"
         ],
         "options": {}
       },
-      "id": "847a9b61-084b-4448-b152-85dcfde763bc",
+      "id": "a8700596-53d0-4926-ab38-bfefa4ae505a",
       "name": "Github Trigger",
       "type": "n8n-nodes-base.githubTrigger",
       "typeVersion": 1,
       "position": [
-        460,
-        460
+        780,
+        360
       ],
-      "webhookId": "c7525553-13e3-4f73-963d-730a1dca5a65",
+      "webhookId": "f9ea4388-e4fb-48e7-9ed2-d105cab7c0c2",
       "credentials": {
-        "githubApi": {
-          "id": "CAnTsavuxvV61O1w",
-          "name": "GitHub account"
+        "githubOAuth2Api": {
+          "id": "wBMqs9Q3SKaMY9Xc",
+          "name": "GitHub account 2"
         }
       }
     }
@@ -71,6 +54,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-14T11:34:34.000Z",
-  "versionId": "164cfefb-fd26-4ac0-9643-1d32b28ac029"
+  "updatedAt": "2024-05-16T01:15:13.389Z",
+  "versionId": "0ce33779-6eac-4fa5-8c03-3d537342e7cb"
 }
