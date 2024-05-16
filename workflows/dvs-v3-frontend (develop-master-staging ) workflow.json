@@ -133,7 +133,7 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "=sed 's/admin.naxa.com.np/{{ $('n8n Form Trigger').item.json.domain_name }}/g' .env.exmaple > .env\n",
+        "command": "=sed 's/admin.naxa.com.np/{{ $('n8n Form Trigger').item.json.domain_name }}/g' .env.example > .env\n",
         "cwd": "=/home/ubuntu/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "df49f6ec-2bff-4951-a293-5fe7afdf6eed",
@@ -179,7 +179,7 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "=sudo bash -c \"echo ' server {\n    listen 80;\n    server_name {{ $('n8n Form Trigger').item.json[\"domain_name\"] }};    # domain name to respond to\n    access_log /var/log/nginx/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.access;\n    error_log /var/log/nginx/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.error;\n\n    client_max_body_size 500M;            # Allow uploads/transper to 100MB.\n    client_body_buffer_size 128k;\n\n    gzip on;            # Allows compression; can be CPU intensive\n    gzip_min_length 150;\n    gzip_types    text/plain text/css application/javascript application/x-javascript text/javascript image/x-icon image/svg+xml image/png application/json ;\n\n              root /home/ubuntu/Projects/$('get repo_name').item.json[\"stdout\"]-{{ $('n8n Form Trigger').item.json[\"branch\"] }}/dist;\n              index  index.html index.htm;\n     location / {\n              add_header Access-Control-Allow-Origin *;\n              try_files \\$uri /index.html;            # if no endpoint found try index.html\n             }\n\n}' > /etc/nginx/sites-enabled/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.conf\"\n",
+        "command": "=sudo bash -c \"echo ' server {\n    listen 80;\n    server_name {{ $('n8n Form Trigger').item.json[\"domain_name\"] }};    # domain name to respond to\n    access_log /var/log/nginx/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.access;\n    error_log /var/log/nginx/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.error;\n\n    client_max_body_size 500M;            # Allow uploads/transper to 100MB.\n    client_body_buffer_size 128k;\n\n    gzip on;            # Allows compression; can be CPU intensive\n    gzip_min_length 150;\n    gzip_types    text/plain text/css application/javascript application/x-javascript text/javascript image/x-icon image/svg+xml image/png application/json ;\n\n              root /home/ubuntu/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json[\"branch\"] }}/dist;\n              index  index.html index.htm;\n     location / {\n              add_header Access-Control-Allow-Origin *;\n              try_files \\$uri /index.html;            # if no endpoint found try index.html\n             }\n\n}' > /etc/nginx/sites-enabled/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.conf\"\n",
         "cwd": "/etc/nginx/sites-enabled"
       },
       "id": "20011a25-24cd-48b8-9a44-88777cbd9e45",
@@ -515,6 +515,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-16T12:07:36.000Z",
-  "versionId": "87116a61-bc86-4e0f-a80c-5f70a605ebaa"
+  "updatedAt": "2024-05-16T12:20:01.000Z",
+  "versionId": "20e61df2-3ef0-4c3e-aadb-83288efbf7b7"
 }
