@@ -306,7 +306,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2300,
+        2320,
         1680
       ],
       "executeOnce": false,
@@ -331,7 +331,7 @@
       "typeVersion": 1,
       "position": [
         2080,
-        1680
+        1720
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -494,8 +494,8 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1820,
-        1700
+        1840,
+        1760
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -515,6 +515,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-17T01:31:13.000Z",
-  "versionId": "1f805102-7b4e-49d8-acba-b23a0adc7a9c"
+  "updatedAt": "2024-05-17T04:00:50.000Z",
+  "versionId": "0f32cb9c-fb01-4c9c-bebf-ffc70fb3be6a"
 }
