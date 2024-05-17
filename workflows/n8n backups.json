@@ -195,6 +195,7 @@
     },
     {
       "parameters": {
+        "authentication": "oAuth2",
         "resource": "file",
         "operation": "get",
         "owner": {
@@ -223,9 +224,9 @@
       "typeVersion": 1,
       "alwaysOutputData": true,
       "credentials": {
-        "githubApi": {
-          "id": "CAnTsavuxvV61O1w",
-          "name": "GitHub account"
+        "githubOAuth2Api": {
+          "id": "wBMqs9Q3SKaMY9Xc",
+          "name": "GitHub account 2"
         }
       },
       "continueOnFail": true
@@ -294,6 +295,7 @@
     },
     {
       "parameters": {
+        "authentication": "oAuth2",
         "resource": "file",
         "operation": "edit",
         "owner": {
@@ -321,14 +323,15 @@
       ],
       "typeVersion": 1,
       "credentials": {
-        "githubApi": {
-          "id": "CAnTsavuxvV61O1w",
-          "name": "GitHub account"
+        "githubOAuth2Api": {
+          "id": "wBMqs9Q3SKaMY9Xc",
+          "name": "GitHub account 2"
         }
       }
     },
     {
       "parameters": {
+        "authentication": "oAuth2",
         "resource": "file",
         "owner": {
           "__rl": true,
@@ -355,9 +358,9 @@
       ],
       "typeVersion": 1,
       "credentials": {
-        "githubApi": {
-          "id": "CAnTsavuxvV61O1w",
-          "name": "GitHub account"
+        "githubOAuth2Api": {
+          "id": "wBMqs9Q3SKaMY9Xc",
+          "name": "GitHub account 2"
         }
       }
     },
@@ -474,6 +477,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-05-14T09:58:11.000Z",
-  "versionId": "4e0d6d99-47ca-4c25-b779-5d4602655879"
+  "updatedAt": "2024-05-17T11:38:37.000Z",
+  "versionId": "6e89c5d5-30c7-4337-8b9e-80081660f62e"
 }
