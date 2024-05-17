@@ -23,17 +23,6 @@
         ]
       ]
     },
-    "create a nginx config file": {
-      "main": [
-        [
-          {
-            "node": "Test & reload nginx",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "n8n Form Trigger": {
       "main": [
         [
@@ -45,22 +34,11 @@
         ]
       ]
     },
-    "Use nvm 19 & Install yarn": {
-      "main": [
-        [
-          {
-            "node": "Yarn install - packages",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Export and load nvm": {
       "main": [
         [
           {
-            "node": "Use nvm 19 & Install yarn",
+            "node": "Install Node & Install yarn",
             "type": "main",
             "index": 0
           }
@@ -93,7 +71,7 @@
       "main": [
         [
           {
-            "node": "create a nginx config file",
+            "node": "create nginx config file",
             "type": "main",
             "index": 0
           }
@@ -104,7 +82,7 @@
       "main": [
         [
           {
-            "node": "Send Slack Notification",
+            "node": "check domain status",
             "type": "main",
             "index": 0
           }
@@ -116,6 +94,57 @@
         [
           {
             "node": "Clone from repository",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Install Node & Install yarn": {
+      "main": [
+        [
+          {
+            "node": "Yarn install - packages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create nginx config file": {
+      "main": [
+        [
+          {
+            "node": "Test & reload nginx",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check domain status": {
+      "main": [
+        [
+          {
+            "node": "if http_code = 200 (true)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "if http_code = 200 (true)": {
+      "main": [
+        [
+          {
+            "node": "Send noti --> Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send noti --> Failed",
             "type": "main",
             "index": 0
           }
@@ -134,7 +163,7 @@
       "parameters": {
         "authentication": "privateKey",
         "command": "=sed 's/admin.naxa.com.np/{{ $('n8n Form Trigger').item.json.domain_name }}/g' .env.example > .env\n",
-        "cwd": "=/home/ubuntu/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "df49f6ec-2bff-4951-a293-5fe7afdf6eed",
       "name": "copy .env file",
@@ -142,7 +171,7 @@
       "typeVersion": 1,
       "position": [
         2620,
-        1700
+        1740
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -157,7 +186,7 @@
       "parameters": {
         "authentication": "privateKey",
         "command": "source ~/.nvm/nvm.sh && yarn cache clean && yarn install",
-        "cwd": "=/home/ubuntu/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "61ea547d-d3dd-41b5-a3c3-3fc62ae5bd59",
       "name": "Yarn install - packages",
@@ -165,29 +194,6 @@
       "typeVersion": 1,
       "position": [
         3260,
-        1700
-      ],
-      "executeOnce": false,
-      "alwaysOutputData": false,
-      "credentials": {
-        "sshPrivateKey": {
-          "id": "aDoEMAgfjOxUDXWv",
-          "name": "SSH Password account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "authentication": "privateKey",
-        "command": "=sudo bash -c \"echo ' server {\n    listen 80;\n    server_name {{ $('n8n Form Trigger').item.json[\"domain_name\"] }};    # domain name to respond to\n    access_log /var/log/nginx/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.access;\n    error_log /var/log/nginx/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.error;\n\n    client_max_body_size 500M;            # Allow uploads/transper to 100MB.\n    client_body_buffer_size 128k;\n\n    gzip on;            # Allows compression; can be CPU intensive\n    gzip_min_length 150;\n    gzip_types    text/plain text/css application/javascript application/x-javascript text/javascript image/x-icon image/svg+xml image/png application/json ;\n\n              root /home/ubuntu/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json[\"branch\"] }}/dist;\n              index  index.html index.htm;\n     location / {\n              add_header Access-Control-Allow-Origin *;\n              try_files \\$uri /index.html;            # if no endpoint found try index.html\n             }\n\n}' > /etc/nginx/sites-enabled/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.conf\"\n",
-        "cwd": "/etc/nginx/sites-enabled"
-      },
-      "id": "20011a25-24cd-48b8-9a44-88777cbd9e45",
-      "name": "create a nginx config file",
-      "type": "n8n-nodes-base.ssh",
-      "typeVersion": 1,
-      "position": [
-        3760,
         1700
       ],
       "executeOnce": false,
@@ -229,7 +235,8 @@
                     "option": "staging"
                   }
                 ]
-              }
+              },
+              "requiredField": true
             },
             {
               "fieldLabel": "node_version",
@@ -244,39 +251,16 @@
       "type": "n8n-nodes-base.formTrigger",
       "typeVersion": 2,
       "position": [
-        1560,
-        1700
+        1400,
+        1740
       ],
       "webhookId": "f929d7b4-c0e5-4489-96ee-dbac03aa5383"
     },
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "=source ~/.nvm/nvm.sh && nvm use {{ $('n8n Form Trigger').item.json.node_version }} && sudo npm install -g yarn",
-        "cwd": "=/home/ubuntu/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
-      },
-      "id": "78dcb8d1-cd3e-4c67-aaa5-d0d4c4b8e8c1",
-      "name": "Use nvm 19 & Install yarn",
-      "type": "n8n-nodes-base.ssh",
-      "typeVersion": 1,
-      "position": [
-        2960,
-        1700
-      ],
-      "executeOnce": false,
-      "alwaysOutputData": false,
-      "credentials": {
-        "sshPrivateKey": {
-          "id": "aDoEMAgfjOxUDXWv",
-          "name": "SSH Password account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "authentication": "privateKey",
         "command": "export NVM_DIR=\"$HOME/.nvm\"\n[ -s \"$NVM_DIR/nvm.sh\" ] && \\. \"$NVM_DIR/nvm.sh\"\n[ -s \"$NVM_DIR/bash_completion\" ] && \\. \"$NVM_DIR/bash_completion\"",
-        "cwd": "=/home/ubuntu/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "beba39fc-89af-460e-a2b3-2f1de5f81359",
       "name": "Export and load nvm",
@@ -284,7 +268,7 @@
       "typeVersion": 1,
       "position": [
         2780,
-        1700
+        1740
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -298,8 +282,8 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "=git pull origin {{ $('n8n Form Trigger').item.json.branch }}",
-        "cwd": "=/home/ubuntu/Projects/{{ $('get repo_name').item.json.stdout }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "command": "=git pull origin {{ $('n8n Form Trigger').item.json.branch }} || git pull origin master",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json.stdout }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "28ef7e94-3378-46ca-8b04-74cb357575c0",
       "name": "pull from branch",
@@ -307,7 +291,7 @@
       "typeVersion": 1,
       "position": [
         2320,
-        1680
+        1640
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -322,8 +306,8 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "=git clone -b {{ $('n8n Form Trigger').item.json.branch }} {{ $('n8n Form Trigger').item.json.repo_url_ssh }} {{ $json.stdout }}-{{ $('n8n Form Trigger').item.json.branch }}",
-        "cwd": "=/home/ubuntu/Projects/"
+        "command": "=git clone -b {{ $('n8n Form Trigger').item.json.branch }} {{ $('n8n Form Trigger').item.json.repo_url_ssh }} {{ $json.stdout }}-{{ $('n8n Form Trigger').item.json.branch }} || git clone -b master {{ $('n8n Form Trigger').item.json.repo_url_ssh }} {{ $json.stdout }}-master",
+        "cwd": "=/srv/Projects/"
       },
       "id": "d133701d-0b0b-4386-b9be-14625b812493",
       "name": "Clone from repository",
@@ -331,7 +315,7 @@
       "typeVersion": 1,
       "position": [
         2080,
-        1720
+        1700
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -347,7 +331,7 @@
       "parameters": {
         "authentication": "privateKey",
         "command": "source ~/.nvm/nvm.sh && yarn build",
-        "cwd": "=/home/ubuntu/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "9cdc71b2-a985-4efc-ad76-b6ab4a2dc1fc",
       "name": "yarn build project",
@@ -371,7 +355,7 @@
       "parameters": {
         "authentication": "privateKey",
         "command": "sudo nginx -t && sudo nginx -s reload",
-        "cwd": "/etc/nginx/sites-enabled"
+        "cwd": "/etc/nginx/sites-enabled/"
       },
       "id": "f2d126c9-3d1a-45a4-81c9-1e730df5730a",
       "name": "Test & reload nginx",
@@ -392,36 +376,7 @@
     },
     {
       "parameters": {
-        "authentication": "oAuth2",
-        "select": "channel",
-        "channelId": {
-          "__rl": true,
-          "value": "C073MQUR0G5",
-          "mode": "list",
-          "cachedResultName": "dvs-v3-frontend"
-        },
-        "text": "=Congratulations !!\n\nFinally your site is live now !\n===========================================================================================\nvisit https://{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}\n===========================================================================================\n\nSome other details:\n\nGitHub Repository: {{ $('n8n Form Trigger').item.json[\"repo_url_ssh\"]}}\nGitHub Branch: {{ $('n8n Form Trigger').item.json[\"branch\"] }}\nProject Directory: /home/ubuntu/Projects/\nProject Name: {{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}\nNode Version: {{ $('n8n Form Trigger').item.json[\"node_version\"] }}\n\nHope this information is useful for you !!",
-        "otherOptions": {}
-      },
-      "id": "7e6cf012-65ad-4ad1-bcd3-46c95c037a93",
-      "name": "Send Slack Notification",
-      "type": "n8n-nodes-base.slack",
-      "typeVersion": 2.1,
-      "position": [
-        4220,
-        1700
-      ],
-      "executeOnce": true,
-      "credentials": {
-        "slackOAuth2Api": {
-          "id": "oytOvgZOMj4GVobW",
-          "name": "Slack account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "content": "# Step 1\n\nGet Project name from Repository url\n\nClone Project from GitHub Repository\n\nPull from branch",
+        "content": "# Step 1\n\nGet Project name from Repository url\n\nClone Project from GitHub Repository to /srv/Projects directory\n\nPull from respective branch",
         "height": 463.19854545454547,
         "width": 706.9920969696972,
         "color": 4
@@ -432,12 +387,12 @@
       "typeVersion": 1,
       "position": [
         1780,
-        1500
+        1480
       ]
     },
     {
       "parameters": {
-        "content": "# Step 2\n\nCopy the environment file\n\nExport and Load nvm\n\nUse node V19 and Install Yarn",
+        "content": "# Step 2\n\nSearch and Replace to api_url .env file\n\nExport and Load nvm\n\nDownload and use respective node version || use V19 as default and Install Yarn-latest",
         "height": 463.19854545454547,
         "width": 552.0640000000002,
         "color": 4
@@ -453,7 +408,7 @@
     },
     {
       "parameters": {
-        "content": "# Step 3\n\nInstall Packages using yarn\n\nBuild Project using yarn",
+        "content": "# Step 3\n\nInstall required Packages using yarn\n\nBuild Project using yarn",
         "height": 463.19854545454547,
         "width": 439.81963636363645,
         "color": 4
@@ -486,8 +441,8 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "=url={{ $('n8n Form Trigger').item.json.repo_url_ssh }}; \nrepo_name=$(basename \"${url%.git}\"); \necho \"$repo_name\"\n\n",
-        "cwd": "=/home/ubuntu/Projects/"
+        "command": "=url={{ $('n8n Form Trigger').item.json.repo_url_ssh }}; \nrepo_name=$(basename \"${url%.git}\"); \necho \"$repo_name\"\n",
+        "cwd": "=/srv/Projects/"
       },
       "id": "001f0ce0-b5d0-4b26-a70c-4343ef31fa96",
       "name": "get repo_name",
@@ -495,7 +450,7 @@
       "typeVersion": 1,
       "position": [
         1840,
-        1760
+        1740
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -506,6 +461,193 @@
         }
       },
       "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=source ~/.nvm/nvm.sh && nvm use {{ $('n8n Form Trigger').item.json.node_version }} || nvm use 19 && sudo npm install -g yarn",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "78dcb8d1-cd3e-4c67-aaa5-d0d4c4b8e8c1",
+      "name": "Install Node & Install yarn",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2960,
+        1740
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "aDoEMAgfjOxUDXWv",
+          "name": "SSH Password account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Form Trigger Node\nIn this trigger form you need to fill up following fields:\n1. GitHub Repository URL(SSH)\n2. Domain Name\n3. Branch\n4. Node Version (optional) --> I used node V19 as default version\n#### The Project directory is set to /srv/Project by default.",
+        "height": 454.1672727272726,
+        "width": 476.55951515151503
+      },
+      "id": "3837ad2c-605b-4181-9eeb-cfbc313ee79e",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1220,
+        1489.416727272726
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=sudo bash -c \"echo ' server {\n    listen 80;\n    server_name {{ $('n8n Form Trigger').item.json[\"domain_name\"] }};    # domain name to respond to\n    access_log /var/log/nginx/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.access;\n    error_log /var/log/nginx/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.error;\n\n    client_max_body_size 500M;            # Allow uploads/transper to 100MB.\n    client_body_buffer_size 128k;\n\n    gzip on;            # Allows compression; can be CPU intensive\n    gzip_min_length 150;\n    gzip_types    text/plain text/css application/javascript application/x-javascript text/javascript image/x-icon image/svg+xml image/png application/json ;\n\n              root /srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json[\"branch\"] }}/dist;\n              index  index.html index.htm;\n     location / {\n              add_header Access-Control-Allow-Origin *;\n              try_files \\$uri /index.html;            # if no endpoint found try index.html\n             }\n\n}' > /etc/nginx/sites-enabled/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.conf\"\n",
+        "cwd": "/etc/nginx/sites-enabled/"
+      },
+      "id": "20011a25-24cd-48b8-9a44-88777cbd9e45",
+      "name": "create nginx config file",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        3760,
+        1700
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "aDoEMAgfjOxUDXWv",
+          "name": "SSH Password account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=curl -LI https://{{ $('n8n Form Trigger').item.json[\"domain_name\"] }} -o /dev/null -w '%{http_code}\\n' -s"
+      },
+      "id": "6472b894-44a6-43b4-ad7d-cb064c10df44",
+      "name": "check domain status",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        4380,
+        1740
+      ],
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "aDoEMAgfjOxUDXWv",
+          "name": "SSH Password account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "58f8129b-039e-4455-bd2a-9db9d4dd5628",
+              "leftValue": "={{ $json.stdout }}",
+              "rightValue": "200",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c42df7f5-b199-463f-912d-579616f0b19d",
+      "name": "if http_code = 200 (true)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        4600,
+        1740
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C074KAMPD16",
+          "mode": "list",
+          "cachedResultName": "dvs-v3-frontend"
+        },
+        "text": "=Congratulations!!\n\nFinally your site is live now !\n===========================================================================================\nvisit https://{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}\n===========================================================================================\n\nSome other details:\n\nGitHub Repository: {{ $('n8n Form Trigger').item.json[\"repo_url_ssh\"]}}\nGitHub Branch: {{ $('n8n Form Trigger').item.json[\"branch\"] }}\nProject Directory: /srv/Projects/\nProject Name: {{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}\nNode Version: {{ $('n8n Form Trigger').item.json[\"node_version\"] }}\n\nHope this information is useful for you !!",
+        "otherOptions": {}
+      },
+      "id": "7e6cf012-65ad-4ad1-bcd3-46c95c037a93",
+      "name": "Send noti --> Success",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [
+        4880,
+        1580
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "oytOvgZOMj4GVobW",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C074KAMPD16",
+          "mode": "list",
+          "cachedResultName": "dvs-v3-frontend"
+        },
+        "text": "=\nYou've Got an Issue !!\n\nGo & verify if everything is in working condition.\n=========================================================================\n\nWorkflow Details:\nGitHub Repository: {{ $('n8n Form Trigger').item.json[\"repo_url_ssh\"]}}\nGitHub Branch: {{ $('n8n Form Trigger').item.json[\"branch\"] }}\nProject Directory: /srv/Projects/\nProject Name: {{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}\nNode Version: {{ $('n8n Form Trigger').item.json[\"node_version\"] }}\n\nHope this information is useful for you !!",
+        "otherOptions": {}
+      },
+      "id": "e66db675-4798-437f-bcc4-b97b24de11e0",
+      "name": "Send noti --> Failed",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [
+        4880,
+        1820
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "oytOvgZOMj4GVobW",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Slack Notification\n\n#### Check domain Status and outputs http_code of respective domain\n\n#### The IF node then verifies that the http_code is 200 or not\n\n#### If http_code = 200, Sends Success notification to slack channel (dvs-v3-frontend)\n\n#### If http_code != 200, Sends Failed notification to same channel\n\n",
+        "height": 685.2435899159664,
+        "width": 1034.787400186742
+      },
+      "id": "ca0eba74-6a51-46d8-b916-2323838c2a60",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4160,
+        1360
+      ]
     }
   ],
   "pinData": {},
@@ -515,6 +657,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-17T04:00:50.000Z",
-  "versionId": "0f32cb9c-fb01-4c9c-bebf-ffc70fb3be6a"
+  "updatedAt": "2024-05-17T06:07:48.000Z",
+  "versionId": "eba80c42-22e1-416d-9c1f-cb8dcebf1134"
 }
