@@ -154,7 +154,9 @@
   },
   "createdAt": "2024-05-22T04:19:51.349Z",
   "id": "QnvESOeq1u1FFfrz",
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "n8n frontend deployment workflow",
   "nodes": [
     {
@@ -172,7 +174,13 @@
         840
       ],
       "executeOnce": false,
-      "alwaysOutputData": false
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     },
     {
       "parameters": {
@@ -189,7 +197,13 @@
         800
       ],
       "executeOnce": false,
-      "alwaysOutputData": false
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     },
     {
       "parameters": {
@@ -257,7 +271,13 @@
         840
       ],
       "executeOnce": false,
-      "alwaysOutputData": false
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     },
     {
       "parameters": {
@@ -275,6 +295,12 @@
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      },
       "onError": "continueRegularOutput"
     },
     {
@@ -293,6 +319,12 @@
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      },
       "onError": "continueRegularOutput"
     },
     {
@@ -311,7 +343,13 @@
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
-      "notesInFlow": false
+      "notesInFlow": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     },
     {
       "parameters": {
@@ -328,7 +366,13 @@
         800
       ],
       "executeOnce": false,
-      "alwaysOutputData": false
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     },
     {
       "parameters": {
@@ -410,6 +454,12 @@
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      },
       "onError": "continueRegularOutput"
     },
     {
@@ -427,7 +477,13 @@
         840
       ],
       "executeOnce": false,
-      "alwaysOutputData": false
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     },
     {
       "parameters": {
@@ -459,7 +515,13 @@
         800
       ],
       "executeOnce": false,
-      "alwaysOutputData": false
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     },
     {
       "parameters": {
@@ -473,7 +535,13 @@
       "position": [
         680,
         840
-      ]
+      ],
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     },
     {
       "parameters": {
@@ -529,7 +597,13 @@
         1180,
         680
       ],
-      "executeOnce": true
+      "executeOnce": true,
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "4ODDVC4CzvbIn7Fk",
+          "name": "Slack account"
+        }
+      }
     },
     {
       "parameters": {
@@ -552,7 +626,13 @@
         1180,
         920
       ],
-      "executeOnce": true
+      "executeOnce": true,
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "4ODDVC4CzvbIn7Fk",
+          "name": "Slack account"
+        }
+      }
     },
     {
       "parameters": {
@@ -577,6 +657,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-22T04:20:05.000Z",
-  "versionId": "2f36a7a9-bbd6-4aa9-968f-76ab947424d4"
+  "updatedAt": "2024-05-22T04:37:25.000Z",
+  "versionId": "9d7c25db-2f4e-400f-ac3e-7583a9a5474e"
 }
