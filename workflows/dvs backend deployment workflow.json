@@ -236,7 +236,7 @@
       "parameters": {
         "content": "# Build\n\n#### Get repo name from the form data\n#### Clone project from GitHub\n#### Pull respective branch\n#### Prepare dependencies : if project is GIS ----> create GIS dependencies else create NON_GIS dependencies\n",
         "height": 709.6809696969693,
-        "width": 1162.2042181818176,
+        "width": 1433.4656791511757,
         "color": 5
       },
       "id": "c55e90d0-18c0-4dfb-bdfb-749f2ebb2d39",
@@ -336,7 +336,7 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "=docker build -f ./docker/Dockerfile -t 685797548389.dkr.ecr.ap-south-1.amazonaws.com/{{ $('get repo_name').item.json[\"stdout\"] }}:{{ $('n8n Form Trigger').item.json[\"branch\"]}} . && docker push 685797548389.dkr.ecr.ap-south-1.amazonaws.com/{{ $('get repo_name').item.json[\"stdout\"] }}:{{ $('n8n Form Trigger').item.json[\"branch\"]}} ",
+        "command": "=echo \"L0vey0um0m123@\" | docker login -u anilrajrimal --password-stdin && \\\ndocker build -f ./docker/Dockerfile -t anilrajrimal/{{ $('get repo_name').item.json[\"stdout\"] }}:{{ $('n8n Form Trigger').item.json[\"branch\"]}} . && \\\ndocker push anilrajrimal/{{ $('get repo_name').item.json[\"stdout\"] }}:{{ $('n8n Form Trigger').item.json[\"branch\"]}}",
         "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "c9944433-b3c0-4000-b096-19efe548df3a",
@@ -344,8 +344,8 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1760,
-        780
+        1680,
+        800
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -359,7 +359,7 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "=aws s3 cp s3://naxa-project-envs/{{ $('get repo_name').item.json[\"stdout\"] }}/backend/{{ $('n8n Form Trigger').item.json[\"branch\"] }}/.env .env",
+        "command": "=sed -e 's/admin.naxa.com.np/{{ $('n8n Form Trigger').item.json.domain_name }}/g' env_sample > .env",
         "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "7aa2c42b-8082-4719-8564-f0c52e7c0a2d",
@@ -367,8 +367,8 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1960,
-        780
+        2040,
+        800
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -390,8 +390,8 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2160,
-        780
+        2240,
+        800
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -413,8 +413,8 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2340,
-        780
+        2420,
+        800
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
@@ -429,7 +429,7 @@
       "parameters": {
         "content": "# Deploy\n\n#### Prepare Docker image and push it to the ECR Repository\n#### Copy the Environment file from AWS S3 Bucket\n#### Copy Compose file from /docker directory in the project directory\n#### Run Docker compose file in detach mode\n",
         "height": 607.3197575757572,
-        "width": 977.6587636363632,
+        "width": 795.6280464069265,
         "color": 4
       },
       "id": "5018434b-d70b-4cf3-9756-084a1ce2cc08",
@@ -437,8 +437,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1660,
-        460
+        1980,
+        500
       ]
     },
     {
@@ -512,6 +512,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-22T04:35:47.000Z",
-  "versionId": "79366ffd-7d2e-4c46-b6d7-f25b58604922"
+  "updatedAt": "2024-05-22T06:10:17.000Z",
+  "versionId": "c567e31c-a313-4871-b17a-b9a556c7f768"
 }
