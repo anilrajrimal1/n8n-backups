@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "On clicking 'execute'": {
       "main": [
@@ -163,7 +163,7 @@
         ]
       ]
     },
-    "every 2 hrs": {
+    "backup every 1 hour": {
       "main": [
         [
           {
@@ -455,13 +455,14 @@
         "triggerTimes": {
           "item": [
             {
-              "mode": "everyX"
+              "mode": "everyX",
+              "value": 1
             }
           ]
         }
       },
       "id": "b3b9bd82-51e3-4f3b-9d08-7a589c4b71ec",
-      "name": "every 2 hrs",
+      "name": "backup every 1 hour",
       "type": "n8n-nodes-base.cron",
       "position": [
         -1265,
@@ -476,7 +477,7 @@
   },
   "staticData": null,
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2024-05-22T04:33:21.000Z",
-  "versionId": "39db83b4-951d-4df7-9159-d2f0c0d6594c"
+  "triggerCount": 1,
+  "updatedAt": "2024-05-22T04:44:13.000Z",
+  "versionId": "b73bd961-0c01-4c75-8e1e-ea32801afcfa"
 }
