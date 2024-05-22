@@ -1,0 +1,201 @@
+{
+  "active": false,
+  "connections": {
+    "Github Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "SSH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-05-22T04:21:20.590Z",
+  "id": "UB0pVttpMkTU3CLF",
+  "meta": null,
+  "name": "send slack alerts on every push",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "owner": {
+          "__rl": true,
+          "value": "anilrajrimal1",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "GuffGaff-Hub",
+          "mode": "list",
+          "cachedResultName": "GuffGaff-Hub",
+          "cachedResultUrl": "https://github.com/anilrajrimal1/GuffGaff-Hub"
+        },
+        "events": [
+          "pull_request"
+        ],
+        "options": {}
+      },
+      "id": "1d0ecfd8-bef0-4b4d-a237-c0b7b27a3430",
+      "name": "Github Trigger",
+      "type": "n8n-nodes-base.githubTrigger",
+      "typeVersion": 1,
+      "position": [
+        460,
+        460
+      ],
+      "webhookId": "ecaa6592-3102-4a20-bb75-b30d49722ce1"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C073NUN9QMP",
+          "mode": "list",
+          "cachedResultName": "github-alerts"
+        },
+        "text": "={{ $json.body.pull_request.head.user.login }} created a PR on  {{ $json.body.pull_request.created_at }}.\n\n--------------------------PR details:------------------------------\nPR id:  {{ $json.body.pull_request.id}}\nBody text:  {{ $json.body.pull_request.body }}\n\n-----------------------other details:-------------------------------\nRepository Name:  {{ $json.body.pull_request.head.repo.name }}\nBranch:  {{ $json.body.pull_request.head.ref }}\n",
+        "otherOptions": {}
+      },
+      "id": "2e4f120a-d8cb-464b-845d-2fd86d007da7",
+      "name": "Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [
+        860,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2a3f59cc-fa50-42b2-aa8d-94fdad33b46b",
+              "name": "body.pull_request.id",
+              "value": "={{ $json.body.pull_request.id }}",
+              "type": "number"
+            },
+            {
+              "id": "236c2079-6825-4a4d-b234-ce38cd01e396",
+              "name": "body.pull_request.body",
+              "value": "={{ $json.body.pull_request.body }}",
+              "type": "string"
+            },
+            {
+              "id": "2f079bac-a5d5-48a9-9f80-ba515fcbe4a1",
+              "name": "body.pull_request.created_at",
+              "value": "={{ $json.body.pull_request.created_at }}",
+              "type": "string"
+            },
+            {
+              "id": "136c9d37-8b86-414e-b383-64609e2faad2",
+              "name": "body.pull_request.head.repo.name",
+              "value": "={{ $json.body.pull_request.head.repo.name }}",
+              "type": "string"
+            },
+            {
+              "id": "0a2b2545-0f47-4cad-b2e3-e3fbd235f41c",
+              "name": "body.pull_request.head.ref",
+              "value": "={{ $json.body.pull_request.head.ref }}",
+              "type": "string"
+            },
+            {
+              "id": "83ad4f32-97af-40c9-bd03-47c03bcdd087",
+              "name": "body.pull_request.head.user.id",
+              "value": "={{ $json.body.pull_request.head.user.id }}",
+              "type": "number"
+            },
+            {
+              "id": "b0700803-313c-421d-9e83-a7ef85650b72",
+              "name": "body.pull_request.head.user.login",
+              "value": "={{ $json.body.pull_request.head.user.login }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0c29198c-58b2-4e87-99a4-62419af8a153",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        660,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "language": "python",
+        "pythonCode": "# Add a new field called 'myNewField' to the JSON of the item\n_input.item.json.myNewField = 1\nreturn _input.item"
+      },
+      "id": "66a01704-665f-42b3-afd5-97b883a8205c",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1080,
+        460
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "cbd10adc-f504-4428-8375-c79e36aa942c",
+      "name": "SSH",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        460
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-05-22T04:21:20.590Z",
+  "versionId": "cbf7505d-0933-4b3e-9a48-ba1254ccc408"
+}
