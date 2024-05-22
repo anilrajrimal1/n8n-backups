@@ -49,7 +49,7 @@
       "main": [
         [
           {
-            "node": "copy .env file from s3",
+            "node": "copy .env file",
             "type": "main",
             "index": 0
           }
@@ -72,17 +72,6 @@
         [
           {
             "node": "Build and Push Docker Image",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "copy .env file from s3": {
-      "main": [
-        [
-          {
-            "node": "Copy compose file from /docker",
             "type": "main",
             "index": 0
           }
@@ -112,6 +101,17 @@
         [
           {
             "node": "Create Dependencies NON-GIS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "copy .env file": {
+      "main": [
+        [
+          {
+            "node": "Copy compose file from /docker",
             "type": "main",
             "index": 0
           }
@@ -359,29 +359,6 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "=sed -e 's/admin.naxa.com.np/{{ $('n8n Form Trigger').item.json.domain_name }}/g' env_sample > .env",
-        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
-      },
-      "id": "7aa2c42b-8082-4719-8564-f0c52e7c0a2d",
-      "name": "copy .env file from s3",
-      "type": "n8n-nodes-base.ssh",
-      "typeVersion": 1,
-      "position": [
-        2040,
-        800
-      ],
-      "executeOnce": false,
-      "alwaysOutputData": false,
-      "credentials": {
-        "sshPrivateKey": {
-          "id": "URw0V20NqIJCpRL3",
-          "name": "SSH Private Key account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "authentication": "privateKey",
         "command": "=cp ./docker/server/docker-compose.{{ $('n8n Form Trigger').item.json.branch }}.yml docker-compose.yml",
         "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
@@ -503,6 +480,29 @@
         1180,
         800
       ]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=sed -e 's/naxa-backend-boilerplate/{{ $('get repo_name').item.json[\"stdout\"] }}/g ; s/develop/{{ $('n8n Form Trigger').item.json[\"branch\"] }}/g ; s//srv/Projects/$PROJECT_NAME/$IMAGE_TAG//srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}/g ; s/685797548389.dkr.ecr.ap-south-1.amazonaws.com/$PROJECT_NAME/anilrajrimal/{{ $('get repo_name').item.json[\"stdout\"] }}/g ; s/$PROJECT_NAME-$IMAGE_TAG/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}/g' env_sample > .env",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "7aa2c42b-8082-4719-8564-f0c52e7c0a2d",
+      "name": "copy .env file",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2040,
+        800
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -512,6 +512,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-22T06:10:17.000Z",
-  "versionId": "c567e31c-a313-4871-b17a-b9a556c7f768"
+  "updatedAt": "2024-05-22T07:14:08.000Z",
+  "versionId": "31b03a36-3783-4520-b070-3ef37f348d08"
 }
