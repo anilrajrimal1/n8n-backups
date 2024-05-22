@@ -48,7 +48,9 @@
   },
   "createdAt": "2024-05-22T04:21:20.590Z",
   "id": "UB0pVttpMkTU3CLF",
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "send slack alerts on every push",
   "nodes": [
     {
@@ -79,7 +81,13 @@
         460,
         460
       ],
-      "webhookId": "ecaa6592-3102-4a20-bb75-b30d49722ce1"
+      "webhookId": "ecaa6592-3102-4a20-bb75-b30d49722ce1",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "m8ljhyxl9virxXtx",
+          "name": "GitHub account"
+        }
+      }
     },
     {
       "parameters": {
@@ -101,7 +109,13 @@
       "position": [
         860,
         460
-      ]
+      ],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "4ODDVC4CzvbIn7Fk",
+          "name": "Slack account"
+        }
+      }
     },
     {
       "parameters": {
@@ -178,7 +192,9 @@
       ]
     },
     {
-      "parameters": {},
+      "parameters": {
+        "authentication": "privateKey"
+      },
       "id": "cbd10adc-f504-4428-8375-c79e36aa942c",
       "name": "SSH",
       "type": "n8n-nodes-base.ssh",
@@ -186,7 +202,13 @@
       "position": [
         1300,
         460
-      ]
+      ],
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -196,6 +218,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-22T04:21:20.590Z",
-  "versionId": "cbf7505d-0933-4b3e-9a48-ba1254ccc408"
+  "updatedAt": "2024-05-22T04:34:52.000Z",
+  "versionId": "a9f0b225-6e47-466b-9c68-98e9f91ed93d"
 }
