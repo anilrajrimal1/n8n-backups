@@ -26,7 +26,9 @@
   },
   "createdAt": "2024-05-22T04:22:01.761Z",
   "id": "zmQQJNlmMewwxynC",
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "slack alerts on every push",
   "nodes": [
     {
@@ -57,7 +59,13 @@
         460,
         460
       ],
-      "webhookId": "648120d0-a050-473c-b10d-88c85e4f3600"
+      "webhookId": "648120d0-a050-473c-b10d-88c85e4f3600",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "m8ljhyxl9virxXtx",
+          "name": "GitHub account"
+        }
+      }
     },
     {
       "parameters": {
@@ -120,7 +128,13 @@
       "position": [
         900,
         460
-      ]
+      ],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "4ODDVC4CzvbIn7Fk",
+          "name": "Slack account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -130,6 +144,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-22T04:22:15.000Z",
-  "versionId": "ce108a41-22cc-44af-ae90-ba2baddb2cc5"
+  "updatedAt": "2024-05-22T04:34:18.000Z",
+  "versionId": "5feeef29-8f84-4250-9265-e09b41e12f2c"
 }
