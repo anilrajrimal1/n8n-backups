@@ -78,17 +78,6 @@
         ]
       ]
     },
-    "Copy compose file from /docker": {
-      "main": [
-        [
-          {
-            "node": "Run compose file",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "check gis or non_gis ?": {
       "main": [
         [
@@ -111,7 +100,76 @@
       "main": [
         [
           {
-            "node": "Copy compose file from /docker",
+            "node": "copy entry-point script",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check branch type": {
+      "main": [
+        [
+          {
+            "node": "Copy compose file for master",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Copy compose file for develop",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Copy compose file for staging",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy compose file for master": {
+      "main": [
+        [
+          {
+            "node": "Run compose file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy compose file for develop": {
+      "main": [
+        [
+          {
+            "node": "Run compose file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy compose file for staging": {
+      "main": [
+        [
+          {
+            "node": "Run compose file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "copy entry-point script": {
+      "main": [
+        [
+          {
+            "node": "check branch type",
             "type": "main",
             "index": 0
           }
@@ -359,29 +417,6 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "=cp ./docker/server/docker-compose.{{ $('n8n Form Trigger').item.json.branch }}.yml docker-compose.yml",
-        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
-      },
-      "id": "bdde8e43-437f-407d-9dbe-2b665c7770d9",
-      "name": "Copy compose file from /docker",
-      "type": "n8n-nodes-base.ssh",
-      "typeVersion": 1,
-      "position": [
-        2300,
-        800
-      ],
-      "executeOnce": false,
-      "alwaysOutputData": false,
-      "credentials": {
-        "sshPrivateKey": {
-          "id": "URw0V20NqIJCpRL3",
-          "name": "SSH Private Key account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "authentication": "privateKey",
         "command": "=docker compose --file docker-compose.yml up --detach --build",
         "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
@@ -390,7 +425,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2540,
+        3200,
         800
       ],
       "executeOnce": false,
@@ -404,9 +439,9 @@
     },
     {
       "parameters": {
-        "content": "# Deploy\n\n#### Copy .env with some adjustments like project-name, branch etc using sed command\n#### Copy Compose file from /docker directory in the project directory\n#### Run compose file\n",
-        "height": 607.3197575757572,
-        "width": 801.1103833023082,
+        "content": "# Deploy\n\n#### Copy .env with some adjustments like project-name, branch etc using sed command\n#### Copy entrypoint.sh file\n#### Check for the branch, because the compose files are different for different branch\n#### Copy Compose file from /docker directory in the project directory (master, develop or staging)\n#### Finally run the compose file\n",
+        "height": 881.4366023447923,
+        "width": 1395.0302136352163,
         "color": 4
       },
       "id": "5018434b-d70b-4cf3-9756-084a1ce2cc08",
@@ -415,7 +450,7 @@
       "typeVersion": 1,
       "position": [
         1980,
-        460
+        380
       ]
     },
     {
@@ -492,7 +527,186 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2060,
+        2020,
+        800
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('n8n Form Trigger').item.json.branch }}",
+                    "rightValue": "master",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "MASTER-BRANCH"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "89e93f18-1837-40c7-a5cf-d369529d0c57",
+                    "leftValue": "={{ $('n8n Form Trigger').item.json.branch }}",
+                    "rightValue": "develop",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "DEVELOP-BRANCH"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "a47ddda6-a62f-4bca-84d7-9baf240c2235",
+                    "leftValue": "={{ $('n8n Form Trigger').item.json.branch }}",
+                    "rightValue": "staging",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "STAGING-BRANCH"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6b255f2c-fb34-4d2c-91fb-87865c532bfc",
+      "name": "check branch type",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        2560,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=cp ./docker/server/docker-compose.master.yml docker-compose.yml",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "bdde8e43-437f-407d-9dbe-2b665c7770d9",
+      "name": "Copy compose file for master",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2880,
+        580
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=cp ./docker/docker-compose.local.yml docker-compose.yml",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "3cc827e1-ae80-4209-8080-ea6511b59058",
+      "name": "Copy compose file for develop",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2880,
+        800
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=cp ./docker/docker-compose.local.yml docker-compose.yml",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "9756ad0d-3244-478a-9b40-5f6b7e6124c5",
+      "name": "Copy compose file for staging",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2880,
+        1020
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=cp docker/docker-entrypoint.sh entrypoint.sh",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "25761df9-6da8-4759-93be-d809048ccf4e",
+      "name": "copy entry-point script",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2260,
         800
       ],
       "executeOnce": false,
@@ -512,6 +726,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-22T08:11:28.000Z",
-  "versionId": "e27c0f0e-3c71-49a8-a648-5d11fe9404a0"
+  "updatedAt": "2024-05-22T08:44:30.000Z",
+  "versionId": "e508c321-1852-4442-8874-8f4ce3b5c285"
 }
