@@ -234,7 +234,7 @@
     },
     {
       "parameters": {
-        "content": "# Build\n\n#### Get repo name from the form data\n#### Clone project from GitHub\n#### Pull respective branch\n#### Prepare dependencies : if project is GIS ----> create GIS dependencies else create NON_GIS dependencies\n",
+        "content": "# Build\n\n#### Get repo name from the form data\n#### Clone project from GitHub Repository\n#### Pull respective branch from repo\n#### Prepare dependencies : if project is GIS ----> create GIS dependencies else create NON_GIS dependencies\n#### Build docker image and push it to DockerHub",
         "height": 709.6809696969693,
         "width": 1433.4656791511757,
         "color": 5
@@ -245,7 +245,7 @@
       "typeVersion": 1,
       "position": [
         460,
-        460
+        420
       ]
     },
     {
@@ -274,7 +274,7 @@
     },
     {
       "parameters": {
-        "content": "# Form Trigger Node\n## In this trigger form you need to fill up following fields:\n### 1. GitHub Repository URL(SSH)\n### 2. Domain Name\n### 3. Branch\n### 4. Node Version (optional) --> I used node V19 as default version\n### The Project directory is set to /srv/Project by default.",
+        "content": "# Form Trigger Node\n## In this trigger form you need to fill up following fields:\n### 1. GitHub Repository URL(SSH)\n### 2. Branch\n### 3. GIS or NON_GIS Project\n### The Project directory is set to /srv/Project by default.",
         "height": 538.5309090909086,
         "width": 564.4383030303027
       },
@@ -367,7 +367,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2240,
+        2300,
         800
       ],
       "executeOnce": false,
@@ -390,7 +390,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2420,
+        2540,
         800
       ],
       "executeOnce": false,
@@ -404,9 +404,9 @@
     },
     {
       "parameters": {
-        "content": "# Deploy\n\n#### Prepare Docker image and push it to the ECR Repository\n#### Copy the Environment file from AWS S3 Bucket\n#### Copy Compose file from /docker directory in the project directory\n#### Run Docker compose file in detach mode\n",
+        "content": "# Deploy\n\n#### Copy .env with some adjustments like project-name, branch etc using sed command\n#### Copy Compose file from /docker directory in the project directory\n#### Run compose file\n",
         "height": 607.3197575757572,
-        "width": 795.6280464069265,
+        "width": 801.1103833023082,
         "color": 4
       },
       "id": "5018434b-d70b-4cf3-9756-084a1ce2cc08",
@@ -415,7 +415,7 @@
       "typeVersion": 1,
       "position": [
         1980,
-        500
+        460
       ]
     },
     {
@@ -484,7 +484,7 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "=sed -e 's/naxa-backend-boilerplate/{{ $('get repo_name').item.json[\"stdout\"] }}/g ; s/develop/{{ $('n8n Form Trigger').item.json[\"branch\"] }}/g ; s//srv/Projects/$PROJECT_NAME/$IMAGE_TAG//srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}/g ; s/685797548389.dkr.ecr.ap-south-1.amazonaws.com/$PROJECT_NAME/anilrajrimal/{{ $('get repo_name').item.json[\"stdout\"] }}/g ; s/$PROJECT_NAME-$IMAGE_TAG/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}/g' env_sample > .env",
+        "command": "=sed -e 's/naxa-backend-boilerplate/{{ $('get repo_name').item.json[\"stdout\"] }}/g; s/develop/{{ $('n8n Form Trigger').item.json[\"branch\"] }}/g; s/685797548389.dkr.ecr.ap-south-1.amazonaws.com/anilrajrimal/g' env_sample > .env",
         "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "7aa2c42b-8082-4719-8564-f0c52e7c0a2d",
@@ -492,7 +492,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2040,
+        2060,
         800
       ],
       "executeOnce": false,
@@ -512,6 +512,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-22T07:14:08.000Z",
-  "versionId": "31b03a36-3783-4520-b070-3ef37f348d08"
+  "updatedAt": "2024-05-22T08:11:28.000Z",
+  "versionId": "e27c0f0e-3c71-49a8-a648-5d11fe9404a0"
 }
