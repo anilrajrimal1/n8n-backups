@@ -1,0 +1,582 @@
+{
+  "active": false,
+  "connections": {
+    "copy .env file": {
+      "main": [
+        [
+          {
+            "node": "Export and load nvm",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Yarn install - packages": {
+      "main": [
+        [
+          {
+            "node": "yarn build project",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "n8n Form Trigger": {
+      "main": [
+        [
+          {
+            "node": "get repo_name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Export and load nvm": {
+      "main": [
+        [
+          {
+            "node": "Install Node & Install yarn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pull from branch": {
+      "main": [
+        [
+          {
+            "node": "copy .env file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clone from repository": {
+      "main": [
+        [
+          {
+            "node": "pull from branch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "yarn build project": {
+      "main": [
+        [
+          {
+            "node": "create nginx config file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test & reload nginx": {
+      "main": [
+        [
+          {
+            "node": "check domain status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get repo_name": {
+      "main": [
+        [
+          {
+            "node": "Clone from repository",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Install Node & Install yarn": {
+      "main": [
+        [
+          {
+            "node": "Yarn install - packages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create nginx config file": {
+      "main": [
+        [
+          {
+            "node": "Test & reload nginx",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check domain status": {
+      "main": [
+        [
+          {
+            "node": "if http_code = 200 (true)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "if http_code = 200 (true)": {
+      "main": [
+        [
+          {
+            "node": "Send noti --> Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send noti --> Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-05-22T04:19:51.349Z",
+  "id": "QnvESOeq1u1FFfrz",
+  "meta": null,
+  "name": "n8n frontend deployment workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=sed 's/admin.naxa.com.np/{{ $('n8n Form Trigger').item.json.domain_name }}/g' .env.example > .env\n",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "5e92ef15-0c97-44e2-844c-3d147f389caa",
+      "name": "copy .env file",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        -1080,
+        840
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "source ~/.nvm/nvm.sh && yarn cache clean && yarn install",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "bfd29086-54dd-4f6a-a3fd-7778ec73e697",
+      "name": "Yarn install - packages",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        -440,
+        800
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "path": "f929d7b4-c0e5-4489-96ee-dbac03aa5383",
+        "formTitle": "Workflow Form",
+        "formDescription": "Fill this form with correct details.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "repo_url_ssh",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "domain_name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "branch",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "master"
+                  },
+                  {
+                    "option": "develop"
+                  },
+                  {
+                    "option": "staging"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "node_version",
+              "fieldType": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ad8374f9-2ecd-4558-8116-66d11d2e465b",
+      "name": "n8n Form Trigger",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2,
+      "position": [
+        -2300,
+        840
+      ],
+      "webhookId": "f929d7b4-c0e5-4489-96ee-dbac03aa5383"
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "export NVM_DIR=\"$HOME/.nvm\"\n[ -s \"$NVM_DIR/nvm.sh\" ] && \\. \"$NVM_DIR/nvm.sh\"\n[ -s \"$NVM_DIR/bash_completion\" ] && \\. \"$NVM_DIR/bash_completion\"",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "64fab416-db84-490e-89fd-a98d534d2d01",
+      "name": "Export and load nvm",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        -920,
+        840
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=git pull origin {{ $('n8n Form Trigger').item.json.branch }} || git pull origin master",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json.stdout }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "c3f7d675-28aa-45e0-9606-b6083cd867a3",
+      "name": "pull from branch",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        -1380,
+        740
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=git clone -b {{ $('n8n Form Trigger').item.json.branch }} {{ $('n8n Form Trigger').item.json.repo_url_ssh }} {{ $json.stdout }}-{{ $('n8n Form Trigger').item.json.branch }} || git clone -b master {{ $('n8n Form Trigger').item.json.repo_url_ssh }} {{ $json.stdout }}-master",
+        "cwd": "=/srv/Projects/"
+      },
+      "id": "68f19839-9f03-4312-8d33-eae83cd1665d",
+      "name": "Clone from repository",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        -1620,
+        800
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "source ~/.nvm/nvm.sh && yarn build",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "79f7b232-c501-4b09-a5e9-4979912add95",
+      "name": "yarn build project",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        800
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "sudo nginx -t && sudo nginx -s reload",
+        "cwd": "/etc/nginx/sites-enabled/"
+      },
+      "id": "e50813f8-7d0c-45b3-9c85-eb8595554439",
+      "name": "Test & reload nginx",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        260,
+        800
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "content": "# Step 1\n\nGet Project name from Repository url\n\nClone Project from GitHub Repository to /srv/Projects directory\n\nPull from respective branch",
+        "height": 463.19854545454547,
+        "width": 706.9920969696972,
+        "color": 4
+      },
+      "id": "8e7ab502-6c96-4366-ad9d-f758a67b79f3",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1920,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Step 2\n\nSearch and Replace to api_url .env file\n\nExport and Load nvm\n\nDownload and use respective node version || use V19 as default and Install Yarn-latest",
+        "height": 463.19854545454547,
+        "width": 552.0640000000002,
+        "color": 4
+      },
+      "id": "99f81d8e-7fb3-4427-8f3c-8b92143fdc55",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1140,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Step 3\n\nInstall required Packages using yarn\n\nBuild Project using yarn",
+        "height": 463.19854545454547,
+        "width": 439.81963636363645,
+        "color": 4
+      },
+      "id": "5ef5b345-64ee-4ada-b22b-a37e4a80f0c0",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -520,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Step 4\n\nCreate nginx config file\n\nTest and Reload nginx",
+        "height": 463.19854545454547,
+        "width": 439.81963636363645,
+        "color": 4
+      },
+      "id": "b860c757-5ca9-45ce-9c1d-bedc49fae65b",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -20,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=url={{ $('n8n Form Trigger').item.json.repo_url_ssh }}; \nrepo_name=$(basename \"${url%.git}\"); \necho \"$repo_name\"\n",
+        "cwd": "=/srv/Projects/"
+      },
+      "id": "9405aa14-e0b2-4fa2-844f-fc549a5e5cfe",
+      "name": "get repo_name",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        -1860,
+        840
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=source ~/.nvm/nvm.sh && nvm use {{ $('n8n Form Trigger').item.json.node_version }} || nvm use 19 && sudo npm install -g yarn",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "cf6d247b-b72a-4e8a-9795-5bc9f0af5b10",
+      "name": "Install Node & Install yarn",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        -740,
+        840
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "content": "# Form Trigger Node\nIn this trigger form you need to fill up following fields:\n1. GitHub Repository URL(SSH)\n2. Domain Name\n3. Branch\n4. Node Version (optional) --> I used node V19 as default version\n#### The Project directory is set to /srv/Project by default.",
+        "height": 454.1672727272726,
+        "width": 476.55951515151503
+      },
+      "id": "3c669fe9-903e-4303-830e-27707b029403",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2480,
+        589.4167272727259
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=sudo bash -c \"echo ' server {\n    listen 80;\n    server_name {{ $('n8n Form Trigger').item.json[\"domain_name\"] }};    # domain name to respond to\n    access_log /var/log/nginx/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.access;\n    error_log /var/log/nginx/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.error;\n\n    client_max_body_size 500M;            # Allow uploads/transper to 100MB.\n    client_body_buffer_size 128k;\n\n    gzip on;            # Allows compression; can be CPU intensive\n    gzip_min_length 150;\n    gzip_types    text/plain text/css application/javascript application/x-javascript text/javascript image/x-icon image/svg+xml image/png application/json ;\n\n              root /srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json[\"branch\"] }}/dist;\n              index  index.html index.htm;\n     location / {\n              add_header Access-Control-Allow-Origin *;\n              try_files \\$uri /index.html;            # if no endpoint found try index.html\n             }\n\n}' > /etc/nginx/sites-enabled/{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}.conf\"\n",
+        "cwd": "/etc/nginx/sites-enabled/"
+      },
+      "id": "eb8cc0c9-d01e-43e0-b1f3-cc751d9837ed",
+      "name": "create nginx config file",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        60,
+        800
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=curl -LI https://{{ $('n8n Form Trigger').item.json[\"domain_name\"] }} -o /dev/null -w '%{http_code}\\n' -s"
+      },
+      "id": "00c4d71f-c95d-4df4-94ea-e9398b8fde73",
+      "name": "check domain status",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        680,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "58f8129b-039e-4455-bd2a-9db9d4dd5628",
+              "leftValue": "={{ $json.stdout }}",
+              "rightValue": "200",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f97c1911-e84f-4c66-89cd-f8c7d4a3d0bc",
+      "name": "if http_code = 200 (true)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        900,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C074KAMPD16",
+          "mode": "list",
+          "cachedResultName": "dvs-v3-frontend"
+        },
+        "text": "=Congratulations!!\n\nFinally your site is live now !\n===========================================================================================\nvisit https://{{ $('n8n Form Trigger').item.json[\"domain_name\"] }}\n===========================================================================================\n\nSome other details:\n\nGitHub Repository: {{ $('n8n Form Trigger').item.json[\"repo_url_ssh\"]}}\nGitHub Branch: {{ $('n8n Form Trigger').item.json[\"branch\"] }}\nProject Directory: /srv/Projects/\nProject Name: {{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}\nNode Version: {{ $('n8n Form Trigger').item.json[\"node_version\"] }}\n\nHope this information is useful for you !!",
+        "otherOptions": {}
+      },
+      "id": "fb428794-2b9f-4656-b5a9-cf875d176b6c",
+      "name": "Send noti --> Success",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [
+        1180,
+        680
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C074KAMPD16",
+          "mode": "list",
+          "cachedResultName": "dvs-v3-frontend"
+        },
+        "text": "=\nYou've Got an Issue !!\n\nGo & verify if everything is in working condition.\n=========================================================================\n\nWorkflow Details:\nGitHub Repository: {{ $('n8n Form Trigger').item.json[\"repo_url_ssh\"]}}\nGitHub Branch: {{ $('n8n Form Trigger').item.json[\"branch\"] }}\nProject Directory: /srv/Projects/\nProject Name: {{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}\nNode Version: {{ $('n8n Form Trigger').item.json[\"node_version\"] }}\n\nHope this information is useful for you !!",
+        "otherOptions": {}
+      },
+      "id": "cf95ceba-f38f-485f-831f-c32c8b16104c",
+      "name": "Send noti --> Failed",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [
+        1180,
+        920
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "content": "# Slack Notification\n\n#### Check domain Status and outputs http_code of respective domain\n\n#### The IF node then verifies that the http_code is 200 or not\n\n#### If http_code = 200, Sends Success notification to slack channel (dvs-v3-frontend)\n\n#### If http_code != 200, Sends Failed notification to same channel\n\n",
+        "height": 685.2435899159664,
+        "width": 1034.787400186742
+      },
+      "id": "48dac472-aa84-4005-afc2-0f43c0cf547b",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        460,
+        460
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-05-22T04:20:05.000Z",
+  "versionId": "2f36a7a9-bbd6-4aa9-968f-76ab947424d4"
+}
