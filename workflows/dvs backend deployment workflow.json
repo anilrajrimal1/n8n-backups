@@ -1,0 +1,461 @@
+{
+  "active": false,
+  "connections": {
+    "n8n Form Trigger": {
+      "main": [
+        [
+          {
+            "node": "get repo_name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clone from repository": {
+      "main": [
+        [
+          {
+            "node": "pull from branch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get repo_name": {
+      "main": [
+        [
+          {
+            "node": "Clone from repository",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pull from branch": {
+      "main": [
+        [
+          {
+            "node": "check gis or non_gis ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build and Push Docker Image": {
+      "main": [
+        [
+          {
+            "node": "copy .env file from s3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Dependencies NON-GIS": {
+      "main": [
+        [
+          {
+            "node": "Build and Push Docker Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Dependencies GIS": {
+      "main": [
+        [
+          {
+            "node": "Build and Push Docker Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "copy .env file from s3": {
+      "main": [
+        [
+          {
+            "node": "Copy compose file from /docker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy compose file from /docker": {
+      "main": [
+        [
+          {
+            "node": "Run compose file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check gis or non_gis ?": {
+      "main": [
+        [
+          {
+            "node": "Create Dependencies GIS",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Dependencies NON-GIS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-05-22T04:20:22.261Z",
+  "id": "8faoKe57v1HV9O10",
+  "meta": null,
+  "name": "dvs backend deployment workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "f929d7b4-c0e5-4489-96ee-dbac03aa5383",
+        "formTitle": "Workflow Form",
+        "formDescription": "Fill this form with correct details.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "repo_url_ssh",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "branch",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "master"
+                  },
+                  {
+                    "option": "develop"
+                  },
+                  {
+                    "option": "staging"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "project_type",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "gis"
+                  },
+                  {
+                    "option": "non_gis"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a19c6b07-56a8-47e5-afc3-f7bbe83424a8",
+      "name": "n8n Form Trigger",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2,
+      "position": [
+        40,
+        840
+      ],
+      "webhookId": "5a98073e-934a-4964-8527-989b6412d39a"
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=git pull origin {{ $('n8n Form Trigger').item.json.branch }} || git pull origin master",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json.stdout }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "38c94303-35f1-4f6c-aea0-e7287ee46fb2",
+      "name": "pull from branch",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        960,
+        760
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=git clone -b {{ $('n8n Form Trigger').item.json.branch }} {{ $('n8n Form Trigger').item.json.repo_url_ssh }} {{ $json.stdout }}-{{ $('n8n Form Trigger').item.json.branch }} || git clone -b master {{ $('n8n Form Trigger').item.json.repo_url_ssh }} {{ $json.stdout }}-master",
+        "cwd": "=/srv/Projects/"
+      },
+      "id": "93b134b6-d6ca-48d9-80ed-d4f011bc2959",
+      "name": "Clone from repository",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        740,
+        800
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "# Build\n\n#### Get repo name from the form data\n#### Clone project from GitHub\n#### Pull respective branch\n#### Prepare dependencies : if project is GIS ----> create GIS dependencies else create NON_GIS dependencies\n",
+        "height": 709.6809696969693,
+        "width": 1162.2042181818176,
+        "color": 5
+      },
+      "id": "c55e90d0-18c0-4dfb-bdfb-749f2ebb2d39",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        460,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=url={{ $('n8n Form Trigger').item.json.repo_url_ssh }}; \nrepo_name=$(basename \"${url%.git}\"); \necho \"$repo_name\"\n",
+        "cwd": "=/srv/Projects/"
+      },
+      "id": "b6c740c0-9711-45c5-91b2-3e43b53519f9",
+      "name": "get repo_name",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        520,
+        840
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "# Form Trigger Node\n## In this trigger form you need to fill up following fields:\n### 1. GitHub Repository URL(SSH)\n### 2. Domain Name\n### 3. Branch\n### 4. Node Version (optional) --> I used node V19 as default version\n### The Project directory is set to /srv/Project by default.",
+        "height": 538.5309090909086,
+        "width": 564.4383030303027
+      },
+      "id": "03431b0e-eb7e-4e9d-8420-8820f0e9e926",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -147.87878787878753,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=cp dependencies/apt_requirements_nongis.txt apt_requirements.txt && cp dependencies/requirements_nongis.txt requirements.txt",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "b8e1e7d3-4c61-44eb-a67f-e2bd2d0cad95",
+      "name": "Create Dependencies NON-GIS",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        900
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=cp dependencies/apt_requirements_gis.txt apt_requirements.txt && cp dependencies/requirements_gis.txt requirements.txt",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "17cd707d-8d41-44eb-8bbe-e2bdf17bd31a",
+      "name": "Create Dependencies GIS",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        700
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=docker build -f ./docker/Dockerfile -t 685797548389.dkr.ecr.ap-south-1.amazonaws.com/{{ $('get repo_name').item.json[\"stdout\"] }}:{{ $('n8n Form Trigger').item.json[\"branch\"]}} . && docker push 685797548389.dkr.ecr.ap-south-1.amazonaws.com/{{ $('get repo_name').item.json[\"stdout\"] }}:{{ $('n8n Form Trigger').item.json[\"branch\"]}} ",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "c9944433-b3c0-4000-b096-19efe548df3a",
+      "name": "Build and Push Docker Image",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        780
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=aws s3 cp s3://naxa-project-envs/{{ $('get repo_name').item.json[\"stdout\"] }}/backend/{{ $('n8n Form Trigger').item.json[\"branch\"] }}/.env .env",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "7aa2c42b-8082-4719-8564-f0c52e7c0a2d",
+      "name": "copy .env file from s3",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1960,
+        780
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=cp ./docker/server/docker-compose.{{ $('n8n Form Trigger').item.json.branch }}.yml docker-compose.yml",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "bdde8e43-437f-407d-9dbe-2b665c7770d9",
+      "name": "Copy compose file from /docker",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        780
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=docker compose --file docker-compose.yml up --detach --build",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "66d6be93-cc83-4aac-9501-c837a6660768",
+      "name": "Run compose file",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2340,
+        780
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "content": "# Deploy\n\n#### Prepare Docker image and push it to the ECR Repository\n#### Copy the Environment file from AWS S3 Bucket\n#### Copy Compose file from /docker directory in the project directory\n#### Run Docker compose file in detach mode\n",
+        "height": 607.3197575757572,
+        "width": 977.6587636363632,
+        "color": 4
+      },
+      "id": "5018434b-d70b-4cf3-9756-084a1ce2cc08",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('n8n Form Trigger').item.json.project_type }}",
+                    "rightValue": "gis",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "GIS"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "89e93f18-1837-40c7-a5cf-d369529d0c57",
+                    "leftValue": "={{ $('n8n Form Trigger').item.json.project_type }}",
+                    "rightValue": "non_gis",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "NON_GIS"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "26f54d10-060a-404d-a450-a767bbd2edf7",
+      "name": "check gis or non_gis ?",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        1180,
+        800
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-05-22T04:20:44.000Z",
+  "versionId": "ffc26673-f376-4ce6-ad10-5dde3e51fe01"
+}
