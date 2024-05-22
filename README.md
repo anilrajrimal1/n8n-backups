@@ -21,7 +21,7 @@ Follow these steps to set up automated backups for your n8n workflows:
 
 ## Restoring Workflows
 
-### For restoration I personally suggest you to download the JSON file from githun on your local machine and then importing it from n8n.
+### For restoration I personally suggest you to download the JSON file from GitHub on your local machine and then import it from n8n.
 
 ## Contributing
 
