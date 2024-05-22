@@ -21,11 +21,7 @@ Follow these steps to set up automated backups for your n8n workflows:
 
 ## Restoring Workflows
 
-In the event that you need to restore your workflows from a backup, follow these steps:
-
-1. **Clone Repository**: Clone your forked repository to your local machine.
-2. **Locate Workflow JSON**: Navigate to the backup file containing the workflow you want to restore.
-3. **Import Workflow**: In your n8n instance, import the JSON file using the "Import" feature to restore your workflow to its previous state.
+### For restoration I personally suggest you to download the JSON file from githun on your local machine and then importing it from n8n.
 
 ## Contributing
 
