@@ -121,7 +121,9 @@
   },
   "createdAt": "2024-05-22T04:20:22.261Z",
   "id": "8faoKe57v1HV9O10",
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "dvs backend deployment workflow",
   "nodes": [
     {
@@ -198,6 +200,12 @@
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      },
       "onError": "continueRegularOutput"
     },
     {
@@ -216,6 +224,12 @@
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      },
       "onError": "continueRegularOutput"
     },
     {
@@ -250,6 +264,12 @@
       ],
       "executeOnce": false,
       "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      },
       "onError": "continueRegularOutput"
     },
     {
@@ -282,7 +302,13 @@
         900
       ],
       "executeOnce": false,
-      "alwaysOutputData": false
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     },
     {
       "parameters": {
@@ -299,7 +325,13 @@
         700
       ],
       "executeOnce": false,
-      "alwaysOutputData": false
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     },
     {
       "parameters": {
@@ -316,7 +348,13 @@
         780
       ],
       "executeOnce": false,
-      "alwaysOutputData": false
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     },
     {
       "parameters": {
@@ -333,7 +371,13 @@
         780
       ],
       "executeOnce": false,
-      "alwaysOutputData": false
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     },
     {
       "parameters": {
@@ -350,7 +394,13 @@
         780
       ],
       "executeOnce": false,
-      "alwaysOutputData": false
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     },
     {
       "parameters": {
@@ -367,7 +417,13 @@
         780
       ],
       "executeOnce": false,
-      "alwaysOutputData": false
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     },
     {
       "parameters": {
@@ -456,6 +512,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-22T04:20:44.000Z",
-  "versionId": "ffc26673-f376-4ce6-ad10-5dde3e51fe01"
+  "updatedAt": "2024-05-22T04:35:47.000Z",
+  "versionId": "79366ffd-7d2e-4c46-b6d7-f25b58604922"
 }
