@@ -175,6 +175,46 @@
           }
         ]
       ]
+    },
+    "Run compose file": {
+      "main": [
+        [
+          {
+            "node": "docker ps",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If the output of docker ps is not empty ?": {
+      "main": [
+        [
+          {
+            "node": "Successful",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "docker ps": {
+      "main": [
+        [
+          {
+            "node": "If the output of docker ps is not empty ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2024-05-22T04:20:22.261Z",
@@ -717,6 +757,132 @@
           "name": "SSH Private Key account"
         }
       }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "fd4e88b1-667d-400d-9128-b9bfa83db8f5",
+              "leftValue": "={{ $json.stdout }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "7d37ce92-3763-4d47-8494-c75cb0e051f7",
+      "name": "If the output of docker ps is not empty ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        3780,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Slack Notifications\n#### 1. check running containers\n#### 2. if the running containers form previous node exists\n#### 3. Send notification to slack \n",
+        "height": 757.8498176764334,
+        "width": 917.7680452321515,
+        "color": 3
+      },
+      "id": "76778926-a465-4152-8d14-852ef05460f5",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3460,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "docker ps",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "5331122d-3c9c-41be-872c-de48ec00ee61",
+      "name": "docker ps",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        3560,
+        800
+      ],
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C074R8WP9S7",
+          "mode": "list",
+          "cachedResultName": "dvs-backend"
+        },
+        "text": "=The containers are are up and running. The deployment is successful I guess.\nThe container details are as follows:\n==========================================================================================================================================================================================================================\n{{ $json[\"stdout\"] }}",
+        "otherOptions": {}
+      },
+      "id": "56cc1a7f-85b2-408e-8de6-e9573cd78bd7",
+      "name": "Successful",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        4040,
+        660
+      ],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "4ODDVC4CzvbIn7Fk",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C074R8WP9S7",
+          "mode": "list",
+          "cachedResultName": "dvs-backend"
+        },
+        "text": "Your containers are not running. \nGo and check them once !!!",
+        "otherOptions": {}
+      },
+      "id": "fc38f18c-69a1-423b-ad95-a82d8ddd2c2e",
+      "name": "Failed",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        4040,
+        880
+      ],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "4ODDVC4CzvbIn7Fk",
+          "name": "Slack account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -726,6 +892,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-22T10:54:20.000Z",
-  "versionId": "0d67d19f-8e68-4ab3-a83c-1f28361aae8d"
+  "updatedAt": "2024-05-23T04:55:47.000Z",
+  "versionId": "2041606d-38ac-4067-9cde-6640c12ea0c1"
 }
