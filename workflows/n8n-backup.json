@@ -23,31 +23,6 @@
         ]
       ]
     },
-    "github_status": {
-      "main": [
-        [
-          {
-            "node": "same",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "different",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "new",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "same": {
       "main": [
         [
@@ -145,7 +120,7 @@
       "main": [
         [
           {
-            "node": "github_status",
+            "node": "check_github_status",
             "type": "main",
             "index": 0
           }
@@ -168,6 +143,31 @@
         [
           {
             "node": "Globals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check_github_status": {
+      "main": [
+        [
+          {
+            "node": "same",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "different",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "new",
             "type": "main",
             "index": 0
           }
@@ -230,35 +230,6 @@
         }
       },
       "continueOnFail": true
-    },
-    {
-      "parameters": {
-        "dataType": "string",
-        "value1": "={{$json[\"github_status\"]}}",
-        "rules": {
-          "rules": [
-            {
-              "value2": "same"
-            },
-            {
-              "value2": "different",
-              "output": 1
-            },
-            {
-              "value2": "new",
-              "output": 2
-            }
-          ]
-        }
-      },
-      "id": "d84e8997-c3d0-4df8-b211-03b59ae08b0c",
-      "name": "github_status",
-      "type": "n8n-nodes-base.switch",
-      "position": [
-        220,
-        700
-      ],
-      "typeVersion": 1
     },
     {
       "parameters": {},
@@ -469,6 +440,35 @@
         855
       ],
       "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{$json[\"github_status\"]}}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "same"
+            },
+            {
+              "value2": "different",
+              "output": 1
+            },
+            {
+              "value2": "new",
+              "output": 2
+            }
+          ]
+        }
+      },
+      "id": "d84e8997-c3d0-4df8-b211-03b59ae08b0c",
+      "name": "check_github_status",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        220,
+        700
+      ],
+      "typeVersion": 1
     }
   ],
   "pinData": {},
@@ -478,6 +478,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-05-22T04:44:13.000Z",
-  "versionId": "b73bd961-0c01-4c75-8e1e-ea32801afcfa"
+  "updatedAt": "2024-07-20T02:46:19.000Z",
+  "versionId": "65fb9229-da44-4e74-908e-6e4e331e0d04"
 }
