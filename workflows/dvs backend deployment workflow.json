@@ -793,7 +793,7 @@
     },
     {
       "parameters": {
-        "content": "## Slack Notifications\n#### 1. check running containers\n#### 2. if the running containers form previous node exists\n#### 3. Send notification to slack \n",
+        "content": "## Slack Notifications\n#### 1. check running containers\n#### 2. if the running containers form previous node exists\n#### 3. Send notification to slack App\n",
         "height": 757.8498176764334,
         "width": 917.7680452321515,
         "color": 3
@@ -892,6 +892,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-06-01T12:39:22.000Z",
-  "versionId": "dca82ad3-02bd-4230-9964-1e9910015bd1"
+  "updatedAt": "2024-07-20T02:44:45.000Z",
+  "versionId": "b6983bb4-5065-4989-a8bd-79801a7dc2ea"
 }
