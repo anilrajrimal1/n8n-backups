@@ -408,7 +408,7 @@
     },
     {
       "parameters": {
-        "content": "# Step 3\n\nInstall required Packages using yarn\n\nBuild Project using yarn",
+        "content": "# Step 3\n\nInstall required Packages using yarn command\n\nBuild Project using yarn using yarn build command",
         "height": 463.19854545454547,
         "width": 439.81963636363645,
         "color": 4
@@ -657,6 +657,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-05-22T04:37:25.000Z",
-  "versionId": "9d7c25db-2f4e-400f-ac3e-7583a9a5474e"
+  "updatedAt": "2024-09-30T04:02:52.000Z",
+  "versionId": "fafb7186-5871-440e-b8b1-e1eea80ea490"
 }
