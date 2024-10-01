@@ -392,7 +392,7 @@
     },
     {
       "parameters": {
-        "content": "# Step 2\n\nSearch and Replace to api_url .env file\n\nExport and Load nvm\n\nDownload and use respective node version || use V19 as default and Install Yarn-latest",
+        "content": "# Step 2\n\nSearch and Replace to api_url .env file\n\nExport and Load nvm\n\nDownload and use respective node version || use node V19 as default and Install Yarn-latest",
         "height": 463.19854545454547,
         "width": 552.0640000000002,
         "color": 4
@@ -657,6 +657,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-09-30T04:02:52.000Z",
-  "versionId": "fafb7186-5871-440e-b8b1-e1eea80ea490"
+  "updatedAt": "2024-10-01T03:40:56.000Z",
+  "versionId": "d4f48231-59aa-48e2-9c82-cd27301da95a"
 }
