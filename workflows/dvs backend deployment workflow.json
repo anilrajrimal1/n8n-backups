@@ -479,7 +479,7 @@
     },
     {
       "parameters": {
-        "content": "# Deploy\n\n#### Copy .env with some adjustments like project-name, branch etc using sed command\n#### Copy entrypoint.sh file\n#### Check for the branch, because the compose files are different for different branch\n#### Copy Compose file from /docker directory in the project directory (master, develop or staging)\n#### Finally run the compose file using command\n ",
+        "content": "# Deploy\n\n#### Copy .env with some adjustments like project-name, branch etc using sed (search&Replace) command\n#### Copy entrypoint.sh file\n#### Check for the branch, because the compose files are different for different branch\n#### Copy Compose file from /docker directory in the project directory (master, develop or staging)\n#### Finally run the compose file using command\n ",
         "height": 881.4366023447923,
         "width": 1434.4131432190434,
         "color": 4
@@ -892,6 +892,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-09-30T04:01:50.000Z",
-  "versionId": "43766137-1379-4209-a920-9842cef92103"
+  "updatedAt": "2024-10-01T03:41:33.000Z",
+  "versionId": "4b9039ee-6ee0-4518-9972-cd3cdd929732"
 }
