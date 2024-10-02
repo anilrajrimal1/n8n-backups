@@ -1,0 +1,897 @@
+{
+  "active": false,
+  "connections": {
+    "n8n Form Trigger": {
+      "main": [
+        [
+          {
+            "node": "get repo_name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clone from repository": {
+      "main": [
+        [
+          {
+            "node": "pull from branch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get repo_name": {
+      "main": [
+        [
+          {
+            "node": "Clone from repository",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pull from branch": {
+      "main": [
+        [
+          {
+            "node": "check gis or non_gis ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build and Push Docker Image": {
+      "main": [
+        [
+          {
+            "node": "copy .env file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Dependencies NON-GIS": {
+      "main": [
+        [
+          {
+            "node": "Build and Push Docker Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Dependencies GIS": {
+      "main": [
+        [
+          {
+            "node": "Build and Push Docker Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check gis or non_gis ?": {
+      "main": [
+        [
+          {
+            "node": "Create Dependencies GIS",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Dependencies NON-GIS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "copy .env file": {
+      "main": [
+        [
+          {
+            "node": "copy entry-point script",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check branch type": {
+      "main": [
+        [
+          {
+            "node": "Copy compose file for master",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Copy compose file for develop",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Copy compose file for staging",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy compose file for master": {
+      "main": [
+        [
+          {
+            "node": "Run compose file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy compose file for develop": {
+      "main": [
+        [
+          {
+            "node": "Run compose file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy compose file for staging": {
+      "main": [
+        [
+          {
+            "node": "Run compose file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "copy entry-point script": {
+      "main": [
+        [
+          {
+            "node": "check branch type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run compose file": {
+      "main": [
+        [
+          {
+            "node": "docker ps",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If the output of docker ps is not empty ?": {
+      "main": [
+        [
+          {
+            "node": "Successful",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "docker ps": {
+      "main": [
+        [
+          {
+            "node": "If the output of docker ps is not empty ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-05-22T04:20:22.261Z",
+  "id": "8faoKe57v1HV9O10",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "dvs-backend deployment workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "f929d7b4-c0e5-4489-96ee-dbac03aa5383",
+        "formTitle": "Workflow Form",
+        "formDescription": "Fill this form with correct details.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "repo_url_ssh",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "branch",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "master"
+                  },
+                  {
+                    "option": "develop"
+                  },
+                  {
+                    "option": "staging"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "project_type",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "gis"
+                  },
+                  {
+                    "option": "non_gis"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a19c6b07-56a8-47e5-afc3-f7bbe83424a8",
+      "name": "n8n Form Trigger",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2,
+      "position": [
+        40,
+        840
+      ],
+      "webhookId": "5a98073e-934a-4964-8527-989b6412d39a"
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=git pull origin {{ $('n8n Form Trigger').item.json.branch }} || git pull origin master",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json.stdout }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "38c94303-35f1-4f6c-aea0-e7287ee46fb2",
+      "name": "pull from branch",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        960,
+        760
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=git clone -b {{ $('n8n Form Trigger').item.json.branch }} {{ $('n8n Form Trigger').item.json.repo_url_ssh }} {{ $json.stdout }}-{{ $('n8n Form Trigger').item.json.branch }} || git clone -b master {{ $('n8n Form Trigger').item.json.repo_url_ssh }} {{ $json.stdout }}-master",
+        "cwd": "=/srv/Projects/"
+      },
+      "id": "93b134b6-d6ca-48d9-80ed-d4f011bc2959",
+      "name": "Clone from repository",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        740,
+        800
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "# Build\n\n#### Get repo name from the form data\n#### Clone project from GitHub Repository\n#### Pull respective branch from repo\n#### Prepare dependencies : if project is GIS ----> create GIS dependencies else create NON_GIS dependencies\n#### Build docker image and push it to DockerHub",
+        "height": 709.6809696969693,
+        "width": 1433.4656791511757,
+        "color": 5
+      },
+      "id": "c55e90d0-18c0-4dfb-bdfb-749f2ebb2d39",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        460,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=url={{ $('n8n Form Trigger').item.json.repo_url_ssh }}; \nrepo_name=$(basename \"${url%.git}\"); \necho \"$repo_name\"\n",
+        "cwd": "=/srv/Projects/"
+      },
+      "id": "b6c740c0-9711-45c5-91b2-3e43b53519f9",
+      "name": "get repo_name",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        520,
+        840
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "# Form Trigger Node\n## In this trigger form you need to fill up following fields:\n### 1. GitHub Repository URL(SSH)\n### 2. Branch Name\n### 3. GIS or NON_GIS Project\n### The Project directory is set to /srv/Project by default.",
+        "height": 538.5309090909086,
+        "width": 564.4383030303027
+      },
+      "id": "03431b0e-eb7e-4e9d-8420-8820f0e9e926",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -147.87878787878753,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=cp dependencies/apt_requirements_nongis.txt apt_requirements.txt && cp dependencies/requirements_nongis.txt requirements.txt",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "b8e1e7d3-4c61-44eb-a67f-e2bd2d0cad95",
+      "name": "Create Dependencies NON-GIS",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        900
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=cp dependencies/apt_requirements_gis.txt apt_requirements.txt && cp dependencies/requirements_gis.txt requirements.txt",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "17cd707d-8d41-44eb-8bbe-e2bdf17bd31a",
+      "name": "Create Dependencies GIS",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        700
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=echo \"L0vey0um0m123@\" | docker login -u anilrajrimal --password-stdin && \\\ndocker build -f ./docker/Dockerfile -t anilrajrimal/{{ $('get repo_name').item.json[\"stdout\"] }}:{{ $('n8n Form Trigger').item.json[\"branch\"]}} . && \\\ndocker push anilrajrimal/{{ $('get repo_name').item.json[\"stdout\"] }}:{{ $('n8n Form Trigger').item.json[\"branch\"]}}",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "c9944433-b3c0-4000-b096-19efe548df3a",
+      "name": "Build and Push Docker Image",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        800
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=docker compose --file docker-compose.yml up --detach --build",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "66d6be93-cc83-4aac-9501-c837a6660768",
+      "name": "Run compose file",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        3200,
+        800
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Deploy\n\n#### Copy .env with some adjustments like project-name, branch etc using sed (search&Replace) command\n#### Copy entrypoint.sh file\n#### Check for the branch, because the compose files are different for different branch\n#### Copy Compose file from /docker directory in the project directory (master, develop or staging)\n#### Finally run the compose file using docker compose up -d command\n ",
+        "height": 881.4366023447923,
+        "width": 1434.4131432190434,
+        "color": 4
+      },
+      "id": "5018434b-d70b-4cf3-9756-084a1ce2cc08",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1960,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('n8n Form Trigger').item.json.project_type }}",
+                    "rightValue": "gis",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "GIS"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "89e93f18-1837-40c7-a5cf-d369529d0c57",
+                    "leftValue": "={{ $('n8n Form Trigger').item.json.project_type }}",
+                    "rightValue": "non_gis",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "NON_GIS"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "26f54d10-060a-404d-a450-a767bbd2edf7",
+      "name": "check gis or non_gis ?",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        1180,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=sed -e 's/naxa-backend-boilerplate/{{ $('get repo_name').item.json[\"stdout\"] }}/g; s/develop/{{ $('n8n Form Trigger').item.json[\"branch\"] }}/g; s/685797548389.dkr.ecr.ap-south-1.amazonaws.com/anilrajrimal/g' env_sample > .env",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "7aa2c42b-8082-4719-8564-f0c52e7c0a2d",
+      "name": "copy .env file",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        800
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('n8n Form Trigger').item.json.branch }}",
+                    "rightValue": "master",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "MASTER-BRANCH"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "89e93f18-1837-40c7-a5cf-d369529d0c57",
+                    "leftValue": "={{ $('n8n Form Trigger').item.json.branch }}",
+                    "rightValue": "develop",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "DEVELOP-BRANCH"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "a47ddda6-a62f-4bca-84d7-9baf240c2235",
+                    "leftValue": "={{ $('n8n Form Trigger').item.json.branch }}",
+                    "rightValue": "staging",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "STAGING-BRANCH"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6b255f2c-fb34-4d2c-91fb-87865c532bfc",
+      "name": "check branch type",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        2560,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=cp ./docker/server/docker-compose.master.yml docker-compose.yml",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "bdde8e43-437f-407d-9dbe-2b665c7770d9",
+      "name": "Copy compose file for master",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2880,
+        580
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=cp ./docker/docker-compose.local.yml docker-compose.yml",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "3cc827e1-ae80-4209-8080-ea6511b59058",
+      "name": "Copy compose file for develop",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2880,
+        800
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=cp ./docker/docker-compose.local.yml docker-compose.yml",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "9756ad0d-3244-478a-9b40-5f6b7e6124c5",
+      "name": "Copy compose file for staging",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2880,
+        1020
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=cp docker/docker-entrypoint.sh entrypoint.sh",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "25761df9-6da8-4759-93be-d809048ccf4e",
+      "name": "copy entry-point script",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2260,
+        800
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "fd4e88b1-667d-400d-9128-b9bfa83db8f5",
+              "leftValue": "={{ $json.stdout }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "7d37ce92-3763-4d47-8494-c75cb0e051f7",
+      "name": "If the output of docker ps is not empty ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        3780,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Slack Notifications\n#### 1. check running containers\n#### 2. if the running containers form previous node exists\n#### 3. Send notification to slack App\n",
+        "height": 757.8498176764334,
+        "width": 917.7680452321515,
+        "color": 3
+      },
+      "id": "76778926-a465-4152-8d14-852ef05460f5",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3460,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "docker ps",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "5331122d-3c9c-41be-872c-de48ec00ee61",
+      "name": "docker ps",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        3560,
+        800
+      ],
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C074R8WP9S7",
+          "mode": "list",
+          "cachedResultName": "dvs-backend"
+        },
+        "text": "=The containers are are up and running. The deployment is successful I guess.\nThe container details are as follows:\n==========================================================================================================================================================================================================================\n{{ $json[\"stdout\"] }}",
+        "otherOptions": {}
+      },
+      "id": "56cc1a7f-85b2-408e-8de6-e9573cd78bd7",
+      "name": "Successful",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        4040,
+        660
+      ],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "4ODDVC4CzvbIn7Fk",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C074R8WP9S7",
+          "mode": "list",
+          "cachedResultName": "dvs-backend"
+        },
+        "text": "Your containers are not running. \nGo and check them once !!!",
+        "otherOptions": {}
+      },
+      "id": "fc38f18c-69a1-423b-ad95-a82d8ddd2c2e",
+      "name": "Failed",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        4040,
+        880
+      ],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "4ODDVC4CzvbIn7Fk",
+          "name": "Slack account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-10-02T04:01:00.000Z",
+  "versionId": "1f6c842f-8bb1-4c37-8dda-c04dd3407d66"
+}
