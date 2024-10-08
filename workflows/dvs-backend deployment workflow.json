@@ -332,7 +332,7 @@
     },
     {
       "parameters": {
-        "content": "# Build\n\n#### Get repo name from the form data\n#### Clone project from GitHub Repository\n#### Pull respective branch from repo\n#### Prepare dependencies : if project is GIS ----> create GIS dependencies else create NON_GIS dependencies\n#### Build docker image and push it to DockerHub",
+        "content": "# Build\n\n#### Get repo name from the form data\n#### Clone project from GitHub Repository\n#### Pull respective branch from repo\n#### Prepare dependencies : if project is GIS ----> create GIS dependencies else create NON_GIS dependencies\n#### Build docker image and push it to DockerHub Repository",
         "height": 709.6809696969693,
         "width": 1433.4656791511757,
         "color": 5
@@ -892,6 +892,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-10-05T14:32:23.000Z",
-  "versionId": "3ea6f6cc-6d60-4f71-9692-2010147be4a8"
+  "updatedAt": "2024-10-08T12:28:03.000Z",
+  "versionId": "644eaab2-ac8c-4d2a-b5a8-9a769fc77cad"
 }
