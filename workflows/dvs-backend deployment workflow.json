@@ -479,7 +479,7 @@
     },
     {
       "parameters": {
-        "content": "# Deploy\n\n#### Copy .env with some adjustments like project-name, branch etc using sed (search&Replace) command\n#### Copy entrypoint.sh file\n#### Check for the branch, because the compose files are different for different branch\n#### Copy Compose file from /docker directory in the project directory (master, develop or staging)\n#### Finally run the compose file using respective command\n ",
+        "content": "# Deploy\n\n#### Copy .env with some adjustments like project-name, branch etc using sed (search&Replace) command\n#### Copy entrypoint.sh file \n#### Check for the branch, because the compose files are different for different branch\n#### Copy Compose file from /docker directory in the project directory (master, develop or staging)\n#### Finally run the compose file using respective command\n ",
         "height": 881.4366023447923,
         "width": 1434.4131432190434,
         "color": 4
@@ -793,7 +793,7 @@
     },
     {
       "parameters": {
-        "content": "## Slack Notifications\n#### 1. check running containers\n#### 2. if the running containers form previous node exists\n#### 3. Send notification to slack App\n",
+        "content": "## Slack Notifications\n#### 1. check running containers\n#### 2. if the running containers form previous node exists\n#### 3. Send notification to slack Channel\n",
         "height": 757.8498176764334,
         "width": 917.7680452321515,
         "color": 3
@@ -892,6 +892,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-10-08T12:28:03.000Z",
-  "versionId": "644eaab2-ac8c-4d2a-b5a8-9a769fc77cad"
+  "updatedAt": "2024-10-09T14:28:52.000Z",
+  "versionId": "ae36b5b0-1ebd-4b9c-a7a0-df0630efc791"
 }
