@@ -392,7 +392,7 @@
     },
     {
       "parameters": {
-        "content": "# Step 2\n\nSearch and Replace to api_url .env file using sed command\n\nExport and Load respective node version manager\n\nDownload and use respective node version || use node V19 as default and Install Yarn-latest",
+        "content": "# Step 2 \n\nSearch and Replace to api_url .env file using sed command\n\nExport and Load respective node version manager\n\nDownload and use respective node version || use node V19 as default and Install Yarn-latest",
         "height": 463.19854545454547,
         "width": 552.0640000000002,
         "color": 4
@@ -657,6 +657,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-10-12T04:34:00.000Z",
-  "versionId": "471e729f-910e-4e7f-8313-bb67bbc3866c"
+  "updatedAt": "2024-10-13T10:17:15.000Z",
+  "versionId": "4d1092ff-e8e9-46f4-84dd-7df61b7e7278"
 }
