@@ -56,40 +56,18 @@
         ]
       ]
     },
-    "Create Dependencies NON-GIS": {
-      "main": [
-        [
-          {
-            "node": "Build and Push Docker Image",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create Dependencies GIS": {
-      "main": [
-        [
-          {
-            "node": "Build and Push Docker Image",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "check gis or non_gis ?": {
       "main": [
         [
           {
-            "node": "Create Dependencies GIS",
+            "node": "Copy GIS dependencies",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Create Dependencies NON-GIS",
+            "node": "Copy NON-GIS Dependencies",
             "type": "main",
             "index": 0
           }
@@ -215,6 +193,28 @@
           }
         ]
       ]
+    },
+    "Copy GIS dependencies": {
+      "main": [
+        [
+          {
+            "node": "Build and Push Docker Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy NON-GIS Dependencies": {
+      "main": [
+        [
+          {
+            "node": "Build and Push Docker Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2024-05-22T04:20:22.261Z",
@@ -332,7 +332,7 @@
     },
     {
       "parameters": {
-        "content": "# Build\n\n#### Get repo name from the form data\n#### Clone project from GitHub Repository\n#### Pull respective branch from GitHub Repository\n#### Prepare dependencies : if project is GIS ----> create GIS dependencies else create NON_GIS dependencies\n#### Build docker image and push it to DockerHub Repository",
+        "content": "# Build\n\n#### Get repo name from the form data\n#### Clone project from GitHub\n#### Pull respective branch from GitHub Repository\n#### Prepare dependencies : if project is GIS ----> copy GIS dependencies else copy NON_GIS dependencies from directories\n#### Build docker image and push it to DockerHub",
         "height": 709.6809696969693,
         "width": 1433.4656791511757,
         "color": 5
@@ -384,52 +384,6 @@
         -147.87878787878753,
         500
       ]
-    },
-    {
-      "parameters": {
-        "authentication": "privateKey",
-        "command": "=cp dependencies/apt_requirements_nongis.txt apt_requirements.txt && cp dependencies/requirements_nongis.txt requirements.txt",
-        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
-      },
-      "id": "b8e1e7d3-4c61-44eb-a67f-e2bd2d0cad95",
-      "name": "Create Dependencies NON-GIS",
-      "type": "n8n-nodes-base.ssh",
-      "typeVersion": 1,
-      "position": [
-        1440,
-        900
-      ],
-      "executeOnce": false,
-      "alwaysOutputData": false,
-      "credentials": {
-        "sshPrivateKey": {
-          "id": "URw0V20NqIJCpRL3",
-          "name": "SSH Private Key account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "authentication": "privateKey",
-        "command": "=cp dependencies/apt_requirements_gis.txt apt_requirements.txt && cp dependencies/requirements_gis.txt requirements.txt",
-        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
-      },
-      "id": "17cd707d-8d41-44eb-8bbe-e2bdf17bd31a",
-      "name": "Create Dependencies GIS",
-      "type": "n8n-nodes-base.ssh",
-      "typeVersion": 1,
-      "position": [
-        1440,
-        700
-      ],
-      "executeOnce": false,
-      "alwaysOutputData": false,
-      "credentials": {
-        "sshPrivateKey": {
-          "id": "URw0V20NqIJCpRL3",
-          "name": "SSH Private Key account"
-        }
-      }
     },
     {
       "parameters": {
@@ -883,6 +837,52 @@
           "name": "Slack account"
         }
       }
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=cp dependencies/apt_requirements_gis.txt apt_requirements.txt && cp dependencies/requirements_gis.txt requirements.txt",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "17cd707d-8d41-44eb-8bbe-e2bdf17bd31a",
+      "name": "Copy GIS dependencies",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        700
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=cp dependencies/apt_requirements_nongis.txt apt_requirements.txt && cp dependencies/requirements_nongis.txt requirements.txt",
+        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "b8e1e7d3-4c61-44eb-a67f-e2bd2d0cad95",
+      "name": "Copy NON-GIS Dependencies",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        900
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -892,6 +892,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-10-13T10:17:51.000Z",
-  "versionId": "ff2c689c-6b56-480e-9ac7-6ba78138c304"
+  "updatedAt": "2024-10-14T04:16:42.000Z",
+  "versionId": "f136831a-beb6-4951-89b8-06e50c64ec3d"
 }
