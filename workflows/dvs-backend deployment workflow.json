@@ -5,40 +5,7 @@
       "main": [
         [
           {
-            "node": "get repo_name",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Clone from repository": {
-      "main": [
-        [
-          {
-            "node": "pull from branch",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "get repo_name": {
-      "main": [
-        [
-          {
-            "node": "Clone from repository",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "pull from branch": {
-      "main": [
-        [
-          {
-            "node": "check gis or non_gis ?",
+            "node": "export repo_name",
             "type": "main",
             "index": 0
           }
@@ -50,24 +17,6 @@
         [
           {
             "node": "copy .env file",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "check gis or non_gis ?": {
-      "main": [
-        [
-          {
-            "node": "Copy GIS dependencies",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Copy NON-GIS Dependencies",
             "type": "main",
             "index": 0
           }
@@ -215,6 +164,57 @@
           }
         ]
       ]
+    },
+    "export repo_name": {
+      "main": [
+        [
+          {
+            "node": "clone from github",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "clone from github": {
+      "main": [
+        [
+          {
+            "node": "pull respective branch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pull respective branch": {
+      "main": [
+        [
+          {
+            "node": "check gis or non_gis ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check gis or non_gis ?": {
+      "main": [
+        [
+          {
+            "node": "Copy GIS dependencies",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Copy NON-GIS Dependencies",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2024-05-22T04:20:22.261Z",
@@ -284,55 +284,7 @@
     },
     {
       "parameters": {
-        "authentication": "privateKey",
-        "command": "=git pull origin {{ $('n8n Form Trigger').item.json.branch }} || git pull origin master",
-        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json.stdout }}-{{ $('n8n Form Trigger').item.json.branch }}"
-      },
-      "id": "38c94303-35f1-4f6c-aea0-e7287ee46fb2",
-      "name": "pull from branch",
-      "type": "n8n-nodes-base.ssh",
-      "typeVersion": 1,
-      "position": [
-        960,
-        760
-      ],
-      "executeOnce": false,
-      "alwaysOutputData": false,
-      "credentials": {
-        "sshPrivateKey": {
-          "id": "URw0V20NqIJCpRL3",
-          "name": "SSH Private Key account"
-        }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "authentication": "privateKey",
-        "command": "=git clone -b {{ $('n8n Form Trigger').item.json.branch }} {{ $('n8n Form Trigger').item.json.repo_url_ssh }} {{ $json.stdout }}-{{ $('n8n Form Trigger').item.json.branch }} || git clone -b master {{ $('n8n Form Trigger').item.json.repo_url_ssh }} {{ $json.stdout }}-master",
-        "cwd": "=/srv/Projects/"
-      },
-      "id": "93b134b6-d6ca-48d9-80ed-d4f011bc2959",
-      "name": "Clone from repository",
-      "type": "n8n-nodes-base.ssh",
-      "typeVersion": 1,
-      "position": [
-        740,
-        800
-      ],
-      "executeOnce": false,
-      "alwaysOutputData": false,
-      "credentials": {
-        "sshPrivateKey": {
-          "id": "URw0V20NqIJCpRL3",
-          "name": "SSH Private Key account"
-        }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "content": "# Build\n\n#### Get repo name from the form data\n#### Clone project from GitHub\n#### Pull respective branch from GitHub Repository\n#### Prepare dependencies : if project is GIS ----> copy GIS dependencies else copy NON_GIS dependencies from directories\n#### Build docker image and push it to DockerHub",
+        "content": "# Build\n\n#### Get repo name from the form data\n#### Clone project from GitHub\n#### Pull respective branch from GitHub Repository\n#### Prepare dependencies : if project is GIS ----> copy GIS dependencies else copy NON_GIS dependencies from directories\n#### Build docker image and push it to DockerHub (personal)",
         "height": 709.6809696969693,
         "width": 1433.4656791511757,
         "color": 5
@@ -345,30 +297,6 @@
         460,
         420
       ]
-    },
-    {
-      "parameters": {
-        "authentication": "privateKey",
-        "command": "=url={{ $('n8n Form Trigger').item.json.repo_url_ssh }}; \nrepo_name=$(basename \"${url%.git}\"); \necho \"$repo_name\"\n",
-        "cwd": "=/srv/Projects/"
-      },
-      "id": "b6c740c0-9711-45c5-91b2-3e43b53519f9",
-      "name": "get repo_name",
-      "type": "n8n-nodes-base.ssh",
-      "typeVersion": 1,
-      "position": [
-        520,
-        840
-      ],
-      "executeOnce": false,
-      "alwaysOutputData": false,
-      "credentials": {
-        "sshPrivateKey": {
-          "id": "URw0V20NqIJCpRL3",
-          "name": "SSH Private Key account"
-        }
-      },
-      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -388,8 +316,8 @@
     {
       "parameters": {
         "authentication": "privateKey",
-        "command": "=echo \"L0vey0um0m123@\" | docker login -u anilrajrimal --password-stdin && \\\ndocker build -f ./docker/Dockerfile -t anilrajrimal/{{ $('get repo_name').item.json[\"stdout\"] }}:{{ $('n8n Form Trigger').item.json[\"branch\"]}} . && \\\ndocker push anilrajrimal/{{ $('get repo_name').item.json[\"stdout\"] }}:{{ $('n8n Form Trigger').item.json[\"branch\"]}}",
-        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "command": "=echo \"L0vey0um0m123@\" | docker login -u anilrajrimal --password-stdin && \\\ndocker build -f ./docker/Dockerfile -t anilrajrimal/{{ $('export repo_name').item.json[\"stdout\"] }}:{{ $('n8n Form Trigger').item.json[\"branch\"]}} . && \\\ndocker push anilrajrimal/{{ $('export repo_name').item.json[\"stdout\"] }}:{{ $('n8n Form Trigger').item.json[\"branch\"]}}",
+        "cwd": "=/srv/Projects/{{ $('export repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "c9944433-b3c0-4000-b096-19efe548df3a",
       "name": "Build and Push Docker Image",
@@ -412,7 +340,7 @@
       "parameters": {
         "authentication": "privateKey",
         "command": "=docker compose --file docker-compose.yml up --detach --build",
-        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "cwd": "=/srv/Projects/{{ $('export repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "66d6be93-cc83-4aac-9501-c837a6660768",
       "name": "Run compose file",
@@ -449,72 +377,9 @@
     },
     {
       "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict"
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $('n8n Form Trigger').item.json.project_type }}",
-                    "rightValue": "gis",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "GIS"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict"
-                },
-                "conditions": [
-                  {
-                    "id": "89e93f18-1837-40c7-a5cf-d369529d0c57",
-                    "leftValue": "={{ $('n8n Form Trigger').item.json.project_type }}",
-                    "rightValue": "non_gis",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals",
-                      "name": "filter.operator.equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "NON_GIS"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "26f54d10-060a-404d-a450-a767bbd2edf7",
-      "name": "check gis or non_gis ?",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3,
-      "position": [
-        1180,
-        800
-      ]
-    },
-    {
-      "parameters": {
         "authentication": "privateKey",
-        "command": "=sed -e 's/naxa-backend-boilerplate/{{ $('get repo_name').item.json[\"stdout\"] }}/g; s/develop/{{ $('n8n Form Trigger').item.json[\"branch\"] }}/g; s/685797548389.dkr.ecr.ap-south-1.amazonaws.com/anilrajrimal/g' env_sample > .env",
-        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "command": "=sed -e 's/naxa-backend-boilerplate/{{ $('export repo_name').item.json[\"stdout\"] }}/g; s/develop/{{ $('n8n Form Trigger').item.json[\"branch\"] }}/g; s/685797548389.dkr.ecr.ap-south-1.amazonaws.com/anilrajrimal/g' env_sample > .env",
+        "cwd": "=/srv/Projects/{{ $('export repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "7aa2c42b-8082-4719-8564-f0c52e7c0a2d",
       "name": "copy .env file",
@@ -624,7 +489,7 @@
       "parameters": {
         "authentication": "privateKey",
         "command": "=cp ./docker/server/docker-compose.master.yml docker-compose.yml",
-        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "cwd": "=/srv/Projects/{{ $('export repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "bdde8e43-437f-407d-9dbe-2b665c7770d9",
       "name": "Copy compose file for master",
@@ -647,7 +512,7 @@
       "parameters": {
         "authentication": "privateKey",
         "command": "=cp ./docker/docker-compose.local.yml docker-compose.yml",
-        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "cwd": "=/srv/Projects/{{ $('export repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "3cc827e1-ae80-4209-8080-ea6511b59058",
       "name": "Copy compose file for develop",
@@ -670,7 +535,7 @@
       "parameters": {
         "authentication": "privateKey",
         "command": "=cp ./docker/docker-compose.local.yml docker-compose.yml",
-        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "cwd": "=/srv/Projects/{{ $('export repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "9756ad0d-3244-478a-9b40-5f6b7e6124c5",
       "name": "Copy compose file for staging",
@@ -693,7 +558,7 @@
       "parameters": {
         "authentication": "privateKey",
         "command": "=cp docker/docker-entrypoint.sh entrypoint.sh",
-        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "cwd": "=/srv/Projects/{{ $('export repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "25761df9-6da8-4759-93be-d809048ccf4e",
       "name": "copy entry-point script",
@@ -765,7 +630,7 @@
       "parameters": {
         "authentication": "privateKey",
         "command": "docker ps",
-        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "cwd": "=/srv/Projects/{{ $('export repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "5331122d-3c9c-41be-872c-de48ec00ee61",
       "name": "docker ps",
@@ -842,7 +707,7 @@
       "parameters": {
         "authentication": "privateKey",
         "command": "=cp dependencies/apt_requirements_gis.txt apt_requirements.txt && cp dependencies/requirements_gis.txt requirements.txt",
-        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "cwd": "=/srv/Projects/{{ $('export repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "17cd707d-8d41-44eb-8bbe-e2bdf17bd31a",
       "name": "Copy GIS dependencies",
@@ -865,7 +730,7 @@
       "parameters": {
         "authentication": "privateKey",
         "command": "=cp dependencies/apt_requirements_nongis.txt apt_requirements.txt && cp dependencies/requirements_nongis.txt requirements.txt",
-        "cwd": "=/srv/Projects/{{ $('get repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
+        "cwd": "=/srv/Projects/{{ $('export repo_name').item.json[\"stdout\"] }}-{{ $('n8n Form Trigger').item.json.branch }}"
       },
       "id": "b8e1e7d3-4c61-44eb-a67f-e2bd2d0cad95",
       "name": "Copy NON-GIS Dependencies",
@@ -883,6 +748,141 @@
           "name": "SSH Private Key account"
         }
       }
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=url={{ $('n8n Form Trigger').item.json.repo_url_ssh }}; \nrepo_name=$(basename \"${url%.git}\"); \necho \"$repo_name\"\n",
+        "cwd": "=/srv/Projects/"
+      },
+      "id": "b6c740c0-9711-45c5-91b2-3e43b53519f9",
+      "name": "export repo_name",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        520,
+        840
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=git clone -b {{ $('n8n Form Trigger').item.json.branch }} {{ $('n8n Form Trigger').item.json.repo_url_ssh }} {{ $json.stdout }}-{{ $('n8n Form Trigger').item.json.branch }} || git clone -b master {{ $('n8n Form Trigger').item.json.repo_url_ssh }} {{ $json.stdout }}-master",
+        "cwd": "=/srv/Projects/"
+      },
+      "id": "93b134b6-d6ca-48d9-80ed-d4f011bc2959",
+      "name": "clone from github",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        740,
+        800
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=git pull origin {{ $('n8n Form Trigger').item.json.branch }} || git pull origin master",
+        "cwd": "=/srv/Projects/{{ $('export repo_name').item.json.stdout }}-{{ $('n8n Form Trigger').item.json.branch }}"
+      },
+      "id": "38c94303-35f1-4f6c-aea0-e7287ee46fb2",
+      "name": "pull respective branch",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        960,
+        760
+      ],
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "URw0V20NqIJCpRL3",
+          "name": "SSH Private Key account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('n8n Form Trigger').item.json.project_type }}",
+                    "rightValue": "gis",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "GIS"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "89e93f18-1837-40c7-a5cf-d369529d0c57",
+                    "leftValue": "={{ $('n8n Form Trigger').item.json.project_type }}",
+                    "rightValue": "non_gis",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "NON_GIS"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "26f54d10-060a-404d-a450-a767bbd2edf7",
+      "name": "check gis or non_gis ?",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        1180,
+        800
+      ]
     }
   ],
   "pinData": {},
@@ -892,6 +892,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-10-14T04:16:42.000Z",
-  "versionId": "f136831a-beb6-4951-89b8-06e50c64ec3d"
+  "updatedAt": "2024-10-15T03:49:34.000Z",
+  "versionId": "109bfddd-b839-4a3f-b6dc-854878871eed"
 }
