@@ -138,17 +138,6 @@
         ]
       ]
     },
-    "backup every 1 hour": {
-      "main": [
-        [
-          {
-            "node": "Globals",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "check_github_status": {
       "main": [
         [
@@ -168,6 +157,17 @@
         [
           {
             "node": "new",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "backup every 10 minutes": {
+      "main": [
+        [
+          {
+            "node": "Globals",
             "type": "main",
             "index": 0
           }
@@ -423,26 +423,6 @@
     },
     {
       "parameters": {
-        "triggerTimes": {
-          "item": [
-            {
-              "mode": "everyX",
-              "value": 1
-            }
-          ]
-        }
-      },
-      "id": "b3b9bd82-51e3-4f3b-9d08-7a589c4b71ec",
-      "name": "backup every 1 hour",
-      "type": "n8n-nodes-base.cron",
-      "position": [
-        -1265,
-        855
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
         "dataType": "string",
         "value1": "={{$json[\"github_status\"]}}",
         "rules": {
@@ -469,6 +449,27 @@
         700
       ],
       "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 10,
+              "unit": "minutes"
+            }
+          ]
+        }
+      },
+      "id": "b3b9bd82-51e3-4f3b-9d08-7a589c4b71ec",
+      "name": "backup every 10 minutes",
+      "type": "n8n-nodes-base.cron",
+      "position": [
+        -1265,
+        855
+      ],
+      "typeVersion": 1
     }
   ],
   "pinData": {},
@@ -478,6 +479,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-07-20T02:46:19.000Z",
-  "versionId": "65fb9229-da44-4e74-908e-6e4e331e0d04"
+  "updatedAt": "2024-10-21T03:48:15.000Z",
+  "versionId": "e71f7d32-c42d-4f22-a8de-212b51b59831"
 }
