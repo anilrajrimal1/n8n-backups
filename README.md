@@ -22,9 +22,13 @@ The template is [`workflows/n8n-backup.json`](workflows/n8n-backup.json).
 2. **Import the template.** In n8n, create a new workflow and import `workflows/n8n-backup.json`.
 3. **Create an n8n API credential.** In n8n, go to **Settings > n8n API** and create an API key. Add it as an n8n API credential and select it on the **n8n** node.
 4. **Create a GitHub credential.** The GitHub nodes use **GitHub OAuth2**. Create that credential, or switch the nodes to a GitHub access token with write access to your backup repository.
-5. **Point it at your repository.** Set the owner and repository on all three GitHub nodes: **GitHub**, **GitHub Edit** and **GitHub Create**.
-6. **Choose the folder.** `repo.path` in the **Globals** node sets the folder the files are written to (default `workflows/`).
-7. **Adjust the schedule** if 10 minutes is too often, then activate the workflow.
+5. **Point it at your repository.** In the **Globals** node, set:
+   - `repo.owner`: your GitHub username or organization
+   - `repo.name`: your backup repository
+   - `repo.path`: the folder the files are written to (default `workflows/`)
+
+   All three GitHub nodes read these values, so this is the only place to change.
+6. **Adjust the schedule** if 10 minutes is too often, then activate the workflow.
 
 ## Restoring a workflow
 
