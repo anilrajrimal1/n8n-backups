@@ -200,15 +200,13 @@
         "operation": "get",
         "owner": {
           "__rl": true,
-          "value": "anilrajrimal1",
+          "value": "={{$node[\"Globals\"].json[\"repo\"][\"owner\"]}}",
           "mode": "name"
         },
         "repository": {
           "__rl": true,
-          "value": "n8n-backups",
-          "mode": "list",
-          "cachedResultName": "n8n-backups",
-          "cachedResultUrl": "https://github.com/anilrajrimal1/n8n-backups"
+          "value": "={{$node[\"Globals\"].json[\"repo\"][\"name\"]}}",
+          "mode": "name"
         },
         "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$json[\"name\"]}}.json",
         "asBinaryProperty": false,
@@ -271,15 +269,13 @@
         "operation": "edit",
         "owner": {
           "__rl": true,
-          "value": "anilrajrimal1",
+          "value": "={{$node[\"Globals\"].json[\"repo\"][\"owner\"]}}",
           "mode": "name"
         },
         "repository": {
           "__rl": true,
-          "value": "n8n-backups",
-          "mode": "list",
-          "cachedResultName": "n8n-backups",
-          "cachedResultUrl": "https://github.com/anilrajrimal1/n8n-backups"
+          "value": "={{$node[\"Globals\"].json[\"repo\"][\"name\"]}}",
+          "mode": "name"
         },
         "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$node[\"OneAtATime\"].json[\"name\"]}}.json",
         "fileContent": "={{$node[\"isDiffOrNew\"].json[\"n8n_data_stringy\"]}}",
@@ -306,15 +302,13 @@
         "resource": "file",
         "owner": {
           "__rl": true,
-          "value": "anilrajrimal1",
+          "value": "={{$node[\"Globals\"].json[\"repo\"][\"owner\"]}}",
           "mode": "name"
         },
         "repository": {
           "__rl": true,
-          "value": "n8n-backups",
-          "mode": "list",
-          "cachedResultName": "n8n-backups",
-          "cachedResultUrl": "https://github.com/anilrajrimal1/n8n-backups"
+          "value": "={{$node[\"Globals\"].json[\"repo\"][\"name\"]}}",
+          "mode": "name"
         },
         "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$node[\"OneAtATime\"].json[\"name\"]}}.json",
         "fileContent": "={{$node[\"isDiffOrNew\"].json[\"n8n_data_stringy\"]}}",
@@ -355,7 +349,7 @@
           "string": [
             {
               "name": "repo.owner",
-              "value": "n8n-io"
+              "value": "your-github-username"
             },
             {
               "name": "repo.name",
