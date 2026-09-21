@@ -1,32 +1,39 @@
-# n8n Workflow Backup 
+# n8n Workflow Backups
 
-This repository is designed to help you automatically back up your n8n workflows at regular intervals. By using this setup, you can ensure that your workflows are safe and secure, even in the event of unexpected data loss or system failures.
+An n8n workflow that backs up every workflow on your n8n instance to a GitHub repository on a schedule. Each workflow is saved as its own JSON file, and a commit is made only when a workflow is new or has changed.
 
-![Image](https://github.com/anilrajrimal1/n8n-backups/blob/master/Screenshot%20from%202024-05-09%2015-24-02.png)
+![n8n backup workflow](Screenshot%20from%202024-05-09%2015-24-02.png)
 
-## Setup Instructions
+## How it works
 
-Follow these steps to set up automated backups for your n8n workflows:
+1. A schedule trigger runs the workflow every 10 minutes.
+2. The **n8n** node fetches all workflows from your instance through the n8n API.
+3. For each workflow, the **GitHub** node looks for an existing file at `workflows/<workflow name>.json`.
+4. The **isDiffOrNew** code node compares the two and routes each workflow:
+   - **new**: creates the file
+   - **different**: updates the file
+   - **same**: skips it
 
-1. **Create a Backup Repository**: Start by creating a backup repository to your GitHub account.
+The template is [`workflows/n8n-backup.json`](workflows/n8n-backup.json).
 
-2. **Generate GitHub Token**: Go to [GitHub settings](https://github.com/settings/tokens/new) and generate a new token with the `repo` scope selected. Copy this token for later use.
+## Setup
 
-3. **Configure new n8n workflow**: In your n8n instance, set up a workflow with the template i provided here.
+1. **Create a backup repository** on GitHub. It can be private.
+2. **Import the template.** In n8n, create a new workflow and import `workflows/n8n-backup.json`.
+3. **Create an n8n API credential.** In n8n, go to **Settings > n8n API** and create an API key. Add it as an n8n API credential and select it on the **n8n** node.
+4. **Create a GitHub credential.** The GitHub nodes use **GitHub OAuth2**. Create that credential, or switch the nodes to a GitHub access token with write access to your backup repository.
+5. **Point it at your repository.** Set the owner and repository on all three GitHub nodes: **GitHub**, **GitHub Edit** and **GitHub Create**.
+6. **Choose the folder.** `repo.path` in the **Globals** node sets the folder the files are written to (default `workflows/`).
+7. **Adjust the schedule** if 10 minutes is too often, then activate the workflow.
 
-5. **Create Required Cerdentials** Create credentials like API forfor GitHub with the previous generated token. Also create a n8n API from the ` Settings > n8n api > generate `
+## Restoring a workflow
 
-4. **Just Modify (Compulsory)**: If you want to change the backup frequency, you can modify the schedule, you also need to change the user, repo name etc as well.
-
-
-## Restoring Workflows
-
-### For restoration I personally suggest you to download the JSON file from GitHub on your local machine and then import it from n8n.
+Download the workflow's JSON file from your backup repository, then import it in n8n with **Import from File**.
 
 ## Contributing
 
-Contributions are welcome! If you have any suggestions, improvements, or feature requests, feel free to open an issue or submit a pull request.
+Suggestions and improvements are welcome. Open an issue or a pull request.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+[MIT](LICENSE)
