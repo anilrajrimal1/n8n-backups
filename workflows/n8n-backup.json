@@ -1,17 +1,314 @@
 {
-  "active": true,
-  "connections": {
-    "On clicking 'execute'": {
-      "main": [
-        [
-          {
-            "node": "Globals",
-            "type": "main",
-            "index": 0
-          }
-        ]
+  "name": "n8n-backup",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "4bf78417-ae70-4f1d-9f2b-108060bea9ba",
+      "name": "Run manually",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        -1265,
+        595
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "resource": "file",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "value": "={{$node[\"Globals\"].json[\"repo\"][\"owner\"]}}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{$node[\"Globals\"].json[\"repo\"][\"name\"]}}",
+          "mode": "name"
+        },
+        "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$json[\"name\"]}}.json",
+        "asBinaryProperty": false,
+        "additionalParameters": {}
+      },
+      "id": "5699c905-74e4-4a78-b4e0-1eb7898e35a6",
+      "name": "GitHub",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        -420,
+        560
+      ],
+      "typeVersion": 1,
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {},
+      "id": "9bff085a-b322-40f2-8f70-694b9924cff3",
+      "name": "same",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        460,
+        460
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "5378aaef-403c-47ad-a5d2-9fab5cba20fc",
+      "name": "different",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        460,
+        700
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "e8a0d790-52f4-4d0b-b623-ff496864a9d3",
+      "name": "new",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        460,
+        880
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "resource": "file",
+        "operation": "edit",
+        "owner": {
+          "__rl": true,
+          "value": "={{$node[\"Globals\"].json[\"repo\"][\"owner\"]}}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{$node[\"Globals\"].json[\"repo\"][\"name\"]}}",
+          "mode": "name"
+        },
+        "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$node[\"OneAtATime\"].json[\"name\"]}}.json",
+        "fileContent": "={{$node[\"isDiffOrNew\"].json[\"n8n_data_stringy\"]}}",
+        "commitMessage": "=update: n8n backup {{$node[\"OneAtATime\"].json[\"name\"]}}.json ({{$json[\"github_status\"]}})"
+      },
+      "id": "df61b005-12e2-41fd-9c0d-7c34248aaab8",
+      "name": "GitHub Edit",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        640,
+        700
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "value": "={{$node[\"Globals\"].json[\"repo\"][\"owner\"]}}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{$node[\"Globals\"].json[\"repo\"][\"name\"]}}",
+          "mode": "name"
+        },
+        "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$node[\"OneAtATime\"].json[\"name\"]}}.json",
+        "fileContent": "={{$node[\"isDiffOrNew\"].json[\"n8n_data_stringy\"]}}",
+        "commitMessage": "=Add: n8n backup file named {{$node[\"OneAtATime\"].json[\"name\"]}}.json ({{$json[\"github_status\"]}})"
+      },
+      "id": "c41e0b7a-f26f-4ea8-8142-08ab08b4918a",
+      "name": "GitHub Create",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        640,
+        880
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "9d0aefa0-b8e0-428d-94d4-eb7950d34d80",
+      "name": "OneAtATime",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        -640,
+        720
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "repo.owner",
+              "value": "your-github-username"
+            },
+            {
+              "name": "repo.name",
+              "value": "n8n-backups"
+            },
+            {
+              "name": "repo.path",
+              "value": "workflows/"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "53f7496d-5c53-499a-8de9-039ecd45b7d0",
+      "name": "Globals",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -1080,
+        720
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "filters": {}
+      },
+      "id": "47da53d5-af0a-47e1-a98e-697f70d39421",
+      "name": "n8n",
+      "type": "n8n-nodes-base.n8n",
+      "position": [
+        -840,
+        720
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "jsCode": "// File Returned with Content\nif (Object.keys($input.all()[0].json).includes(\"content\")) {\n  // Get JSON Objects\n  var origWorkflow = JSON.parse(Buffer.from($input.all()[0].json.content, 'base64'));\n  var n8nWorkflow = $input.all()[1].json;\n  \n  // Order JSON Objects\n  var orderedOriginal = {}\n  var orderedActual = {}\n  \n  Object.keys(origWorkflow).sort().forEach(function(key) {\n    orderedOriginal[key] = origWorkflow[key];\n  });\n  \n  Object.keys(n8nWorkflow).sort().forEach(function(key) {\n    orderedActual[key] = n8nWorkflow[key];\n  });\n\n  // Determine Difference\n  if ( JSON.stringify(orderedOriginal) === JSON.stringify(orderedActual) ) {\n    $input.all()[0].json.github_status = \"same\";\n    $input.all()[0].json.content_decoded = orderedOriginal;\n  } else {\n    $input.all()[0].json.github_status = \"different\";\n    $input.all()[0].json.content_decoded = orderedOriginal;\n    $input.all()[0].json.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n  }\n// No File Returned / New Workflow\n} else {\n  // Order JSON Object\n  var n8nWorkflow = ($input.all()[1].json);\n  var orderedActual = {}\n  Object.keys(n8nWorkflow).sort().forEach(function(key) {\n    orderedActual[key] = n8nWorkflow[key];\n  });\n  \n  // Proper Formatting\n  $input.all()[0].json.github_status = \"new\";\n  $input.all()[0].json.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n}\n\n// Return Items\nreturn $input.all();"
+      },
+      "id": "27cfb5d2-fad5-460b-8a3b-4161cf835daf",
+      "name": "isDiffOrNew",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        -20,
+        700
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "9fc95da6-fdb0-429e-bf24-e7d97e3c187f",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        -200,
+        700
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{$json[\"github_status\"]}}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "same"
+            },
+            {
+              "value2": "different",
+              "output": 1
+            },
+            {
+              "value2": "new",
+              "output": 2
+            }
+          ]
+        }
+      },
+      "id": "d84e8997-c3d0-4df8-b211-03b59ae08b0c",
+      "name": "check_github_status",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        220,
+        700
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "b3b9bd82-51e3-4f3b-9d08-7a589c4b71ec",
+      "name": "Every hour",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        -1265,
+        855
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "content": "## Back up n8n workflows to GitHub\nSaves every workflow on this instance as `<repo.path>/<workflow name>.json` in a GitHub repo, and commits only when a workflow is new or has changed.\n\n**Setup**\n1. Select an **n8n API** credential on the `n8n` node\n2. Select a **GitHub API** credential (personal access token) on the three GitHub nodes\n3. Set your repo in `Globals`\n4. Click **Test workflow**, check the repo, then activate\n\nFull guide: https://github.com/anilrajrimal1/n8n-backups",
+        "height": 340,
+        "width": 520,
+        "color": 7
+      },
+      "id": "844ab738-9c4b-4c8a-b328-1d863201303f",
+      "name": "About this workflow",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1340,
+        180
       ]
     },
+    {
+      "parameters": {
+        "content": "### Set your repo\n`repo.owner`: GitHub user or org\n`repo.name`: backup repo\n`repo.path`: folder, ends with `/`",
+        "height": 320,
+        "width": 240,
+        "color": 4
+      },
+      "id": "a2739b9e-d441-498c-bb2f-1314ec18ce23",
+      "name": "Configure here",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1140,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Only commit what changed\n`isDiffOrNew` sorts the keys of the stored file and of the live workflow, compares them, and tags each one **same**, **different** or **new**. Only *different* and *new* reach GitHub.",
+        "height": 460,
+        "width": 640,
+        "color": 6
+      },
+      "id": "c5ce3278-c32b-4a79-b8ed-c18da64a572c",
+      "name": "Compare and route",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -260,
+        560
+      ]
+    }
+  ],
+  "connections": {
     "GitHub": {
       "main": [
         [
@@ -163,7 +460,18 @@
         ]
       ]
     },
-    "backup every 10 minutes": {
+    "Every hour": {
+      "main": [
+        [
+          {
+            "node": "Globals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run manually": {
       "main": [
         [
           {
@@ -175,304 +483,10 @@
       ]
     }
   },
-  "createdAt": "2024-05-22T04:19:10.551Z",
-  "id": "n8n-backup-template",
-  "meta": {
-    "templateCredsSetupCompleted": true
-  },
-  "name": "n8n-backup",
-  "nodes": [
-    {
-      "parameters": {},
-      "id": "4bf78417-ae70-4f1d-9f2b-108060bea9ba",
-      "name": "On clicking 'execute'",
-      "type": "n8n-nodes-base.manualTrigger",
-      "position": [
-        -1265,
-        595
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "authentication": "oAuth2",
-        "resource": "file",
-        "operation": "get",
-        "owner": {
-          "__rl": true,
-          "value": "={{$node[\"Globals\"].json[\"repo\"][\"owner\"]}}",
-          "mode": "name"
-        },
-        "repository": {
-          "__rl": true,
-          "value": "={{$node[\"Globals\"].json[\"repo\"][\"name\"]}}",
-          "mode": "name"
-        },
-        "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$json[\"name\"]}}.json",
-        "asBinaryProperty": false,
-        "additionalParameters": {}
-      },
-      "id": "5699c905-74e4-4a78-b4e0-1eb7898e35a6",
-      "name": "GitHub",
-      "type": "n8n-nodes-base.github",
-      "position": [
-        -420,
-        560
-      ],
-      "typeVersion": 1,
-      "alwaysOutputData": true,
-      "credentials": {
-        "githubOAuth2Api": {
-          "id": "YOUR_GITHUB_CREDENTIAL_ID",
-          "name": "GitHub account"
-        }
-      },
-      "continueOnFail": true
-    },
-    {
-      "parameters": {},
-      "id": "9bff085a-b322-40f2-8f70-694b9924cff3",
-      "name": "same",
-      "type": "n8n-nodes-base.noOp",
-      "position": [
-        460,
-        460
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {},
-      "id": "5378aaef-403c-47ad-a5d2-9fab5cba20fc",
-      "name": "different",
-      "type": "n8n-nodes-base.noOp",
-      "position": [
-        460,
-        700
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {},
-      "id": "e8a0d790-52f4-4d0b-b623-ff496864a9d3",
-      "name": "new",
-      "type": "n8n-nodes-base.noOp",
-      "position": [
-        460,
-        880
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "authentication": "oAuth2",
-        "resource": "file",
-        "operation": "edit",
-        "owner": {
-          "__rl": true,
-          "value": "={{$node[\"Globals\"].json[\"repo\"][\"owner\"]}}",
-          "mode": "name"
-        },
-        "repository": {
-          "__rl": true,
-          "value": "={{$node[\"Globals\"].json[\"repo\"][\"name\"]}}",
-          "mode": "name"
-        },
-        "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$node[\"OneAtATime\"].json[\"name\"]}}.json",
-        "fileContent": "={{$node[\"isDiffOrNew\"].json[\"n8n_data_stringy\"]}}",
-        "commitMessage": "=update: n8n backup {{$node[\"OneAtATime\"].json[\"name\"]}}.json ({{$json[\"github_status\"]}})"
-      },
-      "id": "df61b005-12e2-41fd-9c0d-7c34248aaab8",
-      "name": "GitHub Edit",
-      "type": "n8n-nodes-base.github",
-      "position": [
-        640,
-        700
-      ],
-      "typeVersion": 1,
-      "credentials": {
-        "githubOAuth2Api": {
-          "id": "YOUR_GITHUB_CREDENTIAL_ID",
-          "name": "GitHub account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "authentication": "oAuth2",
-        "resource": "file",
-        "owner": {
-          "__rl": true,
-          "value": "={{$node[\"Globals\"].json[\"repo\"][\"owner\"]}}",
-          "mode": "name"
-        },
-        "repository": {
-          "__rl": true,
-          "value": "={{$node[\"Globals\"].json[\"repo\"][\"name\"]}}",
-          "mode": "name"
-        },
-        "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$node[\"OneAtATime\"].json[\"name\"]}}.json",
-        "fileContent": "={{$node[\"isDiffOrNew\"].json[\"n8n_data_stringy\"]}}",
-        "commitMessage": "=Add: n8n backup file named {{$node[\"OneAtATime\"].json[\"name\"]}}.json ({{$json[\"github_status\"]}})"
-      },
-      "id": "c41e0b7a-f26f-4ea8-8142-08ab08b4918a",
-      "name": "GitHub Create",
-      "type": "n8n-nodes-base.github",
-      "position": [
-        640,
-        880
-      ],
-      "typeVersion": 1,
-      "credentials": {
-        "githubOAuth2Api": {
-          "id": "YOUR_GITHUB_CREDENTIAL_ID",
-          "name": "GitHub account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "batchSize": 1,
-        "options": {}
-      },
-      "id": "9d0aefa0-b8e0-428d-94d4-eb7950d34d80",
-      "name": "OneAtATime",
-      "type": "n8n-nodes-base.splitInBatches",
-      "position": [
-        -640,
-        720
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "values": {
-          "string": [
-            {
-              "name": "repo.owner",
-              "value": "your-github-username"
-            },
-            {
-              "name": "repo.name",
-              "value": "n8n-backups"
-            },
-            {
-              "name": "repo.path",
-              "value": "workflows/"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "53f7496d-5c53-499a-8de9-039ecd45b7d0",
-      "name": "Globals",
-      "type": "n8n-nodes-base.set",
-      "position": [
-        -1080,
-        720
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "filters": {}
-      },
-      "id": "47da53d5-af0a-47e1-a98e-697f70d39421",
-      "name": "n8n",
-      "type": "n8n-nodes-base.n8n",
-      "position": [
-        -840,
-        720
-      ],
-      "typeVersion": 1,
-      "credentials": {
-        "n8nApi": {
-          "id": "YOUR_N8N_API_CREDENTIAL_ID",
-          "name": "n8n account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "// File Returned with Content\nif (Object.keys($input.all()[0].json).includes(\"content\")) {\n  // Get JSON Objects\n  var origWorkflow = JSON.parse(Buffer.from($input.all()[0].json.content, 'base64'));\n  var n8nWorkflow = $input.all()[1].json;\n  \n  // Order JSON Objects\n  var orderedOriginal = {}\n  var orderedActual = {}\n  \n  Object.keys(origWorkflow).sort().forEach(function(key) {\n    orderedOriginal[key] = origWorkflow[key];\n  });\n  \n  Object.keys(n8nWorkflow).sort().forEach(function(key) {\n    orderedActual[key] = n8nWorkflow[key];\n  });\n\n  // Determine Difference\n  if ( JSON.stringify(orderedOriginal) === JSON.stringify(orderedActual) ) {\n    $input.all()[0].json.github_status = \"same\";\n    $input.all()[0].json.content_decoded = orderedOriginal;\n  } else {\n    $input.all()[0].json.github_status = \"different\";\n    $input.all()[0].json.content_decoded = orderedOriginal;\n    $input.all()[0].json.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n  }\n// No File Returned / New Workflow\n} else {\n  // Order JSON Object\n  var n8nWorkflow = ($input.all()[1].json);\n  var orderedActual = {}\n  Object.keys(n8nWorkflow).sort().forEach(function(key) {\n    orderedActual[key] = n8nWorkflow[key];\n  });\n  \n  // Proper Formatting\n  $input.all()[0].json.github_status = \"new\";\n  $input.all()[0].json.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n}\n\n// Return Items\nreturn $input.all();"
-      },
-      "id": "27cfb5d2-fad5-460b-8a3b-4161cf835daf",
-      "name": "isDiffOrNew",
-      "type": "n8n-nodes-base.code",
-      "position": [
-        -20,
-        700
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {},
-      "id": "9fc95da6-fdb0-429e-bf24-e7d97e3c187f",
-      "name": "Merge",
-      "type": "n8n-nodes-base.merge",
-      "position": [
-        -200,
-        700
-      ],
-      "typeVersion": 2
-    },
-    {
-      "parameters": {
-        "dataType": "string",
-        "value1": "={{$json[\"github_status\"]}}",
-        "rules": {
-          "rules": [
-            {
-              "value2": "same"
-            },
-            {
-              "value2": "different",
-              "output": 1
-            },
-            {
-              "value2": "new",
-              "output": 2
-            }
-          ]
-        }
-      },
-      "id": "d84e8997-c3d0-4df8-b211-03b59ae08b0c",
-      "name": "check_github_status",
-      "type": "n8n-nodes-base.switch",
-      "position": [
-        220,
-        700
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "triggerTimes": {
-          "item": [
-            {
-              "mode": "everyX",
-              "value": 10,
-              "unit": "minutes"
-            }
-          ]
-        }
-      },
-      "id": "b3b9bd82-51e3-4f3b-9d08-7a589c4b71ec",
-      "name": "backup every 10 minutes",
-      "type": "n8n-nodes-base.cron",
-      "position": [
-        -1265,
-        855
-      ],
-      "typeVersion": 1
-    }
-  ],
-  "pinData": {},
+  "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "staticData": null,
-  "tags": [],
-  "triggerCount": 1,
-  "updatedAt": "2024-10-21T03:48:15.000Z",
-  "versionId": "e71f7d32-c42d-4f22-a8de-212b51b59831"
+  "pinData": {},
+  "tags": []
 }
